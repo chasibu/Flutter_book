@@ -123,7 +123,7 @@ open -a Simulator
  2. 「Flutter Application」を選択し,「Next」を選択します。
  3. 「Projectname」を「Flutter_test」とし、「Next」を選択します。
  4. 「Set the package name」画面では特に変更を加えずに、「Finish」を選択します。
- 5. 「今開いている画面で開くかどうか」聞かれるので、「This Window」を選んでおきましょう。
+ 5. 「今開いている画面で開くかどうか」聞かれるので、「This Window」を選んでおきましょう。
  6. 画面上部にあるデバイス選択画面から使用デバイスを選択します。
 　先ほど起動した、「Nexus 5X」があると思いますので、選択します。
  7. 先ほど同様に、Nexus 5Xが起動すると思いますので、起動を確認したら、AndroidStudioの画面上部にある再生ボタンを選択します。
