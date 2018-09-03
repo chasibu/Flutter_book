@@ -78,3 +78,5 @@ rules:
         to:   事件
       - from: 事象
         to:   事象
+  - expected: Android
+    pattern: android

@@ -9,8 +9,7 @@
 基本的に開発環境および開発はMacをベースに行います。
 Windows、Linuxでは環境構築の手順が異なりますので、公式のページをご確認下さい。
 ※公式ページ：https://flutter.io/get-started/install/
-また、AndroidStudioについては別のテキストエディター等でも代替可能ですが、公式推奨とのことなので、こちらを利用して行きます。
-
+また、Android Studioについては別のテキストエディター等でも代替可能ですが、公式推奨とのことなので、こちらを利用して行きます。
 
 == Flutter SDKのインストール（Mac版）
 まずは、Flutter SDKのインストールから行います。基本的には公式のページに英語のドキュメントがありますので、それに沿って行えば問題なくインストール行えます。
@@ -21,9 +20,9 @@ Windows、Linuxでは環境構築の手順が異なりますので、公式の�
 ※執筆時点ではフォルダー名が「flutter_macos_v0.6.0-beta.zip 」となっております。
 
 
-<!--
-画像を入れ込む
--->
+//comment{
+  画像を入れ込む
+//}
 
  2. 好きな所にファイルを展開します。特にこだわり無い人は公式ドキュメント通り、ホーム直下に「development」フォルダーを作成し、そこにフォルダーを展開しましょう。
 
@@ -37,10 +36,13 @@ Windows、Linuxでは環境構築の手順が異なりますので、公式の�
 
 //cmd{
   $ cd
-  $ echo "export PATH=/Users/user/development/flutter/bin:$PATH" >> .bash_profile
+  $ vim bash_profile
 //}
 
-上記の記法じゃいけない？？
+//cmd{
+  #ファイルの一番下に書き込む
+  export PATH=/Users/user/development/flutter/bin:$PATH
+//}
 
  4. pathを定義したファイルの再読み込みを行ないます。
 
@@ -77,15 +79,16 @@ open -a Simulator
 //comment{
 物理iphoneで起動させるための手順があるけど、飛ばしていいよね
 付録として書くぐらいの分量でいいかも
+
 //}
 
 == Android Studioのインストール
 
 === Android Studio インストール
 
- 1. 公式サイト(https://developer.android.com/studio/)
+ 1. 公式サイト（https://developer.android.com/studio/）
 よりインストーラをダウンロードし,インストールします。
- 2. インストール手順等についてはこちら(https://developer.android.com/studio/install?hl=ja)
+ 2. インストール手順等についてはこちら（https://developer.android.com/studio/install?hl=ja）
 を参考にインストールして下さい。
 
 紙媒体だとURLめんどいのであんまりURL誘導はよくない？
@@ -136,7 +139,15 @@ Flutterにはhotreloadという、アプリ実行中に変更を反映させる�
 
 もっとわかりやすい表記に変更すること
 
-@<code>{You have pushed the button this many times:}
+
+//list[main.dart][lass _MyHomePageState extends State<MyHomePage>]
+
+
+
+
+
+
+}
 
 ↓
 
