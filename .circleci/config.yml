@@ -25,11 +25,11 @@ jobs:
           name: Build PDF
           command: npm run pdf
       - store_artifacts:
-          path: ./articles/NefryBook.pdf
-          destination: NefryBook.pdf
+          path: ./articles/FlutterBook.pdf
+          destination: FlutterBook.pdf
       - run:
           name: chmod permissions
           command: chmod +x ./upload_dropbox.sh
       - run:
           name: Upload to Dropbox
-          command: ./upload_dropbox.sh ./articles/NefryBook.pdf ${DROPBOX_TOKEN}
+          command: ./upload_dropbox.sh ./articles/FlutterBook.pdf ${DROPBOX_TOKEN}
