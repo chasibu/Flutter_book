@@ -80,3 +80,7 @@ rules:
         to:   事象
   - expected: Android
     pattern: android
+  - expected: JavaScript
+    pattern: javascript
+  - expected: Dart
+    pattern: dart

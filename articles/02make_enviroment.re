@@ -1,6 +1,6 @@
 = 開発環境構築
 それでは、PCを操作して実際に環境の構築を行なっていこうと思います。
-インストールするものは下記の通りです。
+インストールするものは次のとおりです。
 
  1. Flutter SDK
  2. Xcode（iOSの場合）
@@ -11,10 +11,10 @@ Windows、Linuxでは環境構築の手順が異なりますので、公式の�
 ※公式ページ：https://flutter.io/get-started/install/
 また、Android Studioについては別のテキストエディター等でも代替可能ですが、公式推奨とのことなので、こちらを利用して行きます。
 
-== Flutter SDKのインストール（Mac版）
+== Flutter SDKのインストール（Mac）
 まずは、Flutter SDKのインストールから行います。基本的には公式のページに英語のドキュメントがありますので、それに沿って行えば問題なくインストール行えます。
 
- 1. 公式のFlutterのサイト(https://flutter.io/setup-macos/)にアクセスします。
+ 1. 公式のFlutterのサイト（https://flutter.io/setup-macos/）にアクセスします。
 
  画面トップの方にFlutter SDKのダウンロードリンクがありますので、ダウンロードします。
 ※執筆時点ではフォルダー名が「flutter_macos_v0.6.0-beta.zip 」となっております。
@@ -24,7 +24,7 @@ Windows、Linuxでは環境構築の手順が異なりますので、公式の�
   画像を入れ込む
 //}
 
- 2. 好きな所にファイルを展開します。特にこだわり無い人は公式ドキュメント通り、ホーム直下に「development」フォルダーを作成し、そこにフォルダーを展開しましょう。
+ 2. 好きな所にファイルを展開します。特にこだわり無い人は公式ドキュメントどおり、ホーム直下に「development」フォルダーを作成し、そこにフォルダーを展開しましょう。
 
 //cmd{
   $ mkdir development
@@ -32,7 +32,7 @@ Windows、Linuxでは環境構築の手順が異なりますので、公式の�
   $ unzip ~/Downloads/flutter_macos_v0.6.0-beta.zip
 //}
 
- 3. パスを追加します。以下のコマンドを入力して、「~.bash_profile」ファイルにパスを書き込みます。
+ 3. パスを追加します。次のコマンドを入力して、「~.bash_profile」ファイルにパスを書き込みます。
 
 //cmd{
   $ cd
@@ -57,10 +57,11 @@ echo $PATH
 //}
 正しく更新されていれば、3.で記載した内容が表示されます。
 
+=== Flutter SDKのインストール（Win）
 
-== Xcode
+== Xcodeのインストール（Macのみ）
 
-=== Xcodeインストール
+=== インストール
 
  1. 「App Store」から「Xcode」のインストールを行なって下さい。
  2. インストール後、一度ソフトを起動し、ライセンス認証をして下さい。
@@ -135,20 +136,94 @@ open -a Simulator
 
 =====[column] ホットリロード
 Flutterにはhotreloadという、アプリ実行中に変更を反映させる機能が標準で搭載されています。
-先程は実行したアプリに対して以下の変更を加え、画面上部にある稲妻マークのhotreloadボタンを押してみましょう。
+さきほど、実行したアプリに対して次の変更を加え、画面上部にある稲妻マークのhotreloadボタンを押してみましょう。
 
 もっとわかりやすい表記に変更すること
 
 
-//list[main.dart][class _MyHomePageState extends State<MyHomePage>]{
+//list[main_b][main.dart(変更前)][Dart]{
+class _MyHomePageState extends State<MyHomePage>
+  int _counter = 0;
 
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text(widget.title),
+      ),
+      body: new Center(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Text(
+              'You have pushed the button this many times:',
+            ),
+            new Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.display1,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: new Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
 //}
 
 ↓
 
-@<code>{hotreloadの動作確認！:}
+//list[main_a][main.dart(変更後)][Dart]{
+class _MyHomePageState extends State<MyHomePage>
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text(widget.title),
+      ),
+      body: new Center(
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            new Text(
+              'hotreload機能変更テスト',
+            ),
+            new Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.display1,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: new Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+//}
 
 すると、実行中のアプリの画面が変更されます。
-この様に、hotreload機能を使用すると、変更を反映させるためにアプリを停止させる必要がなく、効率よくアプリ開発を進める事が可能です。
+このように、hotreload機能を使用すると、変更を反映させるためにアプリを停止させる必要がなく、効率よくアプリ開発を進めることが可能です。
 
 ====[/column]
