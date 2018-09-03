@@ -140,14 +140,9 @@ Flutterにはhotreloadという、アプリ実行中に変更を反映させる�
 もっとわかりやすい表記に変更すること
 
 
-//list[main.dart][lass _MyHomePageState extends State<MyHomePage>]
+//list[main.dart][class _MyHomePageState extends State<MyHomePage>]{
 
-
-
-
-
-
-}
+//}
 
 ↓
 
