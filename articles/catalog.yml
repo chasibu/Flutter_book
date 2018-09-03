@@ -3,8 +3,11 @@ PREDEF:
 
 # この順で記事が生成される
 CHAPS:
-  - start.re
-  - arduino.re
+  - 01intro.re
+  - 02make_enviroment.re
+  
+  - 10develop_intro.re
+  - 11develop_input.re
 APPENDIX:
 
 POSTDEF:
