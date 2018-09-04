@@ -84,3 +84,5 @@ rules:
     pattern: javascript
   - expected: Dart
     pattern: dart
+  - expected: Widget
+    pattern: widget
