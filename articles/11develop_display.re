@@ -10,7 +10,7 @@ FlutterはJavaと同様にmain（）からプログラムが開始します。
 次のコードを書いてみましょう。
 
 
-//list[main_display][main.dart][Dart]{
+//list[main_display][main.dart]{
   import 'package:flutter/material.dart';
 
   void main() => runApp(new MyApp());
@@ -36,9 +36,9 @@ FlutterはJavaと同様にmain（）からプログラムが開始します。
 
 //}
 
-## コードの説明
+== コードの説明
 
-//list[main_display1][main.dart][Dart]{
+//list[main_display1][main.dart]{
   import 'package:flutter/material.dart';
 
   void main() => runApp(new MyApp());
@@ -48,7 +48,7 @@ FlutterはJavaと同様にmain（）からプログラムが開始します。
 //}
 今回はステートレスなページを作成するのでStatelessWidgetを継承します。
 
-//list[main_display2][main.dart][Dart]{
+//list[main_display2][main.dart]{
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
@@ -68,7 +68,7 @@ MaterialAppはマテリアルデザインを使用するためのクラスとな
 まずはじめに呼び出すクラスになります。
 アプリのタイトルであったり、最初の遷移先のページなどを決めることができます。
 
-//list[main_display3][main.dart][Dart]{
+//list[main_display3][main.dart]{
 
   import 'package:flutter/material.dart';
 
@@ -106,7 +106,3 @@ homeの次に書かれているのはScaffoldクラスで画面全体のレイ�
 Centerのプロパティ「child:」にTextクラスを呼び出し「"貸し借りメモですよ"」と表示させます。
 
 この状態でアプリの起動を行うと次の画面が表示されると思います。
-
-//comment{
-画像貼り付け
-//}

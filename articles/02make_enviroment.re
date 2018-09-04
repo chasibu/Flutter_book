@@ -141,7 +141,7 @@ Flutterにはhotreloadという、アプリ実行中に変更を反映させる�
 もっとわかりやすい表記に変更すること
 
 
-//list[main_b][main.dart(変更前)][Dart]{
+//list[main_b][main.dart(変更前)]{
 class _MyHomePageState extends State<MyHomePage>
   int _counter = 0;
 
@@ -183,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage>
 
 ↓
 
-//list[main_a][main.dart(変更後)][Dart]{
+//list[main_a][main.dart(変更後)]{
 class _MyHomePageState extends State<MyHomePage>
   int _counter = 0;
 
