@@ -100,9 +100,25 @@ Xcodeから該当のプロジェクトのフォルダーを開きます。
 フィールド タイプ 値
 --------------------------------------------------------------
 lendorrent  String lend
-user  String 借りた人です
+name  String 借りた人です
 loan  String 本
 date  timestamp 2018/10/8
+//}
+
+== pubspec.yamlの変更
+1. 「pubspec.yaml」を開き、次のように変更を加えます。
+
+//list[pubspec-connectfirebase][pubspec.yamlの変更]{
+  dependencies:
+    flutter:
+      sdk: flutter
+    cloud_firestore: ^0.7.3     # new
+//}
+
+2. コンソール画面から次のコマンドを入力します。
+
+//cmd{
+flutter packages get
 //}
 
 以上で、Firebaseとの連携の準備は完了です。
