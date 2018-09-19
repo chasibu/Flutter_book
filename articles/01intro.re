@@ -1,48 +1,49 @@
-= DartとFlutterとFirebaseについて
+= FlutterとFirebaseを知ろう
 
-== Dartについて
-Google社によって開発されたWebプログラミング言語になります。
-位置付けとしてはJavaScriptの代替となる言語として作られました。
-その為、JavaScriptもしくはJavaとかをやっていると比較的始めやすい言語なのかなと思います。
-また、2018年２月にはDart2発表され、本書でもDart2を使用して行きます。
+== Flutter
 
-//comment{
-余裕があったら何が変更になったのかを記載する。
-//}
+オープンソースのモバイルアプリケーションフレームワークです。
 
-
-== Flutterについて
-こちらもGoogle社が開発した、オープンソースのモバイルアプリケーションフレームワークになります。特徴は次のとおりとなります。
+特徴は次のとおりです。
 
  * 対応言語はDart
- * hotreload対応
- * Android,iOSが開発可能なマルチプラットフォーム対応
+ * Hot Reload対応
+ * AndroidやiOSが開発可能なマルチプラットフォーム対応
+ * 開発元はGoogle
 
+====[column] Dart
 
-=== 他のマルチクロスプラットフォーム（ReactNative,Xamarin）との比較を表にまとめました。
+Googleによって開発されたWebプログラミング言語です。
 
+位置付けとしてはJavaScriptの代替となる言語として作られました。
+JavaScriptやJavaに記法が似ており、どちらを使ったことがある方には始めやすい言語だと思います。
+
+====[/column]
+
+=== 他のマルチクロスプラットフォーム（ReactNative,Xamarin）と比較
 
 //table[comparison][他のマルチクロスプラットフォームとの比較]{
-対応プラットフォーム  Flutter/Dart  ReactNative/JavaScript  Xamarin/.NET
+対応プラットフォーム	Flutter/Dart	ReactNative/JavaScript	Xamarin/.NET
 --------------------------------------------------------------
-Android ○ ○ ○
-iOS ○ ○ ○
-デスクトップ（Win） - - ○
-デスクトップ（Mac） - - ○
-Web（フロントエンド）○ ○ ○
-Web（バックエンド）○ ○ -
+Android	○	○	○
+iOS	○	○	○
+デスクトップ（Win）	-	-	○
+デスクトップ（Mac）	-	-	○
+Web（フロントエンド）	○	○	○
+Web（バックエンド）	○	○	-
 //}
 
-デスクトップアプリが作れるXamarinに比べると対応プラットフォーム数は劣りますが、ReactNativeとは対応数は同じです。
-
+デスクトップアプリが作れるXamarinに比べると対応プラットフォーム数は劣りますが、
+ReactNativeとは対応数は同じです。
 
 //comment{
   引用元：https://qiita.com/amay077/items/dff88e7ce6868615a9bb
 //}
 
+== Firebase
 
+FirebaseはGoogleが運営するBaaSです。
 
-== Firebaseについて
-こちらも、Google社が提供しているサービスになります。
-Baas（backend as a service）と呼ばれるサービスのひとつで、今までサーバサイドで行なっていた処理をインターネットを経由してクラウドサービスとして提供してくれうサービスです。
-Firebaseはさまざまなサービスを提供しており、ストレージや認証機能をひとつのサービスとして提供してくれます。今回は、「Cloud Firestore」（※2018年8月現在、β版のみ提供）というクエリと自動スケーリング機能を兼ね備えたリアルタイムデータベースを使用いたします。
+BaaS（backend as a service）とは、サーバーサイドプログラミング不要でデータベースや認証機能、プッシュ通知などを行ってくれるサービスです。
+
+今回は、「Cloud Firestore」（※2018年8月現在、β版のみ提供）というクエリと自動スケーリング機能を兼ね備えたリアルタイムデータベースを使用します。

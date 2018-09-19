@@ -1,30 +1,29 @@
 = 開発環境構築
+
 それでは、PCを操作して実際に環境の構築を行なっていこうと思います。
+
 インストールするものは次のとおりです。
 
  1. Flutter SDK
- 2. Xcode（iOSの場合）
+ 2. Xcode（（Macのみ）iOSの開発を行う場合）
  3. Android Studio（Androidの場合）
 
-基本的に開発環境および開発はMacをベースに行います。
-Windows、Linuxでは環境構築の手順が異なりますので、公式のページをご確認下さい。
-※公式ページ：https://flutter.io/get-started/install/
-また、Android Studioについては別のテキストエディター等でも代替可能ですが、公式推奨とのことなので、こちらを利用して行きます。
+基本的に開発環境および開発は@<b>{Mac}をベースに行います。
+Windows、Linuxでは環境構築の手順が異なりますので、公式サイトのインストール項目をご確認下さい。
 
-== Flutter SDKのインストール（Mac）
-まずは、Flutter SDKのインストールから行います。基本的には公式のページに英語のドキュメントがありますので、それに沿って行えば問題なくインストール行えます。
+※公式サイト：@<href>{https://flutter.io/get-started/install/}
 
- 1. 公式のFlutterのサイト（https://flutter.io/setup-macos/）にアクセスします。
+== Flutter SDKのインストール
+まずは、Flutter SDKのインストールから行います。
+基本的には公式のページに英語のドキュメントがありますので、それに沿って行えば問題なくインストール行えます。
 
+1. 公式のFlutterのサイト（@<href>{https://flutter.io/setup-macos/}）にアクセスします。
  画面トップの方にFlutter SDKのダウンロードリンクがありますので、ダウンロードします。
-※執筆時点ではフォルダー名が「flutter_macos_v0.6.0-beta.zip 」となっております。
-
-
-//comment{
-  画像を入れ込む
+※執筆時点ではフォルダー名が「flutter_macos_v0.7.3-beta.zip」となっております。
+//image[download][ダウンロードリンク]{
 //}
 
- 2. 好きな所にファイルを展開します。特にこだわり無い人は公式ドキュメントどおり、ホーム直下に「development」フォルダーを作成し、そこにフォルダーを展開しましょう。
+2. 公式ドキュメントどおり、ホーム直下に「development」フォルダーを作成し、そこにフォルダーを展開しましょう。
 
 //cmd{
   $ mkdir development
@@ -32,7 +31,7 @@ Windows、Linuxでは環境構築の手順が異なりますので、公式の�
   $ unzip ~/Downloads/flutter_macos_v0.6.0-beta.zip
 //}
 
- 3. パスを追加します。次のコマンドを入力して、「~.bash_profile」ファイルにパスを書き込みます。
+3. パスを追加します。次のコマンドを入力して、「~.bash_profile」ファイルにパスを書き込みます。
 
 //cmd{
   $ cd
@@ -44,67 +43,25 @@ Windows、Linuxでは環境構築の手順が異なりますので、公式の�
   export PATH=/Users/user/development/flutter/bin:$PATH
 //}
 
- 4. pathを定義したファイルの再読み込みを行ないます。
+4. pathを定義したファイルの再読み込みを行ないます。
 
 //cmd{
 source $HOME/.bash_profile
 //}
 
- 5. pathが更新されたかを確認します。
+5. pathが更新されたかを確認します。
 
 //cmd{
 echo $PATH
 //}
 正しく更新されていれば、3.で記載した内容が表示されます。
 
-=== Flutter SDKのインストール（Win）
-
-== Xcodeのインストール（Macのみ）
-
-=== インストール
-
- 1. 「App Store」から「Xcode」のインストールを行なって下さい。
- 2. インストール後、一度ソフトを起動し、ライセンス認証をして下さい。
-
-=== エミュレータの起動
-
- 1. 動作確認のために、一度iOSのエミュレータを起動させます。
-
-//cmd{
-open -a Simulator
-//}
-
-起動に成功するとiphoneが画面上に表示されます。
-画面上部にあるメニューバーから「Simulator」→「Quit Simulator」より終了することができます。
-
-//comment{
-物理iphoneで起動させるための手順があるけど、飛ばしていいよね
-付録として書くぐらいの分量でいいかも
-
-//}
-
-== Android Studioのインストール
-
 === Android Studio インストール
 
- 1. 公式サイト（https://developer.android.com/studio/）
-よりインストーラをダウンロードし,インストールします。
- 2. インストール手順等についてはこちら（https://developer.android.com/studio/install?hl=ja）
+ 1. 公式サイト（@<href>{https://developer.android.com/studio/}）
+よりインストーラをダウンロードし、インストールします。
+ 2. インストール手順等についてはこちら（@<href>{https://developer.android.com/studio/install?hl=ja}）
 を参考にインストールして下さい。
-
-紙媒体だとURLめんどいのであんまりURL誘導はよくない？
-
-=== エミュレータの設定
-
- 1. インストールが完了したら、AndroidStudioを開き、Androidシミュレータの設定を行います。
-    画面上部にある、「AVD Manager」のアイコンを選択します。
- 2. 表示された画面の左下にある「Create Virtual Device...」のボタンを選択します。
- 3. デバイス選択画面が表示されるので「Nexus 5X」を選択し、右下の「Next」ボタンを選択します。
-    ※基本的にどれ選んでも問題ないと思うのですが、今回動作確認を行なったデバイスがNexus 5Xだったため、これを選択しています。
- 4. OSのバージョン選択画面が表示されますが、「Android 8.1」を選択し、右下の「Next」ボタンを押下します。
- 5. 設定の確認画面が出てきますが、特に変更することなく、右下の「Finish」を選択します。
- 6. 再生ボタンを選択し、デバイスを起動させます。
- 7. Nexus 5Xが画面に表示されれば、成功です。画面横にある×ボタンを選択して、エミュレータを終了させます。
 
 == プラグインの追加
 基本的にはAndroidアプリ、iOSアプリを作るにしろ全て、Android Studioを操作して行きます。そのため、Flutterを使う準備など全てAndroidStudio上で行います。
@@ -119,7 +76,7 @@ open -a Simulator
 開発に入るまでもう一息ですが、頑張りましょう！
 
  1. 画面上部より「File>New>New Flutter Project」を選択します。
- 2. 「Flutter Application」を選択し,「Next」を選択します。
+ 2. 「Flutter Application」を選択し、「Next」を選択します。
  3. 「Projectname」を「Flutter_test」とし、「Next」を選択します。
  4. 「Set the package name」画面では特に変更を加えずに、「Finish」を選択します。
  5. 「今開いている画面で開くかどうか」聞かれるので、「This Window」を選んでおきましょう。
@@ -128,94 +85,30 @@ open -a Simulator
  7. 先ほど同様に、Nexus 5Xが起動すると思いますので、起動を確認したら、AndroidStudioの画面上部にある再生ボタンを選択します。
  8. 画像のようなデモアプリが実行されれば動作確認完了です。
 
+=====[column] エミュレータの設定
+
+  1. インストールが完了したら、AndroidStudioを開き、Androidシミュレータの設定を行います。
+     画面上部にある、「AVD Manager」のアイコンを選択します。
+  2. 表示された画面の左下にある「Create Virtual Device...」のボタンを選択します。
+  3. デバイス選択画面が表示されるので「Nexus 5X」を選択し、右下の「Next」ボタンを選択します。
+     ※基本的にどれ選んでも問題ないと思うのですが、今回動作確認を行なったデバイスがNexus 5Xだったため、これを選択しています。
+  4. OSのバージョン選択画面が表示されますが、「Android 8.1」を選択し、右下の「Next」ボタンを押下します。
+  5. 設定の確認画面が出てきますが、特に変更することなく、右下の「Finish」を選択します。
+  6. 再生ボタンを選択し、デバイスを起動させます。
+  7. Nexus 5Xが画面に表示されれば、成功です。画面横にある×ボタンを選択して、エミュレータを終了させます。
+
+====[/column]
 
 =====[column] ホットリロード
-Flutterにはhotreloadという、アプリ実行中に変更を反映させる機能が標準で搭載されています。
-さきほど、実行したアプリに対して次の変更を加え、画面上部にある稲妻マークのhotreloadボタンを押してみましょう。
 
-//list[main_b][main.dart(変更前)]{
-class _MyHomePageState extends State<MyHomePage>
-  int _counter = 0;
+FlutterにはHot Reloadという、アプリ実行中に変更を反映させるためにアプリを停止させることなく、効率よくアプリ開発ができる機能があります。
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+次の画像は、「Hello World!」から「Flutter」と文字をプログラム上で変更する例です。
+文字を変更してプログラムを保存すると1秒後には画像にあるようにアプリの表示が更新されました。
 
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
+通常であれば数十秒から数分かかるプログラムの更新がすぐできるので非常に効率よくプログラムを作成できるのが伝わると思います。
+
+//image[hotreload][Hot Reload（文字変更）]{
 //}
-
-↓
-
-//list[main_a][main.dart(変更後)]{
-class _MyHomePageState extends State<MyHomePage>
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-      body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'hotreload機能変更テスト',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
-//}
-
-すると、実行中のアプリの画面が変更されます。
-このように、hotreload機能を使用すると、変更を反映させるためにアプリを停止させる必要がなく、効率よくアプリ開発を進めることが可能です。
 
 ====[/column]
