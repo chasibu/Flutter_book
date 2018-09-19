@@ -8,6 +8,8 @@ imports:
   - ../prh-rules/media/techbooster.yml
 
 rules:
+  - expected: 公式サイト
+    pattern:  公式ページ
   - expected: asm.js
     pattern:  ams.js
   - expected: 本章
