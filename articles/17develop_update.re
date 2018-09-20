@@ -103,7 +103,23 @@ class _MyInputFormState extends State<InputForm> {
   var change_Flg = 0;
   var lendorrent_Flg = 0;
 
-　...
+  Future <Null> _selectTime(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: date,
+        firstDate: new DateTime(2018),
+        lastDate: new DateTime(2020)
+    );
+
+    if(picked != null && picked != date){
+      setState(() {
+        date = picked;
+        change_Flg = 1;
+        print(date);
+      });
+    }
+  }
+
 
   Widget build(BuildContext context) {
     var _mainReference;
@@ -129,4 +145,24 @@ class _MyInputFormState extends State<InputForm> {
 }
 //}
 
-"InputForm"に引数を受けれるように
+"InputForm"が引数を受けれるように"InputForm"クラス内でコンストラクタを定義します。
+
+次に”_MyInputFormState”内では、"InputForm"内の引数によって、"_data"に代入する値を変更しています。
+”Null”である場合には、全てのデータに”空欄”を代入、データがある場合にはドキュメントIDを参照して
+データを代入しています。
+
+=== lendorrent_Flgについて
+貸し借りの表記を今回”RadioListTile”を使用して実現しているのですが、"lendorrent"に対して変数を直接代入すると
+ラジオボタンが正常に動作しなくなります。そのため、後から編集するために、もともと"lend"が代入されているのか
+"rent"が代入されているのかを判断し、"lendorrent"に対して実値を代入しています。
+
+=== change_Flgについて
+こちらは、日時を入力する為のフラグになります。”showDatePicker”を使用し、データを入力すると、入力後に
+"build()"内の処理が実行されてしまいます。その為、新規登録した時の値をそのまま"build()"内で代入すると
+更新しようとした時に、新規登録した時の値で上書きされてしまいます。
+そこで、"change_Flg"を利用し、更新時に初期登録時の値で上書きしないようにしています。
+また、"_selectTime()"内で、時刻データ登録時に”change_Flg = 1;”と追記しております。
+
+ここまでの記述が完了したら、一度アプリを立ち上げてみましょう。
+一覧画面が表示され、”へんしゅうボタン”を選択すると、新規登録画面に元々登録した値が代入された状態で
+表示されます。
