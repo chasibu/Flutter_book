@@ -9,6 +9,7 @@
 1. 一覧画面から編集したいデータを選択。その際に、対象のデータのドキュメントIDを表示画面先に渡す。
 2. 受け取ったドキュメントIDを元にFirestoreからデータを取得。
 3. 紐づいているキーの値を元に入力フォームに値を入力。
+4. 保存ボタンを押して、データの登録を行う。
 
 == コードの説明
 今回は、一覧画面側（_buildListItem()）と編集画面側（_MyInputFormState()）でコードの編集を行います。
@@ -133,12 +134,12 @@ class _MyInputFormState extends State<InputForm> {
       if(change_Flg == 0) {
         date = widget.docs['date'];
       }
-      _mainReference = Firestore.instance.collection('promise').document(widget.docs.documentID);
+      _mainReference = Firestore.instance.collection('kasikari-memo').document(widget.docs.documentID);
       } else {
         _data.lendorrent = "";
         _data.user = "";
         _data.loan = "";
-        _mainReference = Firestore.instance.collection('promise').document();
+        _mainReference = Firestore.instance.collection('kasikari-memo').document();
       }
     }
     ...
@@ -161,8 +162,8 @@ class _MyInputFormState extends State<InputForm> {
 "build()"内の処理が実行されてしまいます。その為、新規登録した時の値をそのまま"build()"内で代入すると
 更新しようとした時に、新規登録した時の値で上書きされてしまいます。
 そこで、"change_Flg"を利用し、更新時に初期登録時の値で上書きしないようにしています。
-また、"_selectTime()"内で、時刻データ登録時に”change_Flg = 1;”と追記しております。
+また、"_selectTime()"内で、時刻データ登録時に”change_Flg = 1;”と追記しています。
 
-ここまでの記述が完了したら、一度アプリを立ち上げてみましょう。
+ここまでの記述が完了したら、一度アプリを実行してみましょう。
 一覧画面が表示され、”へんしゅうボタン”を選択すると、新規登録画面に元々登録した値が代入された状態で
 表示されます。

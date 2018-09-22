@@ -83,8 +83,9 @@ class _MyList extends State<_List> {
           children: <Widget>[
             ListTile(
               leading: const Icon(Icons.android),
-              title: Text(document['name']),
-              subtitle: Text(document['loan']),
+              title: Text("【" + lendorrent +"】"+ document['name']),
+              subtitle: Text('期限：'+date.substring(0,16)+'\n'
+                  "貸借り品："+document['loan']),
             ),
             new ButtonTheme.bar(
                 child: new ButtonBar(

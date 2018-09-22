@@ -321,11 +321,21 @@ class _MyInputFormState extends State<InputForm> {
                 ),
               ),
 
-              new Text("締め切り日：${date.toString()}"),
               new RaisedButton(
-                  child: new Text("締め切り日変更"),
+                  color: Colors.blue,
+                  child: new RichText(
+                      text: new TextSpan(
+                          children: <TextSpan>[
+                            new TextSpan(
+                              text: '日付変更',
+                              style: new TextStyle(color: Colors.white),
+                            )
+                          ]
+                      )
+                  ),
                   onPressed: (){_selectTime(context);}
               ),
+              new Text("締め切り日：${date.toString()}"),
             ],
           ),
         ),
@@ -430,7 +440,7 @@ groupValueの値は事前に宣言しておくのがポイントになります�
   }
 //}
 
-ここで、佐喜雄ほど設定した、groupValueのlendorrentに対して値の代入を行います。
+ここで、先ほど設定した、groupValueのlendorrentに対して値の代入を行います。
 
 //list[input_TextFormField][TextFormFieldについて]{
   new TextFormField(
@@ -446,8 +456,19 @@ groupValueの値は事前に宣言しておくのがポイントになります�
 
 //list[input_RaiseButton][RaiseButtonについて]{
 new RaisedButton(
-    child: new Text("締め切り日変更"),
+    color: Colors.blue,
+    child: new RichText(
+        text: new TextSpan(
+            children: <TextSpan>[
+              new TextSpan(
+                text: '日付変更',
+                style: new TextStyle(color: Colors.white),
+              )
+            ]
+        )
+    ),
     onPressed: (){_selectTime(context);}
+),
 //}
 
 日付を入力するためのボタンの設定をしています。ボタンを押すと先ほど解説をいったん飛ばした
