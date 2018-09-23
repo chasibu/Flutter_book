@@ -19,54 +19,51 @@ Flutterではそのようなステートフルなページを作成する場合�
   import 'package:flutter/material.dart';
   import 'dart:async';
 
-  void main() => runApp(new MyApp());
+  void main() => runApp(MyApp());
 
   class MyApp extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
-      return new MaterialApp(
-            title: ("貸し借りメモタイトル"),
-            home: InputForm(),
+      return MaterialApp(
+        title: "かしかりメモ",
+        home: InputForm(),
       );
     }
   }
 
-  class InputForm extends StatefulWidget {
-    @override
-    _MyInputFormState createState() => new _MyInputFormState();
-  }
-
   class _formData {
-    String lendorrent;
+    String lendOrRent = "rent";
     String user;
     String loan;
-    DateTime date;
+    DateTime date = new DateTime.now();
+  }
+
+  class InputForm extends StatefulWidget {
+    @override
+    _MyInputFormState createState() => _MyInputFormState();
   }
 
   class _MyInputFormState extends State<InputForm> {
-    final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-    _formData _data = new _formData();
-    String lendorrent = "rent";
-    DateTime date = new DateTime.now();
+    final _formData _data = _formData();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-    void _setLendorRent(String value){
+    void _setLendOrRent(String value){
       setState(() {
-        lendorrent = value;
+        _data.lendOrRent = value;
       });
     }
 
     Future <Null> _selectTime(BuildContext context) async {
       final DateTime picked = await showDatePicker(
           context: context,
-          initialDate: date,
-          firstDate: new DateTime(2018),
-          lastDate: new DateTime(2020)
+          initialDate: _data.date,
+          firstDate: DateTime(_data.date.year - 2),
+          lastDate: DateTime(_data.date.year + 2)
       );
 
-      if(picked != null && picked != date){
+      if(picked != null && picked != _data.date){
         setState(() {
-          date = picked;
-          print(date);
+          _data.date = picked;
         });
       }
     }
@@ -74,55 +71,52 @@ Flutterではそのようなステートフルなページを作成する場合�
     @override
     Widget build(BuildContext context) {
 
-      Widget titleSection;
-      titleSection = Scaffold(
+      return Scaffold(
         appBar: AppBar(
-          title: const Text('かしかりめも'),
+          title: const Text('かしかり入力'),
           actions: <Widget>[
-            // action button
             IconButton(
-              icon: Icon(Icons.save),
-              onPressed: () {
-                print("保存ボタンを押しました");
+                icon: Icon(Icons.save),
+                onPressed: () {
+                  print("保存ボタンを押しました");
                 }
-      ),
+            ),
             IconButton(
               icon: Icon(Icons.delete),
               onPressed: (){
                 print("削除ボタンを押しました");
-    },
+              },
             )
           ],
         ),
-        body: new SafeArea(
+        body: SafeArea(
           child:
-          new Form(
-            key: this._formKey,
-            child: new ListView(
+           Form(
+            key: _formKey,
+            child: ListView(
               padding: const EdgeInsets.all(20.0),
               children: <Widget>[
 
                 RadioListTile(
                   value: "rent",
-                  groupValue: lendorrent,
-                  title: new Text("借りた"),
+                  groupValue: _data.lendOrRent,
+                  title: Text("借りた"),
                   onChanged: (String value){
-                    _setLendorRent(value);
+                    _setLendOrRent(value);
                     print("借りたに設定しました");
                   },
                 ),
 
                 RadioListTile(
                     value: "lend",
-                    groupValue: lendorrent,
-                    title: new Text("貸した"),
+                    groupValue: _data.lendOrRent,
+                    title: Text("貸した"),
                     onChanged: (String value) {
-                      _setLendorRent(value);
+                      _setLendOrRent(value);
                       print("貸したに設定しました");
                     }
                 ),
-                new TextFormField(
-                  //controller: _myController,
+                TextFormField(
                   decoration: const InputDecoration(
                     icon: const Icon(Icons.person),
                     hintText: '相手の名前',
@@ -139,15 +133,14 @@ Flutterではそのようなステートフルなページを作成する場合�
                   initialValue: _data.user,
                 ),
 
-                new TextFormField(
-                  //controller: _myController2,
+                TextFormField(
                   decoration: const InputDecoration(
                     icon: const Icon(Icons.business_center),
                     hintText: '借りたもの、貸したもの',
                     labelText: 'loan',
                   ),
                   onSaved: (String value) {
-                    this._data.loan = value;
+                    _data.loan = value;
                   },
                   validator: (value) {
                     if (value.isEmpty) {
@@ -157,17 +150,19 @@ Flutterではそのようなステートフルなページを作成する場合�
                   initialValue: _data.loan,
                 ),
 
-                new Text("締め切り日：${date.toString()}"),
-                new RaisedButton(
-                    child: new Text("締め切り日変更"),
-                    onPressed: (){_selectTime(context);}
+                Padding(
+                  padding: const EdgeInsets.only(top:8.0),
+                  child: Text("締め切り日：${_data.date.toString()}"),
+                ),
+                RaisedButton(
+                    child: const Text("締め切り日変更"),
+                    onPressed: (){_selectTime(context);},
                 ),
               ],
             ),
           ),
         ),
       );
-      return titleSection;
     }
   }
 //}

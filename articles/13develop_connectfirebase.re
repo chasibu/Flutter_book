@@ -1,14 +1,8 @@
 = Firebaseとの連携
-この章ではFirebaseとの連携を行います。といってもコードを書くのは次の章からでここでは連携の為の準備を
-行います。
-基本的にはこの導入のためのチュートリアルがあるので、それに沿って導入を進めて行きます。
-※参考：Firebase for Flutter（https://codelabs.developers.google.com/codelabs/flutter-firebase/#0）
-　これの１から８を行います。
-
-
+この章では、Firebaseの設定を行います。
 
 == アカウント取得
-1. FirebaseのWebサイトを開きます。Google等で検索すればトップに表示されると思うので、そこから開きましょう。
+1. FirebaseのWebサイトを開きます。（https://firebase.google.com/）
 2. 画面の右上にある「コンソールへ移動」を選択します。
 3. 保有のアカウント情報を入力します。持っていない場合は、新規作成してください。
 4. 「Firebaseへようこそ」と記載された画面が表示されたら、「プロジェクトを追加」を選択します。

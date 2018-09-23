@@ -59,9 +59,8 @@ echo $PATH
 === Android Studio インストール
 
  1. 公式サイト（@<href>{https://developer.android.com/studio/}）
-よりインストーラをダウンロードし、インストールします。
- 2. インストール手順等についてはこちら（@<href>{https://developer.android.com/studio/install?hl=ja}）
-を参考にインストールして下さい。
+よりインストーラをダウンロードします。
+ 2. インストーラに沿ってインストールを完了してください。
 
 == プラグインの追加
 基本的にはAndroidアプリ、iOSアプリを作るにしろ全て、Android Studioを操作して行きます。そのため、Flutterを使う準備など全てAndroidStudio上で行います。
