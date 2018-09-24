@@ -39,7 +39,7 @@
 
 簡単にですが、Android Studioにどのような機能があり、どの部分を触るのか今回必要となる部分に限ってですが、説明します。
 
-//image[androidstudio1][Android Studio][scale=1.0]{
+//image[androidstudio1][Android Studio][scale=0.9]{
 //}
 
 === ファイル選択
@@ -83,14 +83,14 @@ Flutterのコードを実行する時に使用します。
 
 2. Androidの設定メニューから「開発者向けオプション > USBデバッグ」を有効にします。
 
-//image[device1][USBデバッグ有効にする][scale=0.8]{
+//image[device1][USBデバッグ有効にする][scale=0.6]{
 //}
 
 3. 「２」までの設定が完了した状態でPCとUSBでつなぐとこのようなダイアログが表示されます。
 「このコンピュータは常に許可する」にチェックをいれ「OK」を押します。
 このダイアログが出ないとUSBのドライバーが足りないか設定が間違っている可能性があります。
 
-//image[device2][USBデバッグの許可][scale=0.8]{
+//image[device2][USBデバッグの許可][scale=0.6]{
 //}
 
 4. 問題なければ、Android Studioを確認するとデバイス名が表示されます。
@@ -101,7 +101,7 @@ Flutterのコードを実行する時に使用します。
 
 5. 実行するとこのような画面が表示されます。これで動作確認完了です。
 
-//image[device3][実行例][scale=0.8]{
+//image[device3][実行例][scale=0.6]{
 //}
 
 =====[column] Androidエミュレータの設定
@@ -133,7 +133,7 @@ FlutterにはHot Reloadという、アプリ実行中に変更を反映させる
 
 通常であれば数十秒から数分かかるプログラムの更新がすぐできるので非常に効率よくプログラムを作成できるのが伝わると思います。
 
-//image[hotreload][Hot Reload（文字変更）]{
+//image[hotreload][Hot Reload（文字変更）][scale=0.6]{
 //}
 
 ====[/column]
