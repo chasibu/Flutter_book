@@ -15,7 +15,7 @@ Flutterではそのようなステートフルなページを作成する場合�
 
 それでは、前章でコードを書いた「main.dart」ファイルにコードを書いて行きましょう。
 
-//list[main_input][main.dart][Dart]{
+//listnum[main_input][main.dart][Dart]{
   import 'package:flutter/material.dart';
   import 'dart:async';
 
@@ -32,7 +32,7 @@ Flutterではそのようなステートフルなページを作成する場合�
   }
 
   class _formData {
-    String lendOrRent = "rent";
+    String borrowOrLend = "borrow";
     String user;
     String loan;
     DateTime date = new DateTime.now();
@@ -49,7 +49,7 @@ Flutterではそのようなステートフルなページを作成する場合�
 
     void _setLendOrRent(String value){
       setState(() {
-        _data.lendOrRent = value;
+        _data.borrowOrLend = value;
       });
     }
 
@@ -91,15 +91,15 @@ Flutterではそのようなステートフルなページを作成する場合�
         ),
         body: SafeArea(
           child:
-           Form(
+          Form(
             key: _formKey,
             child: ListView(
               padding: const EdgeInsets.all(20.0),
               children: <Widget>[
 
                 RadioListTile(
-                  value: "rent",
-                  groupValue: _data.lendOrRent,
+                  value: "borrow",
+                  groupValue: _data.borrowOrLend,
                   title: Text("借りた"),
                   onChanged: (String value){
                     _setLendOrRent(value);
@@ -109,7 +109,7 @@ Flutterではそのようなステートフルなページを作成する場合�
 
                 RadioListTile(
                     value: "lend",
-                    groupValue: _data.lendOrRent,
+                    groupValue: _data.borrowOrLend,
                     title: Text("貸した"),
                     onChanged: (String value) {
                       _setLendOrRent(value);
@@ -155,8 +155,8 @@ Flutterではそのようなステートフルなページを作成する場合�
                   child: Text("締め切り日：${_data.date.toString()}"),
                 ),
                 RaisedButton(
-                    child: const Text("締め切り日変更"),
-                    onPressed: (){_selectTime(context);},
+                  child: const Text("締め切り日変更"),
+                  onPressed: (){_selectTime(context);},
                 ),
               ],
             ),

@@ -1,4 +1,17 @@
 = 表示機能の実装
+
+== プロジェクトの作成
+
+プロジェクトの作成を行います。
+
+先ほどの環境構築の手順と同様に、プロジェクトを作成します。
+プロジェクト名はお好きな名前でいいですが、本書では「kasikari_memo」という名前にします。
+
+それでは、次の章から開発を進めて行きましょう。
+
+
+
+
 まずはじめに、文字の表示機能の実装を行います。
 FlutterはJavaと同様にmain（）からプログラムが開始します。
 今回はmain（）からMyApp（）を実行し、文字の表示を行います。
@@ -11,28 +24,25 @@ FlutterはJavaと同様にmain（）からプログラムが開始します。
 
 
 //list[main_display][main.dart]{
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
-  void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
-  class MyApp extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
-      return new MaterialApp(
-            title: ("貸し借りメモタイトル"),
-            home: new Scaffold(
-              appBar: new AppBar(
-                title: new Text("貸し借りメモタイトル"),
-              ),
-              body: new Center(
-                  child:new Text(
-                      "貸し借りメモですよ"
-                  )
-              )
-            )
-      );
-    }
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text("かしかりメモタイトル"),
+            ),
+            body: Center(
+                child: const Text("かしかりメモアプリ 本文"),
+            ),
+        )
+    );
   }
+}
 
 //}
 
