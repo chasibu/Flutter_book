@@ -116,22 +116,22 @@ Android StudioでFlutterを開発するためにFlutterのプラグインをイ�
 
 もしくは「File＞settings」からでも同様の画面に進むことができます。
 
-//image[plugin2][Flutterプラグインのインストール][scale=0.5]{
+//image[plugin2][Flutterプラグインのインストール][scale=0.7]{
 //}
 
 2. プラグイン一覧が表示されます。下部にある「Browser repositories」を選択してます。
 
-//image[plugin3][Flutterプラグインの一覧][scale=0.7]{
+//image[plugin3][Flutterプラグインの一覧][scale=0.9]{
 //}
 
 3. 検索欄がありますので「flutter」と入力します。選択するとインストールボタンが表示されるのでそれをクリックします。
 
-//image[plugin4][Flutterプラグインの検索][scale=0.7]{
+//image[plugin4][Flutterプラグインの検索][scale=0.9]{
 //}
 
 4. 途中、「Dart plugin」をインストールしてもいいかと聞かれるので「Yes」を選択し、インストールして下さい。
 
-//image[plugin5][Dartプラグインのインストール][scale=0.7]{
+//image[plugin5][Dartプラグインのインストール][scale=0.9]{
 //}
 
 5. インストール完了後、Browse Repositoriesを「Close」で閉じ、「Flutter」をリストから探しクリックします。
@@ -139,7 +139,7 @@ Android StudioでFlutterを開発するためにFlutterのプラグインをイ�
 「Restart Android Studio」をクリックします。
 そうするとAndroid Studioが再起動するのでしばらく待ちましょう。
 
-//image[plugin6][Dartプラグインのインストール][scale=0.7]{
+//image[plugin6][Dartプラグインのインストール][scale=0.9]{
 //}
 
 これで環境構築は完了です！
