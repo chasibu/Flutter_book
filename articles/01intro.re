@@ -23,7 +23,7 @@ JavaScriptやJavaに記法が似ており、どちらかの言語を使ったこ
 
 ====[/column]
 
-=== 他のマルチクロスプラットフォーム（ReactNative,Xamarin）と比較
+=== ReactNativeやXamarinとの比較
 
 //table[comparison][他のマルチクロスプラットフォームとの比較]{
 対応プラットフォーム	Flutter/Dart	ReactNative/JavaScript	Xamarin/.NET
