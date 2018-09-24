@@ -16,12 +16,12 @@ Flutterで開発する前にFirebaseの設定を行います。
 3. プロジェクト名に「kasikari-memo」を入力します。
 すべてにチェックを入れて、プロジェクト作成ボタンを押します。
 
-//image[firebase3][情報を入力][scale=0.8]{
+//image[firebase3][情報を入力][scale=0.6]{
 //}
 
 4. しばらく待つとプロジェクトが作成されるので、「次へ」ボタンを選択します。
 
-//image[firebase4][プロジェクトを追加][scale=0.8]{
+//image[firebase4][プロジェクトを追加][scale=0.6]{
 //}
 
 == プロジェクトとFirebaseの紐付け
@@ -143,12 +143,12 @@ Xcodeから該当のプロジェクトのフォルダーを開きます。
 3. テスト用のデータをして次のデータを入力します。入力できたら「保存」をクリックします。
 
 //table[firebase-document][作成するコレクション]{
-フィールド タイプ 値
+フィールド	タイプ	値
 --------------------------------------------------------------
-borrowOrLend  String lend
-stuff  String PC
-user  String てすとユーザ
-date  timestamp 2018/10/8
+borrowOrLend	String	lend
+stuff	String	PC
+user	String	てすとユーザ
+date	timestamp	2018/10/8
 //}
 
 //image[database5][作成するコレクション][scale=0.8]{
