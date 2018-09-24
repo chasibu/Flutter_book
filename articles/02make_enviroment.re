@@ -47,7 +47,7 @@ Flutter SDKのダウンロードリンクがありますので、ダウンロー
 本書と同じ手順であれば「C:\Users\ユーザフォルダ\flutter\bin」となります。
 設定が完了したらOKをクリックし、閉じます。
 
-//image[windows4][パス設定][scale=0.8]{
+//image[windows4][パス設定][scale=0.6]{
 //}
 
 Windows版のFlutter SDKの準備は完了です。
