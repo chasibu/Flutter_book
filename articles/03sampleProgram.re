@@ -39,7 +39,7 @@
 
 簡単にですが、Android Studioにどのような機能があり、どの部分を触るのか今回必要となる部分に限ってですが、説明します。
 
-//image[androidstudio1][Android Studio][scale=0.8]{
+//image[androidstudio1][Android Studio][scale=1.0]{
 //}
 
 === ファイル選択
