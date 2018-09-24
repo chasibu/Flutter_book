@@ -5,6 +5,7 @@ PREDEF:
 CHAPS:
   - 01intro.re
   - 02make_enviroment.re
+  - 03sampleProgram.re
   - 10develop_intro.re
   - 11develop_display.re
   - 12develop_input.re
