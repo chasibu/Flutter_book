@@ -21,7 +21,7 @@ Flutterで開発する前にFirebaseの設定を行います。
 
 4. しばらく待つとプロジェクトが作成されるので、「次へ」ボタンを選択します。
 
-//image[firebase4][プロジェクトを追加][scale=0.6]{
+//image[firebase4][準備完了][scale=0.5]{
 //}
 
 == プロジェクトとFirebaseの紐付け
@@ -156,5 +156,5 @@ date	timestamp	2018/10/8
 
 4. 正常に作成できると、次のようになっているはずです。これでFirebaseの設定は完了です！
 
-//image[database6][コレクションの作成ダイアログ][scale=0.8]{
+//image[database6][成功例][scale=0.7]{
 //}
