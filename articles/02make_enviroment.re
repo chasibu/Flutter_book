@@ -9,7 +9,8 @@
  * Xcode（（Macのみ）iOSの開発を行う場合）
 
 基本的に開発環境および開発は@<b>{Windows 10}をベースに行います。
-Flutterはまだベータ版なのでインストール方法が変わる可能性があります。
+Flutterはベータ版なのでインストール方法が変わる可能性があります。
+
 執筆現在（2018/9/23）のインストール方法について紹介します。
 本書の手順でうまくいかない場合など最新のインストール方法については公式サイトをご覧ください。
 
@@ -67,7 +68,7 @@ Windows版のFlutter SDKの準備は完了です。
 //cmd{
   $ mkdir development
   $ cd ~/development
-  $ unzip ~/Downloads/flutter_macos_v0.6.0-beta.zip
+  $ unzip ~/Downloads/flutter_macos_v0.8.2-beta.zip
 //}
 
 3. パスを追加します。次のコマンドを入力して、「~.bash_profile」ファイルにパスを書き込みます。
@@ -115,22 +116,22 @@ Android StudioでFlutterを開発するためにFlutterのプラグインをイ�
 
 もしくは「File＞settings」からでも同様の画面に進むことができます。
 
-//image[plugin2][Flutterプラグインのインストール][scale=0.4]{
+//image[plugin2][Flutterプラグインのインストール][scale=0.5]{
 //}
 
 2. プラグイン一覧が表示されます。下部にある「Browser repositories」を選択してます。
 
-//image[plugin3][Flutterプラグインの一覧][scale=0.8]{
+//image[plugin3][Flutterプラグインの一覧][scale=0.7]{
 //}
 
 3. 検索欄がありますので「flutter」と入力します。選択するとインストールボタンが表示されるのでそれをクリックします。
 
-//image[plugin4][Flutterプラグインの検索][scale=0.8]{
+//image[plugin4][Flutterプラグインの検索][scale=0.7]{
 //}
 
 4. 途中、「Dart plugin」をインストールしてもいいかと聞かれるので「Yes」を選択し、インストールして下さい。
 
-//image[plugin5][Dartプラグインのインストール][scale=0.8]{
+//image[plugin5][Dartプラグインのインストール][scale=0.7]{
 //}
 
 5. インストール完了後、Browse Repositoriesを「Close」で閉じ、「Flutter」をリストから探しクリックします。
@@ -138,7 +139,7 @@ Android StudioでFlutterを開発するためにFlutterのプラグインをイ�
 「Restart Android Studio」をクリックします。
 そうするとAndroid Studioが再起動するのでしばらく待ちましょう。
 
-//image[plugin6][Dartプラグインのインストール][scale=0.8]{
+//image[plugin6][Dartプラグインのインストール][scale=0.7]{
 //}
 
 これで環境構築は完了です！
