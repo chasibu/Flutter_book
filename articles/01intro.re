@@ -11,6 +11,9 @@
  * AndroidやiOSが開発可能なマルチプラットフォーム対応
  * 開発元はGoogle
 
+//image[flutter][Flutterロゴ][scale=0.4]{
+//}
+
 ====[column] Dart
 
 Googleによって開発されたWebプログラミング言語です。
@@ -34,7 +37,7 @@ Web（バックエンド）	○	○	-
 //}
 
 デスクトップアプリが作れるXamarinに比べると対応プラットフォーム数は劣りますが、
-ReactNativeとは対応プラットフォーム数は同じです。
+ReactNativeと対応プラットフォーム数は同じです。
 
 //comment{
   引用元：https://qiita.com/amay077/items/dff88e7ce6868615a9bb
