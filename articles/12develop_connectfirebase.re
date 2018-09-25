@@ -1,4 +1,4 @@
-= Firebase設定
+= Firebaseの設定をしよう
 
 Flutterで開発する前にFirebaseの設定を行います。
 
@@ -154,7 +154,9 @@ date	timestamp	2018/10/8
 //image[database5][作成するコレクション][scale=0.8]{
 //}
 
-4. 正常に作成できると、次のようになっているはずです。これでFirebaseの設定は完了です！
+4. 正常に作成できると、次のようになっているはずです。
+
+これでFirebaseの設定は完了です！
 
 //image[database6][成功例][scale=0.7]{
 //}
