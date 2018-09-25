@@ -104,63 +104,53 @@ Flutterのコードを実行する時に使用します。
 //image[device3][実行例][scale=0.6]{
 //}
 
-=====[column] Androidエミュレータの設定
+== Androidエミュレータの設定
 
-1. AndroidStudioを開き、Androidシミュレータの設定を行います。
-     画面上部にある、「AVD Manager」のアイコンを選択します。
-//image[Android_emu1][「AVD Manager」のアイコン][scale=0.6]{
+1. Android Studioを開き、Androidエミュレータの設定を行います。
+
+画面上部にある、「AVD Manager」のアイコンをクリックします。
+
+//image[Android_emu1][Androidエミュレータの作成][scale=0.7]{
 //}
 
-2. 表示された画面にある「＋Create Virtual Device...」のボタンを選択します。
+2. 表示された画面にある「＋Create Virtual Device...」のボタンをクリックします。
 
-3. デバイス選択画面が表示されるので「Nexus 5X」を選択し、右下の「Next」ボタンを選択します。
-     ※基本的にどれ選んでも問題ないと思うのですが、今回動作確認を行なったデバイスがNexus 5Xだったため、これを選択しています。
-//image[Android_emu2][「AVD Manager」のアイコン][scale=0.6]{
-//}
-4. OSのバージョン選択画面が表示されますが、「Android 8.1」を選択し、右下の「Next」ボタンを押下します。
-//image[Android_emu3][「AVD Manager」のアイコン][scale=0.6]{
-//}
-5. 設定の確認画面が出てきますが、特に変更することなく、右下の「Finish」を選択します。
-//image[Android_emu4][「AVD Manager」のアイコン][scale=0.6]{
-//}
-6. 再生ボタンを選択し、デバイスを起動させます。
-//image[Android_emu5][「AVD Manager」のアイコン][scale=0.6]{
-//}
-7. Nexus 5Xが画面に表示されれば、成功です。画面横にある×ボタンを選択して、エミュレータを終了させます。
-//image[Android_emu6][「AVD Manager」のアイコン][scale=0.6]{
-//}
-====[/column]
+3. デバイス選択画面が表示されるので「Nexus 5X」を選択し、右下の「Next」ボタンをクリックします。
 
-=====[column] iphoneエミュレータの設定
-
-1. AndroidStudioを開き、iPhoneシミュレータの設定を行います。
-     画面上部にある、「<No devices>」を選択し、「Open iOS Simulator」を選択します。
-//image[iPhone_emu1][「AVD Manager」のアイコン]{
+//image[Android_emu2][「Nexus 5X」を選択][scale=0.7]{
 //}
 
-2. しばらくすると、次の画像のようにiphoneが表示されます。
-//image[iPhone_emu2][「AVD Manager」のアイコン]{
+4. OSのバージョン選択画面が表示されますが、「Android 8.1」を選択し、右下の「Next」ボタンをクリックします。
+
+//image[Android_emu3][「Android 8.1」を選択][scale=0.7]{
 //}
 
-3. 終了する場合には、”Simulator”から"Quit Simulator"を選択して終了させます。
-//image[iPhone_emu3][「AVD Manager」のアイコン]{
+5. 設定の確認画面が出てきますが、特に変更することなく、右下の「Finish」をクリックします。
+
+6. デバイスを選択して起動させます。
+
+//image[Android_emu5][デバイス選択][scale=0.7]{
+//}
+7. Nexus 5Xが画面に表示されれば、成功です。
+
+Nexus 5X画面横にある×ボタンを選択して、エミュレータを終了させます。
+
+== iPhoneエミュレータの設定
+
+1. Android Studioを開き、iPhoneシミュレータの設定を行います。
+
+画面上部にある、「<No devices>」を選択し、「Open iOS Simulator」を選択します。
+
+//image[iPhone_emu1][「Open iOS Simulator」][scale=0.7]{
 //}
 
+2. しばらくすると、iPhoneが画面に表示されます。
 
-====[/column]
+3. 終了する場合には、「Simulator > Quit Simulator」を選択して終了させます。
 
-=====[column] iOSエミュレータの設定
-
-1. 画面上部にある、「<no devices>」と表示されているアイコンを選択します。
-
-2. 「Open iOS Simulator」を選択します。
-
-3. iphoneが表示されれば成功です。画面横にある×ボタンを選択して、エミュレータを終了させます。
-//image[iphone_menu][メニュー画面][scale=0.6]{
+//image[iPhone_emu3][「AVD Manager」のアイコン][scale=0.6]{
 //}
 
-
-====[/column]
 
 =====[column] ホットリロード
 
