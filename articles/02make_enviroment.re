@@ -66,6 +66,7 @@ Windows版のFlutter SDKの準備は完了です。
 2. 公式ドキュメントどおり、ホーム直下に「development」フォルダーを作成し、そこにフォルダーを展開しましょう。
 
 //cmd{
+  $ cd
   $ mkdir development
   $ cd ~/development
   $ unzip ~/Downloads/flutter_macos_v0.8.2-beta.zip
@@ -75,13 +76,18 @@ Windows版のFlutter SDKの準備は完了です。
 
 //cmd{
   $ cd
-  $ vim bash_profile
+  $ vim .bash_profile
 //}
 
 //cmd{
   #ファイルの一番下に書き込む
   export PATH=/Users/user/development/flutter/bin:$PATH
 //}
+※次の画像の57行目のように入力して下さい。画像では、「user」の箇所が「sho」となっておりますが
+ここの名前は実行環境により異なります。
+//image[write_path][パス入力画面][scale=0.8]{
+//}
+
 
 4. pathを定義したファイルの再読み込みを行ないます。
 
@@ -94,7 +100,11 @@ source $HOME/.bash_profile
 //cmd{
 echo $PATH
 //}
-正しく更新されていれば、3.で記載した内容が表示されます。
+※場合によっては、次の画像のように先頭に表示されない場合がありますので、表示されたものに全て
+目を通して画像と同じものが表示されること確認して下さい。
+
+//image[path_list][パス一覧画面][scale=0.5]{
+//}
 
 == Android Studioのインストール
 

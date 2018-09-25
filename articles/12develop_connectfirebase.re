@@ -3,7 +3,9 @@
 Flutterで開発する前にFirebaseの設定を行います。
 
 == アカウント取得
-1. FirebaseのWebサイトを開き、画面の右上にある「コンソールへ移動」を選択します。（@<href>{https://firebase.google.com/}）
+1. FirebaseのWebサイトを開き、画面の右上にある「コンソールへ移動」を選択します。
+
+Firebase公式サイト : @<href>{https://firebase.google.com/}
 
 //image[firebase1][コンソールへ移動][scale=0.8]{
 //}
@@ -25,9 +27,11 @@ Flutterで開発する前にFirebaseの設定を行います。
 //}
 
 == プロジェクトとFirebaseの紐付け
+
 Android向けとiOS向けにそれぞれ設定を行う必要があります。
 
 === Androidの設定
+
 1.「Project Overview」を選択し、画面上にある「Android」のマークを選択します。
 
 //image[firebase5][Androidの設定][scale=0.8]{
@@ -82,10 +86,11 @@ Android向けとiOS向けにそれぞれ設定を行う必要があります。
 7. 最後にこの表示になりますが、「このステップをスキップ」をクリックして処理を終了します。
 これでAndroidの設定は完了です！
 
-//image[firebase11][プロジェクトを追加][scale=0.8]{
+//image[firebase11][このステップをスキップ][scale=0.8]{
 //}
 
 === iOSの設定
+
 1.「Project Overview」を選択し、画面上にある「iOS」のマークを選択します。
 
 2. アプリの登録を行うのにiOSバンドルIDを入力する必要があるので、それを調べます。次のコマンドを入力して
@@ -93,25 +98,29 @@ Xcodeから該当のプロジェクトのフォルダーを開きます。
 
 //cmd{
   $ cd Users/user/development/kasikari_memo
-  $ cd open ios/Runner.xcworkspace
+  $ open ios/Runner.xcworkspace
 //}
 
-今回作業をしているフォルダーに移動して、xcodeで開くようにコマンドを叩いています。
-うまくいくと、xcodeの画面が開きます。
+今回作業をしているフォルダーに移動して、Ⅹcodeで開くようにコマンドを叩きます。
 
-3. 左のペインからRunnerを選択すると、画面真ん中が、Runnerのinfoの画面に切り替わると思います。
-その画面になったら、Runnernの横にあるボタンを押します。
-※マウスオーバすると「Show project and targets list」とされるボタンです。
+//image[open_xcode][Xcodeで開く][scale=0.8]{
+//}
 
-4. ボタン選択後、「TARGETS」の下にある「Runner」を選択すると、画面真ん中に「Bundle Identifier」と記載のある欄が表示されます。
+3. サイドバーからRunnerを選択し、Runnernの横にあるボタンを押します。
+「TARGETS」の下にある「Runner」を選択すると、画面中央に「Bundle Identifier」と記載のある欄が表示されます。
 これがバンドルIDなので、コピーします。
+
+//image[show_bundleID][バンドルIDのコピー][scale=0.8]{
+//}
 
 5. Firebaseのアプリ登録画面に戻り、バンドルIDを入力し、アプリの登録を行います。
 
 6. 画面の表示に従い、「GoogleService-info.plist」をダウンロードします。
 
 7. ダウンロードしたファイルをXcode上で「Runner」フォルダの直下に移動させます。
-以上で終わりです。
+
+//image[downloadfile][ダウンロードファイルの移動][scale=0.8]{
+//}
 
 == データベースの作成
 1. 左のリストより「開発」→「Database」を選択します。
