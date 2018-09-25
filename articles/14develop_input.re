@@ -147,7 +147,9 @@ class _MyInputFormState extends State<InputForm> {
 "_MyInputFormState"内では、まず、”appBar:”にて”IconButton”を使用し、保存ボタンと削除ボタンを
 設定します。機能の実装は後ほど行う為、ボタンが押された後にコンソール画面にボタンを押した旨の表示をしています。
 
-”body:”においては、”RadioListTile”で「貸したのか、借りたのか」の情報を入力しています。
+”body:”においては、"Form"を利用し、データの入力画面を作成します。
+”key: _formKey”では、フォーム全体に対する制御を行うものであり、後ほど、実装する入力チェックに利用します。
+”RadioListTile”で「貸したのか、借りたのか」の情報を入力しています。
 まだ、この段階では、ボタンは有効化されていません。
 
  //実際の値は"value:"に格納され、ボタンが選択され、”onChanged:”が実行されるたびに、
@@ -439,3 +441,11 @@ class _MyInputFormState extends State<InputForm> {
 
 Firestoreにデータを登録するために、”Firestore.instance.collection('コレクション名').document();”
 を使用し、インスタンスを生成します。
+
+保存ボタンを選択後、”_formKey”を使用し、入力チェックを行います。
+入力チェクを行い、問題なければ、”_mainReference.setData()”を使用し、Firestoreへデータの登録を行います。
+
+「"キー":"値"」の形式で、Firestoreへデータの登録を行い、４つのデータを保存したら、”Navigator.pop”を利用し
+元の一覧画面に戻ります。
+
+この状態で、アプリを実行すると、一覧画面が表示され、右下の新規作成ボタンを押すことで、新規作成画面に遷移し、新規登録が可能になります。
