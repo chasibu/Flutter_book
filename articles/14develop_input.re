@@ -8,102 +8,83 @@
  * 期限はいつなのか
 
 
-登録画面は入力を伴い、ユーザからの入力や表示するの内容が他のデータに依存する（たとえば、データベースから登録してある情報を表示するなど）
-ページをステートフルなページと呼びます。
+登録画面は入力を伴い、ユーザからの入力や表示するの内容が他のデータに依存する為
+（たとえば、データベースから登録してある情報を表示するなど）
+statefullなページとして作成します。
 
-Flutterではそのようなステートフルなページを作成する場合、「StatefulWidget」クラスを継承しクラスの作成を行います。
+Flutterではそのようなページを作成する場合、「StatefulWidget」クラスを継承しクラスの作成を行います。
 
-それでは、「main.dart」ファイルにコードを書いて行きましょう。
 
-//listnum[main_input][main.dart][Dart]{
-  import 'package:flutter/material.dart';
-  import 'dart:async';
+== 画面の実装
 
-  void main() => runApp(MyApp());
+//list[main_input1][main.dart]{
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  class MyApp extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
-      return MaterialApp(
-        title: "かしかりメモ",
-        home: InputForm(),
-      );
-    }
-  }
+void main() => runApp(new MyApp());
 
-  class _formData {
-    String borrowOrLend = "borrow";
-    String user;
-    String loan;
-    DateTime date = new DateTime.now();
-  }
+class MyApp extends StatelessWidget {
+...
+}
 
-  class InputForm extends StatefulWidget {
-    @override
-    _MyInputFormState createState() => _MyInputFormState();
-  }
+class List extends StatefulWidget {
+...
+}
 
-  class _MyInputFormState extends State<InputForm> {
-    final _formData _data = _formData();
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class _MyList extends State<List> {
+...
+}
 
-    void _setLendOrRent(String value){
-      setState(() {
-        _data.borrowOrLend = value;
-      });
-    }
+class InputForm extends StatefulWidget {
+  @override
+  _MyInputFormState createState() => _MyInputFormState();
+}
 
-    Future <Null> _selectTime(BuildContext context) async {
-      final DateTime picked = await showDatePicker(
-          context: context,
-          initialDate: _data.date,
-          firstDate: DateTime(_data.date.year - 2),
-          lastDate: DateTime(_data.date.year + 2)
-      );
+class _FormData {
+  String borrowOrLend = "borrow";
+  String user;
+  String stuff;
+  DateTime date = DateTime.now();
+}
 
-      if(picked != null && picked != _data.date){
-        setState(() {
-          _data.date = picked;
-        });
-      }
-    }
+class _MyInputFormState extends State<InputForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _FormData _data = _FormData();
 
-    @override
-    Widget build(BuildContext context) {
-
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('かしかり入力'),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.save),
-                onPressed: () {
-                  print("保存ボタンを押しました");
-                }
-            ),
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: (){
-                print("削除ボタンを押しました");
-              },
-            )
-          ],
-        ),
-        body: SafeArea(
-          child:
-          Form(
-            key: _formKey,
-            child: ListView(
-              padding: const EdgeInsets.all(20.0),
-              children: <Widget>[
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('かしかり入力'),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {
+                print("保存ボタンを押しました");
+              }
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              print("削除ボタンを押しました");
+            },
+          )
+        ],
+      ),
+      body: SafeArea(
+        child:
+        Form(
+          key: _formKey,
+          child: ListView(
+            padding: const EdgeInsets.all(20.0),
+            children: <Widget>[
 
                 RadioListTile(
                   value: "borrow",
                   groupValue: _data.borrowOrLend,
                   title: Text("借りた"),
                   onChanged: (String value){
-                    _setLendOrRent(value);
-                    print("借りたに設定しました");
+                    print("借りたをタッチしました");
                   },
                 ),
 
@@ -112,8 +93,7 @@ Flutterではそのようなステートフルなページを作成する場合�
                     groupValue: _data.borrowOrLend,
                     title: Text("貸した"),
                     onChanged: (String value) {
-                      _setLendOrRent(value);
-                      print("貸したに設定しました");
+                      print("貸したをタッチしました");
                     }
                 ),
                 TextFormField(
@@ -122,15 +102,6 @@ Flutterではそのようなステートフルなページを作成する場合�
                     hintText: '相手の名前',
                     labelText: 'Name',
                   ),
-                  onSaved: (String value) {
-                    this._data.user = value;
-                  },
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return '名前は必須入力項目です';
-                    }
-                  },
-                  initialValue: _data.user,
                 ),
 
                 TextFormField(
@@ -139,24 +110,17 @@ Flutterではそのようなステートフルなページを作成する場合�
                     hintText: '借りたもの、貸したもの',
                     labelText: 'loan',
                   ),
-                  onSaved: (String value) {
-                    _data.loan = value;
-                  },
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return '借りたもの、貸したものは必須入力項目です';
-                    }
-                  },
-                  initialValue: _data.loan,
                 ),
 
                 Padding(
                   padding: const EdgeInsets.only(top:8.0),
-                  child: Text("締め切り日：${_data.date.toString()}"),
+                  child: Text("締め切り日：${_data.date.toString().substring(0,10)}"),
                 ),
                 RaisedButton(
                   child: const Text("締め切り日変更"),
-                  onPressed: (){_selectTime(context);},
+                  onPressed: (){
+                     print("締め切り日変更をタッチしました");
+                    },
                 ),
               ],
             ),
@@ -164,335 +128,314 @@ Flutterではそのようなステートフルなページを作成する場合�
         ),
       );
     }
-  }
+}
 //}
 
+"InputForm"クラスを"StatefulWidget"を継承して作成しているのがポイントになります。この中で、
+実際の実装を行う、"_MyInputFormState"の作成を行います。
 
-== コードの説明
+"_formData"クラスは入力する変数を格納するために作成しています。
+それぞれ
 
-//list[main_input1][main.dart]{
-  import 'package:flutter/material.dart';
-  import 'dart:async';
+ * borrowOrLend → 貸したか借りたか
+ * user       → 誰に貸したのか、借りたのか
+ * stuff       → 何を貸したのか、借りたのか
+ * date       → 締め切り日
 
-  void main() => runApp(new MyApp());
+ に対応しています。
 
-  class MyApp extends StatelessWidget {
-    @override
+"_MyInputFormState"内では、まず、”appBar:”にて”IconButton”を使用し、保存ボタンと削除ボタンを
+設定します。機能の実装は後ほど行う為、ボタンが押された後にコンソール画面にボタンを押した旨の表示をしています。
+
+”body:”においては、”RadioListTile”で「貸したのか、借りたのか」の情報を入力しています。
+まだ、この段階では、ボタンは有効化されていません。
+
+ //実際の値は"value:"に格納され、ボタンが選択され、”onChanged:”が実行されるたびに、
+ //”groupValue:”に対して、"value:"の値が代入されます。
+ //また、”groupValue”に対して事前に値を代入して置かないとうまく動作しません。
+
+”TextFormField”を使用し、
+ * 貸した、借りた相手の名前
+ * 貸し借りした物の名前
+の入力を実現しています。この段階では、入力画面のみを作成しており、まだ、データの取り出し等は行えません。
+
+
+== 登録後の画面遷移
+//list[main_input2][main.dart]{
+  class _MyList extends State<List> {
+
     Widget build(BuildContext context) {
-      return new MaterialApp(
-            title: ("貸し借りメモタイトル"),
-            home: InputForm(),
+      return Scaffold(
+        appBar: AppBar(
+            title: const Text("リスト画面"),
+        ),
+        body: Padding(
+          ...
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.check),
+            onPressed: () {
+              print("新規作成ボタンを押しました");
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    settings: const RouteSettings(name: "/new"),
+                    builder: (BuildContext context) => InputForm()
+                ),
+              );
+            }
+        ),
       );
     }
   }
 //}
 
-前章との大きな変更点はMaterialAppのhomeに対して直接Widgetを設定するのではなく
-InputForm()というクラスを用意して入力画面を表示しているところです。
+一覧画面から登録画面への画面遷移機能の実装になります。
+新規登録ボタン選択後、”Navigator.push()”を使用し、画面の遷移機能を実装しています。
+”settings:”では、ルーティングの設定、”builder:”では、どこのクラスに遷移するのかを設定します。
 
-また、importするパッケージも増えていますので、忘れずに追加しておきましょう。
-
-//list[main_input2][main.dart]{
-  import 'package:flutter/material.dart';
-  import 'dart:async';
-
-  void main() => runApp(new MyApp());
-
-  class MyApp extends StatelessWidget {
-  ...
-  }
-
-class InputForm extends StatefulWidget {
-  @override
-  _MyInputFormState createState() => new _MyInputFormState();
-}
-
-class _formData {
-  String lendorrent;
-  String user;
-  String loan;
-  DateTime date;
-}
-
-class _MyInputFormState extends State<InputForm> {
-}
-//}
-
-InputFormクラスをStatefulWidgetを継承して作成しているのがポイントになります。この中で、
-実際の実装を行う、_MyInputFormStateの作成を行います。
-次の行で作成している_formDataクラスは入力する変数を格納するために作成しています。
-それぞれ
-
- * lendorrent → 貸したか借りたか
- * user       → 誰に貸したのか、借りたのか
- * loan       → 何を貸したのか、借りたのか
- * date       → 締め切り日
-
- に対応しています。
-
+== RadioListTile有効化
 //list[main_input3][main.dart]{
-   import 'package:flutter/material.dart';
-   import 'dart:async';
+  class _MyInputFormState extends State<InputForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _FormData _data = _FormData();
 
-   void main() => runApp(new MyApp());
-
-   class MyApp extends StatelessWidget {
-   ...
-   }
-  ...
-
-class _MyInputFormState extends State<InputForm> {
-
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  _formData _data = new _formData();
-  String lendorrent = "rent";
-  DateTime date = new DateTime.now();
-
-  ...
+  void _setLendOrRent(String value){
+    setState(() {
+      _data.borrowOrLend = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    Widget titleSection;
-    titleSection = Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text('かしかりめも'),
-        actions: <Widget>[
-          // action button
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {
-              print("保存ボタンを押しました");
-              }
-          ),
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: (){
-              print("削除ボタンを押しました");
-              },
-          )
-        ],
+        ...
       ),
-      body: new SafeArea(
+      body: SafeArea(
         child:
-        new Form(
-          key: this._formKey,
-          child: new ListView(
-            padding: const EdgeInsets.all(20.0),
-            children: <Widget>[
+          Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(20.0),
+                children: <Widget>[
 
-              RadioListTile(
-                value: "rent",
-                groupValue: lendorrent,
-                title: new Text("借りた"),
-                onChanged: (String value){
-                  _setLendorRent(value);
-                  print("借りたに設定しました");
-                },
-              ),
+                RadioListTile(
+                  value: "borrow",
+                  groupValue: _data.borrowOrLend,
+                  title: Text("借りた"),
+                  onChanged: (String value){
+                    print("借りたをタッチしました");
+                    _setLendOrRent(value);
+                  },
+                ),
 
-              RadioListTile(
+                RadioListTile(
                   value: "lend",
-                  groupValue: lendorrent,
-                  title: new Text("貸した"),
+                  groupValue: _data.borrowOrLend,
+                  title: Text("貸した"),
                   onChanged: (String value) {
-                    _setLendorRent(value);
-                    print("貸したに設定しました");
+                    print("貸したをタッチしました");
+                    _setLendOrRent(value);
                   }
-              ),
-              new TextFormField(
-                decoration: const InputDecoration(
-                  icon: const Icon(Icons.person),
-                  hintText: '相手の名前',
-                  labelText: 'Name',
                 ),
-              ),
-
-              new TextFormField(
-                decoration: const InputDecoration(
-                  icon: const Icon(Icons.business_center),
-                  hintText: '借りたもの、貸したもの',
-                  labelText: 'loan',
-                ),
-              ),
-
-              new RaisedButton(
-                  color: Colors.blue,
-                  child: new RichText(
-                      text: new TextSpan(
-                          children: <TextSpan>[
-                            new TextSpan(
-                              text: '日付変更',
-                              style: new TextStyle(color: Colors.white),
-                            )
-                          ]
-                      )
-                  ),
-                  onPressed: (){_selectTime(context);}
-              ),
-              new Text("締め切り日：${date.toString()}"),
-            ],
+                ...
+              ],
+            ),
           ),
-        ),
       ),
     );
-    return titleSection;
+  }
+}
+//}
+"RadioListTile"において、ボタンを押した後の実際の値の代入の処理は
+"onChanged:"の中にある"_setLendorRent()"にて実装しています。
+"_data.borrowOrLend"に対して値の代入を行います。
+
+
+
+== 入力チェック機能追加
+//list[main_input4][main.dart]{
+
+class _MyInputFormState extends State<InputForm> {
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final _FormData _data = _FormData();
+
+void _setLendOrRent(String value){
+  setState(() {
+    _data.borrowOrLend = value;
+  });
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        ...
+      ),
+      body: SafeArea(
+        child:
+          Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(20.0),
+                children: <Widget>[
+                ...
+
+                TextFormField(
+                    decoration: const InputDecoration(
+                    icon: const Icon(Icons.person),
+                    hintText: '相手の名前',
+                    labelText: 'Name',
+                    ),
+                    onSaved: (String value) {
+                      _data.user = value;
+                    },
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return '名前は必須入力項目です';
+                      }
+                    },
+                    initialValue: _data.user,
+                ),
+
+                TextFormField(
+                  decoration: const InputDecoration(
+                    icon: const Icon(Icons.business_center),
+                    hintText: '借りたもの、貸したもの',
+                    labelText: 'loan',
+                    ),
+                    onSaved: (String value) {
+                      _data.stuff = value;
+                    },
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return '借りたもの、貸したものは必須入力項目です';
+                      }
+                    },
+                      initialValue: _data.stuff,
+                  ),
+                  ...
+              ],
+            ),
+          ),
+      ),
+    );
   }
 }
 //}
 
-buildメソッドの前に、いくつかメソッドがあるのですが、先にbuildメソッドの中身から解説します。
+貸し借りした相手の名前、貸し借りしたものの名前を入力する"TextFormField"に対して、
+入力チェック機能とを実装しています。”onSaved:”にて、”_data”の各プロパティに対して、値の代入を行なっています。
+また、"validator:"を使用し、登録時に空欄である場合、エラー文を返すように設定しています。
 
-このメソッドの中身は次の図のとおりとなっております。
+== 日付選択
+//list[main_input5][main.dart]{
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 
-※説明に必要な部分のみ抜粋して表示しております。
-//image[MyInputForm_build][buildクラスの中身]{
-//}
+class _MyInputFormState extends State<InputForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _FormData _data = _FormData();
 
-図のような入れ子状にWidget等を配置し、アプリを作って行きます。次から各ポイントごとに解説を記載して行きます。
-
-//list[input_scafold][appBar:について]{
-appBar: AppBar(
-  title: const Text('かしかりめも'),
-  actions: <Widget>[
-    // action button
-    IconButton(
-      icon: Icon(Icons.save),
-      onPressed: () {
-        print("保存ボタンを押しました");
-        }
-),
-    IconButton(
-      icon: Icon(Icons.delete),
-      onPressed: (){
-        print("削除ボタンを押しました");
-},
-    )
-  ],
-),
-//}
-
-ここでは後に実装する保存機能と削除機能のためのボタンを配置しています。
-onPressed：の中にボタンを押した後の処理を記載できるのですが、
-正しく動いていることを確認するために、ボタンが押された後にコンソール画面にボタンを押した旨の表示をしています。
-
-
-//list[input_appBar:][appBar:について]{
-appBar: AppBar(
-  title: const Text('かしかりめも'),
-  actions: <Widget>[
-    // action button
-    IconButton(
-      icon: Icon(Icons.save),
-      onPressed: () {
-        print("保存ボタンを押しました");
-        }
-),
-    IconButton(
-      icon: Icon(Icons.delete),
-      onPressed: (){
-        print("削除ボタンを押しました");
-},
-    )
-  ],
-),
-//}
-
-
-//list[input_RadioListTile][RadioListTileについて]{
-  RadioListTile(
-    value: "rent",
-    groupValue: lendorrent,
-    title: new Text("借りた"),
-    onChanged: (String value){
-      _setLendorRent(value);
-      print("借りたに設定しました");
-    },
-  ),
-
-  RadioListTile(
-      value: "lend",
-      groupValue: lendorrent,
-      title: new Text("貸した"),
-      onChanged: (String value) {
-        _setLendorRent(value);
-        print("貸したに設定しました");
-      }
-  ),
-//}
-
-valueで実際に設定する値、groupValueに値の格納先の変数名を記載します。
-groupValueの値は事前に宣言しておくのがポイントになります。
-今回の例では「class _MyInputFormState」の先頭で「String lendorrent = "rent";」
-と宣言しています。
-ボタンを押した後の実際の値の代入の処理は「onChanged:」の中にある「_setLendorRent()」にて実装しています。
-
-//list[input_setLendorRent][_setLendorRentについて]{
-  void _setLendorRent(String value){
-    setState(() {
-      lendorrent = value;
-    });
+  Future <DateTime> _selectTime(BuildContext context) async {
+  final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: _data.date,
+      firstDate: DateTime(_data.date.year - 2),
+      lastDate: DateTime(_data.date.year + 2)
+  );
+  return picked;
   }
-//}
 
-ここで、先ほど設定した、groupValueのlendorrentに対して値の代入を行います。
-
-//list[input_TextFormField][TextFormFieldについて]{
-  new TextFormField(
-    decoration: const InputDecoration(
-      icon: const Icon(Icons.business_center),
-      hintText: '借りたもの、貸したもの',
-      labelText: 'loan',
-    ),
-  ),
-//}
-
-文字入力可能なテキストフォームを作成します。「decoration:」でラベルやアイコンの設定を行うことができます。
-
-//list[input_RaiseButton][RaiseButtonについて]{
-new RaisedButton(
-    color: Colors.blue,
-    child: new RichText(
-        text: new TextSpan(
-            children: <TextSpan>[
-              new TextSpan(
-                text: '日付変更',
-                style: new TextStyle(color: Colors.white),
-              )
-            ]
-        )
-    ),
-    onPressed: (){_selectTime(context);}
-),
-//}
-
-日付を入力するためのボタンの設定をしています。ボタンを押すと先ほど解説をいったん飛ばした
-「selectTime()」に処理が遷移します。
-
-//list[input_selectTime][selectTimeについて]{
-  Future <Null> _selectTime(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: new DateTime(2018),
-        lastDate: new DateTime(2020)
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        ...
+      ),
+      body: SafeArea(
+        child:
+          Form(
+              key: _formKey,
+              child: ListView(
+                padding: const EdgeInsets.all(20.0),
+                children: <Widget>[
+                ...
+                RaisedButton(
+                  child: const Text("締め切り日変更"),
+                  onPressed: (){
+                    print("締め切り日変更をタッチしました");
+                    _selectTime(context).then((time){
+                      if(time != null && time != _data.date){
+                        setState(() {
+                          _data.date = time;
+                        });
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+      ),
     );
-
-    if(picked != null && picked != date){
-      setState(() {
-        date = picked;
-        print(date);
-      });
-    }
   }
-//}
+}
 
-日時の入力を行うために、用意されている「showDatePicker」という関数を使用します。
+//}
+"RaisedButton"の”onPressed:”のおいて、時刻入力するための関数、”_selectTime()”を呼び出します。
+”_selectTime()”では、Fluuterがデフォルトで用意している、日時を入力するための「showDatePicker」という
+関数を使用します。
+
 この関数の戻り値はFuture型となっており、これは非同期処理を行うときに使用します。
 そのため、async/awaitを利用し、非同期処理を実現しております。
+そのため、ファイルの初めに”import 'dart:async';”が追加になっているので、
+忘れずに追加しましょう。
+
 nitialDate:は初期値の値、firstDate:が入力できる日付の最小値、lastDate:が入力できる値の最大値となっております。
-（今回の例だと2018／01／01 〜 2020／01／01が入力できます。）
-dateに対して日時の代入はsetState()で実現しています。
 
+== データ保存
+//list[main_input6][main.dart]{
+class _MyInputFormState extends State<InputForm> {
 
-この状態でアプリを起動すると次のような画面が立ち上がり、無事に文字の入力が可能になっていると思います。
+  @override
+  Widget build(BuildContext context) {
+  DocumentReference _mainReference;
+  _mainReference = Firestore.instance.collection('kasikari-memo').document();
+
+  return Scaffold(
+  appBar: AppBar(
+    title: const Text('かしかり入力'),
+    actions: <Widget>[
+      IconButton(
+          icon: Icon(Icons.save),
+          onPressed: () {
+            print("保存ボタンを押しました");
+            if (_formKey.currentState.validate()) {
+              _formKey.currentState.save();
+              _mainReference.setData(
+                  {
+                    'borrowOrLend': _data.borrowOrLend,
+                    'user': _data.user,
+                    'stuff': _data.stuff,
+                    'date': _data.date
+                  });
+              Navigator.pop(context);
+            }
+          }
+      ),
+      IconButton(
+        ...
+      )
+    ],
+  ),
+  ...
+  )
+  }
+}
+//}
+
+Firestoreにデータを登録するために、”Firestore.instance.collection('コレクション名').document();”
+を使用し、インスタンスを生成します。
