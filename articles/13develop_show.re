@@ -21,7 +21,7 @@ flutter packages get
 
 
 == Firestoreデータリスト表示
-//list[main_show][main.dart]{
+//list[main_show1][main.dart]{
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -76,7 +76,8 @@ class _MyList extends State<List> {
             ListTile(
               leading: const Icon(Icons.android),
               title: Text("【 " + (document['borrowOrLend'] == "lend"?"貸":"借") +" 】"+ document['stuff']),
-              subtitle: Text('期限 ： ' + document['date'].toString().substring(0,10) + "\n相手 ： " + document['user']),
+              subtitle: Text('期限 ： ' + document['date'].toString().
+                        substring(0,10) + "\n相手 ： " + document['user']),
             ),
           ]
       ),
@@ -89,7 +90,7 @@ Flutterでは"main()"からアプリが開始し、"main()"が"MyApp()"を実行
 実行されます。”MyApp”内では”MaterialApp”が返り値としてなっており、この中”home:”に設定されている
 "list()"クラスをさらに呼び出します。
 
-呼び出される”List”はFirestoreに格納しているデータを表示する機能を持ちます。
+呼び出される”list()”はFirestoreに格納しているデータを表示する機能を持ちます。
 Firestoreから毎回データを取得し、画面に表示しています。その為、Firebaseのデータの状態により
 表示される画面の内容が変化する為、StatefulWidgetクラスを継承し、クラスを作成します。
 
@@ -111,7 +112,7 @@ Firestoreからデータを取得し、表示する機能は"StreamBuilder<Query
 scrollDirection:	Axis.vertical	スクロールの方向を決める。垂直方向に画面をスクロールできるように設定。
 itemCount:	snapshot.data.documents.length	表示するアイテムの数を決める。snapshotから取得したドキュメントの数を設定。
 padding:	const EdgeInsets.only(top: 10.0)	一番初めに表示されるアイテムのパディングを決定。
-itemBuilder:	(context, index) => _buildListItem(context, snapshot.data.documents[index])	次の項目にて説明
+itemBuilder:	(context, index) => _buildListItem()	次の項目にて説明
 //}
 
 "_buildListItem"クラスでは引数として"DocumentSnapshot document"を設定し、"ListTile"を使用して
@@ -121,3 +122,71 @@ document["タイプ名"]でFirestoreに登録してある、データを取得�
 この状態で、アプリを実行すると、テスト入力したデータがリストとなって表示されます。
 
 == 新規ボタン追加
+//list[main_show2][main.dart]{
+class _MyList extends State<List> {
+
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+            title: const Text("リスト画面"),
+        ),
+        body: Padding(
+          ...
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.check),
+            onPressed: () {
+              print("新規作成ボタンを押しました");
+            }
+        ),
+      );
+    }
+}
+//}
+
+"Scaffold"に”floatingActionButton:”を追加し、新規作成ボタンを追加します。
+登録機能の実装は後ほど行うため、ここでは、ボタンを押した時の処理を記載する、”onPressed:”の
+中には”print("新規作成ボタンを押しました");”とだけ記載します。
+
+この状態で、アプリを実行すると、新規登録ボタンが表示されます。
+
+== 編集ボタン追加
+//list[main_show3][main.dart]{
+class _MyList extends State<List> {
+  ...
+
+  Widget _buildListItem(BuildContext context, DocumentSnapshot document){
+    return Card(
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.android),
+              title: Text("【 " + (document['borrowOrLend'] == "lend"?"貸":"借") +" 】"+ document['stuff']),
+              subtitle: Text('期限 ： ' + document['date'].toString().
+                              substring(0,10) + "\n相手 ： " + document['user']),
+            ),
+            ButtonTheme.bar(
+                child: ButtonBar(
+                  children: <Widget>[
+                    FlatButton(
+                        child: const Text("へんしゅう"),
+                        onPressed: ()
+                        {
+                          print("編集ボタンを押しました");
+                        }
+                    ),
+                  ],
+                )
+            ),
+          ]
+      ),
+    );
+  }
+}
+//}
+"Column"の中に”ButtonTheme.bar”を追加し、編集画面へのボタンを設定します。
+編集機能の実装は後ほど行うため、ここでは、ボタンを押した時の処理を記載する、”onPressed:”の
+中には”print("編集ボタンを押しました");”とだけ記載します。
+
+この状態で、アプリを実行すると、編集ボタンが表示されます。
