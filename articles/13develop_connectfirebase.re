@@ -33,26 +33,36 @@ Xcodeから該当のプロジェクトのフォルダーを開きます。
 
 //cmd{
   $ cd Users/user/development/kasikari_memo
-  $ cd open ios/Runner.xcworkspace
+  $ open ios/Runner.xcworkspace
 //}
 
 今回作業をしているフォルダーに移動して、xcodeで開くようにコマンドを叩いています。
-うまくいくと、xcodeの画面が開きます。
+うまくいくと、次の画像のようにxcodeが開きます。
+//image[open_xcode][xcodeで開く]{
+//}
 
-3. 左のペインからRunnerを選択すると、画面真ん中が、Runnerのinfoの画面に切り替わると思います。
-その画面になったら、Runnernの横にあるボタンを押します。
-※マウスオーバすると「Show project and targets list」とされるボタンです。
+3. 左のペインからRunnerを選択すると、画面真ん中が、Runnerのinfoの画面に切り替わります。
+切り替え後、Runnernの横にあるボタンを押します。
+※次の画像にて、赤い四角で囲まれているボタンです。
+//image[show_targets_list][Show_targets_listを開く]{
+//}
 
-4. ボタン選択後、「TARGETS」の下にある「Runner」を選択すると、画面真ん中に「Bundle Identifier」と記載のある欄が表示されます。
+4. 選択後、「TARGETS」の下にある「Runner」を選択すると、
+画面真ん中に「Bundle Identifier」と記載のある欄が表示されます。
 これがバンドルIDなので、コピーします。
+※次の画像にて、赤い下線が引いてあるのが、バンドルIDになります。
+//image[show_bundleID][バンドルIDの表示]{
+//}
 
 5. Firebaseのアプリ登録画面に戻り、バンドルIDを入力し、アプリの登録を行います。
 
 6. 画面の表示に従い、「GoogleService-info.plist」をダウンロードします。
 
 7. ダウンロードしたファイルをXcode上で「Runner」フォルダの直下に移動させます。
-以上で終わりです。
+//image[downloadfile][ダウンロードファイルの移動]{
+//}
 
+以上で終わりです。
 
 === Androidの設定
 1.「Project Overview」を選択し、画面上にある「Android」のマークを選択します。
@@ -97,12 +107,12 @@ Xcodeから該当のプロジェクトのフォルダーを開きます。
 5. コレクションの作成画面に遷移します。試しに次のようなコレクションを作成します。
 
 //table[firebase-document][作成するコレクション]{
-フィールド タイプ 値
+フィールド	タイプ	値
 --------------------------------------------------------------
-lendorrent  String lend
-name  String 借りた人です
-loan  String 本
-date  timestamp 2018/10/8
+lendorrent	String	lend
+name	String	借りた人です
+loan	String	本
+date	timestamp	2018/10/8
 //}
 
 == pubspec.yamlの変更
