@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
   }
 }
 //}
-”MaterialApp”のroutesに対して二つのルートを設定します。
+”MaterialApp”のroutesに対してふたつのルートを設定します。
 ”/（ルート）”が優先されるので、”Splash()”が実行されます。
 
 //list[main_login2][main.dart]{
