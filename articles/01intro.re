@@ -39,10 +39,6 @@ Web（バックエンド）	○	○	-
 デスクトップアプリが作れるXamarinに比べると対応プラットフォーム数は劣りますが、
 ReactNativeと対応プラットフォーム数は同じです。
 
-//comment{
-  引用元：https://qiita.com/amay077/items/dff88e7ce6868615a9bb
-//}
-
 == Firebase
 
 FirebaseはGoogleが運営するBaaSです。

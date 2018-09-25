@@ -13,7 +13,7 @@
 
 Flutterではそのようなステートフルなページを作成する場合、「StatefulWidget」クラスを継承しクラスの作成を行います。
 
-それでは、前章でコードを書いた「main.dart」ファイルにコードを書いて行きましょう。
+それでは、「main.dart」ファイルにコードを書いて行きましょう。
 
 //listnum[main_input][main.dart][Dart]{
   import 'package:flutter/material.dart';
