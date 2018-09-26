@@ -86,12 +86,17 @@ class _MyList extends State<List> {
 }
 //}
 
-Flutterでは"main()"からアプリが開始し、"main()"が"MyApp()"を実行しているので、"MyApp()"が
+Flutterでは@<code>{main()}からアプリが開始します。
+今回のコードでは以下の順番でクラスが実行されます。
+1. @<code>{main()}が@<code>{MyApp()}を実行。
+2. @<code>{MyApp()}ないの
+3.
+"main()"が"MyApp()"を実行しているので、"MyApp()"が
 実行されます。”MyApp”内では”MaterialApp”が返り値としてなっており、この中”home:”に設定されている
 "list()"クラスをさらに呼び出します。
 
 呼び出される”list()”はFirestoreに格納しているデータを表示する機能を持ちます。
-Firestoreから毎回データを取得し、画面に表示しています。その為、Firebaseのデータの状態により
+Firestoreから毎回データを取得し、画面に表示しています。その為、Firestoreのデータの状態により
 表示される画面の内容が変化する為、StatefulWidgetクラスを継承し、クラスを作成します。
 
 "_MyList"クラスの"build"メソッド内で"Scaffold"を使用し、画面の描写を行います。
@@ -109,8 +114,8 @@ Firestoreからデータを取得し、表示する機能は"StreamBuilder<Query
 //table[ListView.builder][ListView.builderのプロパティ]{
 プロパティ	値	説明
 --------------------------------------------------------------
-scrollDirection:	Axis.vertical	スクロールの方向を決める。垂直方向に画面をスクロールできるように設定。
-itemCount:	snapshot.data.documents.length	表示するアイテムの数を決める。snapshotから取得したドキュメントの数を設定。
+scrollDirection:	Axis.vertical	スクロールの方向を決める。
+itemCount:	snapshot.data.documents.length	表示するアイテムの数を決める。
 padding:	const EdgeInsets.only(top: 10.0)	一番初めに表示されるアイテムのパディングを決定。
 itemBuilder:	(context, index) => _buildListItem()	次の項目にて説明
 //}

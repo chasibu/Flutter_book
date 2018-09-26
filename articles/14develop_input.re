@@ -12,7 +12,7 @@
 （たとえば、データベースから登録してある情報を表示するなど）
 statefullなページとして作成します。
 
-Flutterではそのようなページを作成する場合、「StatefulWidget」クラスを継承しクラスの作成を行います。
+Flutterではそのようなページを作成する場合、@<code>{StatefulWidget}クラスを継承しクラスの作成を行います。
 
 
 == 画面の実装
@@ -131,10 +131,10 @@ class _MyInputFormState extends State<InputForm> {
 }
 //}
 
-"InputForm"クラスを"StatefulWidget"を継承して作成しているのがポイントになります。この中で、
-実際の実装を行う、"_MyInputFormState"の作成を行います。
+@<code>{InputForm}クラスを@<code>{StatefulWidget}を継承して作成しているのがポイントになります。この中で、
+実際の実装を行う、@<code>{_MyInputFormState}の作成を行います。
 
-"_formData"クラスは入力する変数を格納するために作成しています。
+@<code>{_formData}クラスは入力する変数を格納するために作成しています。
 それぞれ
 
  * borrowOrLend → 貸したか借りたか
@@ -144,19 +144,15 @@ class _MyInputFormState extends State<InputForm> {
 
  に対応しています。
 
-"_MyInputFormState"内では、まず、”appBar:”にて”IconButton”を使用し、保存ボタンと削除ボタンを
+@<code>{_MyInputFormState}内では、まず、@<code>{appBar:}にて@<code>{IconButton}を使用し、保存ボタンと削除ボタンを
 設定します。機能の実装は後ほど行う為、ボタンが押された後にコンソール画面にボタンを押した旨の表示をしています。
 
-”body:”においては、"Form"を利用し、データの入力画面を作成します。
-”key: _formKey”では、フォーム全体に対する制御を行うものであり、後ほど、実装する入力チェックに利用します。
-”RadioListTile”で「貸したのか、借りたのか」の情報を入力しています。
+@<code>{body:}においては、@<code>{Form}を利用し、データの入力画面を作成します。
+@<code>{key: _formKey}では、フォーム全体に対する制御を行うものであり、後ほど、実装する入力チェックに利用します。
+@<code>{RadioListTile}で「貸したのか、借りたのか」の情報を入力しています。
 まだ、この段階では、ボタンは有効化されていません。
 
- //実際の値は"value:"に格納され、ボタンが選択され、”onChanged:”が実行されるたびに、
- //”groupValue:”に対して、"value:"の値が代入されます。
- //また、”groupValue”に対して事前に値を代入して置かないとうまく動作しません。
-
-”TextFormField”を使用し、
+@<code>{TextFormField}を使用し、
  * 貸した、借りた相手の名前
  * 貸し借りした物の名前
 の入力を実現しています。この段階では、入力画面のみを作成しており、まだ、データの取り出し等は行えません。
@@ -193,8 +189,8 @@ class _MyInputFormState extends State<InputForm> {
 //}
 
 一覧画面から登録画面への画面遷移機能の実装になります。
-新規登録ボタン選択後、”Navigator.push()”を使用し、画面の遷移機能を実装しています。
-”settings:”では、ルーティングの設定、”builder:”では、どこのクラスに遷移するのかを設定します。
+新規登録ボタン選択後、@<code>{Navigator.push()}を使用し、画面の遷移機能を実装しています。
+@<code>{settings:}では、ルーティングの設定、@<code>{builder:}では、どこのクラスに遷移するのかを設定します。
 
 == RadioListTile有効化
 //list[main_input3][main.dart]{
@@ -250,9 +246,9 @@ class _MyInputFormState extends State<InputForm> {
   }
 }
 //}
-"RadioListTile"において、ボタンを押した後の実際の値の代入の処理は
-"onChanged:"の中にある"_setLendorRent()"にて実装しています。
-"_data.borrowOrLend"に対して値の代入を行います。
+@<code>{RadioListTile}において、ボタンを押した後の実際の値の代入の処理は
+@<code>{onChanged:}の中にある@<code>{_setLendorRent()}にて実装しています。
+@<code>{_data.borrowOrLend}に対して値の代入を行います。
 
 
 
@@ -327,9 +323,9 @@ void _setLendOrRent(String value){
 }
 //}
 
-貸し借りした相手の名前、貸し借りしたものの名前を入力する"TextFormField"に対して、
-入力チェック機能とを実装しています。”onSaved:”にて、”_data”の各プロパティに対して、値の代入を行なっています。
-また、"validator:"を使用し、登録時に空欄である場合、エラー文を返すように設定しています。
+貸し借りした相手の名前、貸し借りしたものの名前を入力する@<code>{TextFormField}に対して、
+入力チェック機能とを実装しています。@<code>{onSaved:}にて、@<code>{_data}の各プロパティに対して、値の代入を行なっています。
+また、@<code>{validator:}を使用し、登録時に空欄である場合、エラー文を返すように設定しています。
 
 == 日付選択
 //list[main_input5][main.dart]{
@@ -387,13 +383,13 @@ class _MyInputFormState extends State<InputForm> {
 }
 
 //}
-"RaisedButton"の”onPressed:”のおいて、時刻入力するための関数、”_selectTime()”を呼び出します。
-”_selectTime()”では、Fluuterがデフォルトで用意している、日時を入力するための「showDatePicker」という
+@<code>{RaisedButton}の@<code>{onPressed:}のおいて、時刻入力するための関数、@<code>{_selectTime()}を呼び出します。
+@<code>{_selectTime()}では、Fluuterがデフォルトで用意している、日時を入力するための@<code>{showDatePicker()}という
 関数を使用します。
 
 この関数の戻り値はFuture型となっており、これは非同期処理を行うときに使用します。
 そのため、async/awaitを利用し、非同期処理を実現しております。
-そのため、ファイルの初めに”import 'dart:async';”が追加になっているので、
+そのため、ファイルの初めに@<code>{import 'dart:async'}”が追加になっているので、
 忘れずに追加しましょう。
 
 nitialDate:は初期値の値、firstDate:が入力できる日付の最小値、lastDate:が入力できる値の最大値となっております。
@@ -439,13 +435,13 @@ class _MyInputFormState extends State<InputForm> {
 }
 //}
 
-Firestoreにデータを登録するために、”Firestore.instance.collection('コレクション名').document();”
+Firestoreにデータを登録するために、@<code>{Firestore.instance.collection('コレクション名').document();}
 を使用し、インスタンスを生成します。
 
-保存ボタンを選択後、”_formKey”を使用し、入力チェックを行います。
-入力チェクを行い、問題なければ、”_mainReference.setData()”を使用し、Firestoreへデータの登録を行います。
+保存ボタンを選択後、@<code>{_formKey}を使用し、入力チェックを行います。
+入力チェクを行い、問題なければ、@<code>{_mainReference.setData()}を使用し、Firestoreへデータの登録を行います。
 
-「"キー":"値"」の形式で、Firestoreへデータの登録を行い、４つのデータを保存したら、”Navigator.pop”を利用し
+「"キー":"値"」の形式で、Firestoreへデータの登録を行い、４つのデータを保存したら、@<code>{Navigator.pop}を利用し
 元の一覧画面に戻ります。
 
 この状態で、アプリを実行すると、一覧画面が表示され、右下の新規作成ボタンを押すことで、新規作成画面に遷移し、新規登録が可能になります。
