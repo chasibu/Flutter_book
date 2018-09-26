@@ -1,4 +1,8 @@
 =  登録画面の実装
+
+この章を完了すると下記のタグの内容になります。
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter8}
+
 この章では貸借り情報の入力を画面を作成します。
 具体的には次のデータを入力できるようにします。
 

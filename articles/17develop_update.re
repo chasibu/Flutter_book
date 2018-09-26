@@ -1,6 +1,9 @@
 = 編集機能の実装
 この章では登録してあるデータを呼び出し、編集し、再び保存する編集機能の実装を行います。
 
+この章を完了すると下記のタグの内容になります。
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter11}
+
 == 登録データの呼び出しについて
 登録データを呼び出すには@<code>{Firestore.instance.collection(”コレクション名”).document(”ドキュメントID”)}
 を使用します。

@@ -2,6 +2,9 @@
 この章では、登録したデータの削除する機能の実装を行います。
 前章にてドキュメントIDを参照する機能を実装したので、それを利用し、登録してあるデータの削除を行います。
 
+この章を完了すると下記のタグの内容になります。
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter12}
+
 == deleteflagの用意
 
 //list[main_delete1][main.dart]{

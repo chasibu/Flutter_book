@@ -2,6 +2,9 @@
 この章ではアプリの画面を通して、Firebaseへデータの登録を行う機能の実装をします。
 その為、触るのは「_MyInputFormState」クラスの中になります。
 
+この章を完了すると下記のタグの内容になります。
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter10}
+
 == 登録に使用するメソッドについて
 Firestore.instance.collection('コレクション名').document()というインスタンスを生成し
 データの登録を行います。

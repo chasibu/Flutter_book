@@ -1,6 +1,9 @@
 = 一覧画面の実装
 この章ではFirestoreに保存されている貸し借りデータを一括で表示する機能の実装を行います。
 
+この章を完了すると下記のタグの内容になります。
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter7}
+
 == pubspec.yamlの変更
 1. 「pubspec.yaml」を開き、次のように変更を加えます。
 

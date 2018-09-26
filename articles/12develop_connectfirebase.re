@@ -1,5 +1,8 @@
 = Firebaseの設定をしよう
 
+この章を完了すると下記のタグの内容になります。
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter6}
+
 == アカウント取得
 1. FirebaseのWebサイトを開き、画面の右上にある「コンソールへ移動」を選択します。
 
