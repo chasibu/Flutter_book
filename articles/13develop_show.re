@@ -87,30 +87,46 @@ class _MyList extends State<List> {
 //}
 
 Flutterでは@<code>{main()}からアプリが開始します。
-今回のコードでは以下の順番でクラスが実行されます。
+今回のコードでは次の順番でクラスが実行されます。
+
 1. @<code>{main()}が@<code>{MyApp()}を実行。
-2. @<code>{MyApp()}ないの
-3.
-"main()"が"MyApp()"を実行しているので、"MyApp()"が
-実行されます。”MyApp”内では”MaterialApp”が返り値としてなっており、この中”home:”に設定されている
-"list()"クラスをさらに呼び出します。
 
-呼び出される”list()”はFirestoreに格納しているデータを表示する機能を持ちます。
+2. @<code>{MyApp()}内の@<code>{build()}が実行。
+
+3. @<code>{build()}内の@<code>{home: new List()}が実行。
+
+4. @<code>{List()}内で@<code>{_MyList()}が実行。
+
+5. @<code>{_MyList()}内で@<code>{build()}が実行。
+
+6. @<code>{build()}内で@<code>{StreamBuilder<QuerySnapshot>}を実行。
+
+7. @<code>{StreamBuilder<QuerySnapshot>}内で@<code>{_buildListItem}が呼び出され、Firestoreにある保存されている、データを表示。
+
+文字で書くと長く、ややこしい感じがしますが、実際にコードを目で追ってみると、どのようなフローを経て
+表示されるのかがよく分かると思います。
+
+次に先ほど記載した、クラスの呼び出しについて、ステップごとに解説を記載します。
+
+==== 4.について
+呼び出される@<code>{list()}はFirestoreに格納しているデータを表示する機能を持ちます。
 Firestoreから毎回データを取得し、画面に表示しています。その為、Firestoreのデータの状態により
-表示される画面の内容が変化する為、StatefulWidgetクラスを継承し、クラスを作成します。
+表示される画面の内容が変化する為、@<code>{StatefulWidget}クラスを継承し、クラスを作成します。
 
-"_MyList"クラスの"build"メソッド内で"Scaffold"を使用し、画面の描写を行います。
-"body:"にはPaddingを代入し、表示する貸し借り情報に対してpaddingを設けます。
-Firestoreからデータを取得し、表示する機能は"StreamBuilder<QuerySnapshot>()"の中で実装します。
+==== 6.について
+@<code>{_MyList}クラスの@<code>{build}メソッド内で@<code>{Scaffold}を使用し、画面の描写を行います。
+@<code>{body:}にはPaddingを代入し、表示する貸し借り情報に対して余白を設けます。
+Firestoreからデータを取得し、表示する機能は@<code>{StreamBuilder<QuerySnapshot>()}の中で実装します。
 
-"StreamBuilder"は"_buildListItem"を使用し、Firestoreから取得したデータを表示させます。
-"stream:"は、非同期に接続しているstreamを代入し使用します。
-非同期に接続するデータはFirestoreから「Firestore.instance.collection('コレクション名').snapshots()」
+==== 7.について
+@<code>{StreamBuilder}は@<code>{_buildListItem}を使用し、Firestoreから取得したデータを表示させます。
+@<code>{stream:}は、非同期に接続しているstreamを代入し使用します。
+非同期に接続するデータはFirestoreから@<code>{Firestore.instance.collection('コレクション名').snapshots()}
 で入手することが可能です。
-「builder:」内では「snapshot」がデータを持っていない状態（Firestoreからデータを取得している状態）では
-「Loading...」と表示し、データを一件でも取得し始めたら、ListViewの形式で表示しています。
+@<code>{builder:}内では@<code>{snapshot}がデータを持っていない状態（Firestoreからデータを取得している状態）では
+「Loading...」と表示し、データを一件でも取得し始めたら、@<code>{ListView}の形式で表示しています。
 
-データを取得した時のListView.builderのプロパティは次のとおりです。
+データを取得した時の@<code>{ListView.builder}のプロパティは次のとおりです。
 //table[ListView.builder][ListView.builderのプロパティ]{
 プロパティ	値	説明
 --------------------------------------------------------------
@@ -120,9 +136,9 @@ padding:	const EdgeInsets.only(top: 10.0)	一番初めに表示されるアイ�
 itemBuilder:	(context, index) => _buildListItem()	次の項目にて説明
 //}
 
-"_buildListItem"クラスでは引数として"DocumentSnapshot document"を設定し、"ListTile"を使用して
+@<code>{_buildListItem}クラスでは引数として@<code>{DocumentSnapshot document}を設定し、@<code>{ListTile}を使用して
 一件ごとの貸し借りの情報を表示しています。
-document["タイプ名"]でFirestoreに登録してある、データを取得し表示しています。
+@<code>{document["タイプ名"]}でFirestoreに登録してある、データを取得し表示しています。
 
 この状態で、アプリを実行すると、テスト入力したデータがリストとなって表示されます。
 
@@ -149,9 +165,9 @@ class _MyList extends State<List> {
 }
 //}
 
-"Scaffold"に”floatingActionButton:”を追加し、新規作成ボタンを追加します。
+@<code>{Scaffold}に@<code>{floatingActionButton:}を追加し、新規作成ボタンを追加します。
 登録機能の実装は後ほど行うため、ここでは、ボタンを押した時の処理を記載する、”onPressed:”の
-中には”print("新規作成ボタンを押しました");”とだけ記載します。
+中には@<code>{print("新規作成ボタンを押しました");}とだけ記載します。
 
 この状態で、アプリを実行すると、新規登録ボタンが表示されます。
 
@@ -190,8 +206,8 @@ class _MyList extends State<List> {
   }
 }
 //}
-"Column"の中に”ButtonTheme.bar”を追加し、編集画面へのボタンを設定します。
-編集機能の実装は後ほど行うため、ここでは、ボタンを押した時の処理を記載する、”onPressed:”の
-中には”print("編集ボタンを押しました");”とだけ記載します。
+@<code>{Column}の中に@<code>{ButtonTheme.bar}を追加し、編集画面へのボタンを設定します。
+編集機能の実装は後ほど行うため、ここでは、ボタンを押した時の処理を記載する、@<code>{onPressed:}の
+中には@<code>{print("編集ボタンを押しました");}とだけ記載します。
 
 この状態で、アプリを実行すると、編集ボタンが表示されます。

@@ -1,69 +1,70 @@
 = 編集機能の実装
-この章では登録してあるデータを呼び出し、再び保存する編集機能の実装を行います。
+この章では登録してあるデータを呼び出し、編集し、再び保存する編集機能の実装を行います。
 
 == 登録データの呼び出しについて
-登録データを呼び出すには「Firestore.instance.collection(”コレクション名”).document(”ドキュメントID”)」
+登録データを呼び出すには@<code>{Firestore.instance.collection(”コレクション名”).document(”ドキュメントID”)}
 を使用します。
+
 全体的な動きは次のとおりになります。
 
 1. 一覧画面から編集したいデータを選択。その際に、対象のデータのドキュメントIDを表示画面先に渡す。
+
 2. 受け取ったドキュメントIDを元にFirestoreからデータを取得。
+
 3. 紐づいているキーの値を元に入力フォームに値を入力。
+
 4. 保存ボタンを押して、データの登録を行う。
 
-== コードの説明
-今回は、一覧画面側（_buildListItem()）と編集画面側（_MyInputFormState()）でコードの編集を行います。
+今回は、一覧画面側@<code>{_buildListItem()}と編集画面側@<code>{_MyInputFormState()}でコードの編集を行います。
 まずは、一覧画面から編集画面に対してドキュメントIDを渡す箇所についてです。
 
+== InputFormの引数変更
 //list[main_update1][main.dart]{
-class _MyList extends State<_List> {
+  class InputForm extends StatefulWidget {
+  //add-start
+  InputForm(this.document);
+  final DocumentSnapshot document;
+  //add-end
 
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("一覧"),
-      ),
-      body: Padding(
-      ...
-      ),
-      floatingActionButton: new FloatingActionButton(
-          child: new Icon(Icons.check),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  settings: const RouteSettings(name: "/new"),
-                  builder: (BuildContext context) => new InputForm(null)
-              ),
-            );
-          }),
-    );
-  }
+  @override
+  _MyInputFormState createState() => _MyInputFormState();
+}
+//}
 
-  Widget _buildListItem(BuildContext context, DocumentSnapshot document){
-    return new Card(
-      child: new Column(
+@<code>{InputForm(this.document);}と追加することで、@<code>{InputForm}に対して、
+引数をひとつ追加します。こうすることで、編集ボタンを押した際にドキュメントIDを
+遷移先に引き渡すことができます。
+
+== 編集ボタンの変更
+//list[main_update2][main.dart]{
+  class _MyList extends State<List> {
+    Widget _buildListItem(BuildContext context, DocumentSnapshot document){
+    return Card(
+      child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
               ...
             ),
-            new ButtonTheme.bar(
-                child: new ButtonBar(
+            ButtonTheme.bar(
+                child: ButtonBar(
                   children: <Widget>[
-                    new FlatButton(
-                      child: const Text("へんしゅう"),
-                      onPressed: ()
+                    FlatButton(
+                        child: const Text("へんしゅう"),
+                        onPressed: ()
                         {
+                          print("編集ボタンを押しました");
+                          //add-start
                           Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            settings: const RouteSettings(name: "/new"),
-                            builder: (BuildContext context) => new InputForm(document)
-                          ),
+                            context,
+                            MaterialPageRoute(
+                                settings: const RouteSettings(name: "/edit"),
+                                builder: (BuildContext context) => InputForm(document)
+                            ),
                           );
-                        },
-                        ),
+                          //add-end
+                        }
+                    ),
                   ],
                 )
             ),
@@ -73,12 +74,68 @@ class _MyList extends State<_List> {
   }
 }
 //}
-MaterialPageRouteを使用して編集ボタンを押した後のルーティングの設定をしています。
-”document”を引数として、”InputForm()”を呼び出していますが、今のコードでは"InputForm()"は引数を
-持たない設定になっているので、エラーが表示されると思いますが、それは次の箇所で説明します。
 
-また、順番が前後しますが、”InputForm()”の引数を一つ加える事で”floatingActionButton:”の中の
-”InputForm()”もエラー文が発生するため、先に引数に(null)を加える変更をしておきます。
+== 入力フォームへ値の代入
+//list[main_update3][main.dart]{
+  class _MyInputFormState extends State<InputForm> {
+    @override
+    Widget build(BuildContext context) {
+      //add-start
+      DocumentReference _mainReference;
+      if (widget.document != null) {
+        if(_data.user == null && _data.stuff == null) {
+          _data.borrowOrLend = widget.document['borrowOrLend'];
+          _data.user = widget.document['user'];
+          _data.stuff = widget.document['stuff'];
+          _data.date = widget.document['date'];
+          _mainReference =_mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
+        }
+        } else {
+          _mainReference = _mainReference = Firestore.instance.collection('kasikari-memo').document();
+        }
+      ...
+      }
+  }
+}
+//}
+
+
+
+== 新規作成ボタンの変更
+//list[main_update4][main.dart]{
+  class _MyList extends State<List> {
+
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+            title: const Text("リスト画面"),
+        ),
+        body: Padding(
+          ...
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.check),
+            onPressed: () {
+              print("新規作成ボタンを押しました");
+              //add-start
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    settings: const RouteSettings(name: "/new"),
+                    builder: (BuildContext context) => InputForm(null)
+                ),
+              );
+              //add-end
+            }
+        ),
+      );
+    }
+  }
+//}
+
+新規作成ボタンを選択後に、@<code>{MaterialPageRoute}を使用して@<code>{InputForm(null)}を呼び出します。
+@<code>{InputForm()}に引数をひとつ持たせた為、何かしら値を引き渡す必要があります。新規作成時は特別引き渡す変数が無いため
+@<code>{null}を引き渡しています。
 
 それでは、"InputForm()"のコードを次に記載します。
 

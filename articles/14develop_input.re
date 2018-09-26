@@ -392,7 +392,7 @@ class _MyInputFormState extends State<InputForm> {
 そのため、ファイルの初めに@<code>{import 'dart:async'}”が追加になっているので、
 忘れずに追加しましょう。
 
-nitialDate:は初期値の値、firstDate:が入力できる日付の最小値、lastDate:が入力できる値の最大値となっております。
+@<code>{initialDate:}は初期値の値、@<code>{firstDate:}が入力できる日付の最小値、@<code>{lastDate:}が入力できる値の最大値となっております。
 
 == データ保存
 //list[main_input6][main.dart]{
