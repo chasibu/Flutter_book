@@ -2,63 +2,94 @@
 この章では、登録したデータの削除する機能の実装を行います。
 前章にてドキュメントIDを参照する機能を実装したので、それを利用し、登録してあるデータの削除を行います。
 
-== コードの説明
+== deleteflagの用意
+
 //list[main_delete1][main.dart]{
-
-class _MyInputFormState extends State<InputForm> {
-  bool deleteFlg;
+  class _MyInputFormState extends State<InputForm> {
   ...
-  @override
-  Widget build(BuildContext context) {
-    if (this.widget.docs != null) {
-      if(lendorrent_Flg == 0 && widget.docs['lendorrent'].toString() == "lend"){
-        lendorrent = "lend";
-        lendorrent_Flg = 1;
+    @override
+    Widget build(BuildContext context) {
+      DocumentReference _mainReference;
+      //add
+      bool deleteFlg = false;
+      if (widget.document != null) {
+        if(_data.user == null && _data.stuff == null) {
+          _data.borrowOrLend = widget.document['borrowOrLend'];
+          _data.user = widget.document['user'];
+          _data.stuff = widget.document['stuff'];
+          _data.date = widget.document['date'];
+          _mainReference =_mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
+        }
+        //add
+        deleteFlg = true;
+        } else {
+          _mainReference = _mainReference = Firestore.instance.collection('kasikari-memo').document();
+        }
       }
-      _data.user = widget.docs['name'];
-      _data.loan = widget.docs['loan'];
-      print(date);
-      if(change_Flg == 0) {
-        date = widget.docs['date'];
-      }
-      _mainReference = Firestore.instance.collection('promise').document(widget.docs.documentID);
-      deleteFlg = true;
-    } else {
-      _data.lendorrent = "";
-      _data.user = "";
-      _data.loan = "";
-      _mainReference = Firestore.instance.collection('promise').document();
-      deleteFlg = false;
-    }
+  ...
+}
+//}
+@<code>{build()}の中に@<code>{deleteFlg}を用意します。
+編集画面への遷移のように前画面から何かデータを引き継ぐ場合には、@<code>{deleteFlg}にtrueにします。
+次に実装するのですが、@<code>{true}の場合には、画面上部にある削除ボタンを有効化、@<code>{false}の場合には無効化するのに
+使用します。
 
-    titleSection = Scaffold(
-      appBar: AppBar(
-        title: const Text('かしかりめも'),
-        actions: <Widget>[
-        ...
-        IconButton(
-          icon: Icon(Icons.delete),
-          onPressed: !deleteFlg? null:() {
-            _mainReference.delete();
-            Navigator.pop(context);
-            },
-        )
-        ],
-    ),
+== 削除の実施
+
+//list[main_delete2][main.dart]{
+class _MyInputFormState extends State<InputForm> {
     ...
-  }
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('かしかり入力'),
+          actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {
+              print("保存ボタンを押しました");
+              if (_formKey.currentState.validate()) {
+                _formKey.currentState.save();
+                _mainReference.setData(
+                {
+                  'borrowOrLend': _data.borrowOrLend,
+                  'user': _data.user,
+                  'stuff': _data.stuff,
+                  'date': _data.date
+                });
+                Navigator.pop(context);
+              }
+            }
+          ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            //add-start
+            onPressed: !deleteFlg? null:() {
+              print("削除ボタンを押しました");
+              _mainReference.delete();
+            },
+            //add-end
+          )
+          ],
+        ),
+      )
+    }
+  ...
 }
 //}
 
-"_MyInputFormState"実行時に"deleteFlg"の初期値の設定を行います。
-引数の"docs"が"null"でなければ、編集時なので"deleteFlg"に"true",
-"null"であれば、新規登録なので、"false"を代入します。
+@<code>{deleteFlg}が@<code>{true}の場合には、削除機能が有効になり、
+@<code>{_mainReference.delete()}を利用して、データ削除を行います。
 
-"IconButton"内では"deleteFlg"を利用し、編集時のみ機能を有効化し、実際の削除は、
-”Firestore.instance.collection('コレクション名').document('ドキュメントID').delete()”
-で実行しています。
+ここまで実装すると、削除機能が有効になります。
+次の画像のように実際に登録してあるデータを削除してみましょう。
 
-この状態で、アプリを実行してみましょう。
-今までに登録したデータの一覧が表示されるので、削除したいデータをタップします。
-タップすると、編集画面に遷移するので、画面上部にある、削除アイコン（ゴミ箱アイコン）をタップします。
-タップ後、一覧画面が表示されるので、削除したものが表示されてないことを確認してみましょう。
+//image[list_before][一覧画面(削除前)][scale=0.6]{
+//}
+
+//image[update][編集画面][scale=0.6]{
+//}
+
+//image[list_after][一覧画面(削除後)][scale=0.6]{
+//}

@@ -75,7 +75,12 @@
 }
 //}
 
+編集ボタンを選択後、@<code>{MaterialPageRoute}を利用し画面遷移を実現します。
+ドキュメントIDを引数として、@<code>{InputForm(document)}を実行することで、
+入力画面に対象のドキュメントIDを引き渡します。
+
 == 入力フォームへ値の代入
+
 //list[main_update3][main.dart]{
   class _MyInputFormState extends State<InputForm> {
     @override
@@ -88,18 +93,22 @@
           _data.user = widget.document['user'];
           _data.stuff = widget.document['stuff'];
           _data.date = widget.document['date'];
-          _mainReference =_mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
+          _mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
         }
         } else {
-          _mainReference = _mainReference = Firestore.instance.collection('kasikari-memo').document();
+           _mainReference = Firestore.instance.collection('kasikari-memo').document();
         }
+      //add-end
       ...
       }
   }
 }
 //}
 
-
+@<code>{_MyInputFormState}を呼び出し直後、@<code>{widget.document}の有無を判定します。
+データがある場合には、データ格納用の変数@<code>{_data}にFirestoreに登録されているデータを代入します。
+また、@<code>{_mainReference}に呼び出したIDに対応する、Firestoreのインスタンスを生成します。
+無い場合には、IDを指定しないでFirestoreのインスタンスを生成(新規作成)します。
 
 == 新規作成ボタンの変更
 //list[main_update4][main.dart]{
@@ -137,90 +146,9 @@
 @<code>{InputForm()}に引数をひとつ持たせた為、何かしら値を引き渡す必要があります。新規作成時は特別引き渡す変数が無いため
 @<code>{null}を引き渡しています。
 
-それでは、"InputForm()"のコードを次に記載します。
-
-//list[main_update2][main.dart]{
-
-class InputForm extends StatefulWidget {
-
-  InputForm(this.docs);
-  final DocumentSnapshot docs;
-
-  @override
-  _MyInputFormState createState() => new _MyInputFormState();
-}
-
-...
-
-class _MyInputFormState extends State<InputForm> {
-
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  _formData _data = new _formData();
-  String lendorrent = "rent";
-  DateTime date = new DateTime.now();
-  var change_Flg = 0;
-  var lendorrent_Flg = 0;
-
-  Future <Null> _selectTime(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: date,
-        firstDate: new DateTime(2018),
-        lastDate: new DateTime(2020)
-    );
-
-    if(picked != null && picked != date){
-      setState(() {
-        date = picked;
-        change_Flg = 1;
-        print(date);
-      });
-    }
-  }
-
-
-  Widget build(BuildContext context) {
-    var _mainReference;
-    if (this.widget.docs != null) {
-      if(lendorrent_Flg == 0 && widget.docs['lendorrent'].toString() == "lend"){
-        lendorrent = "lend";
-        lendorrent_Flg = 1;
-      }
-      _data.user = widget.docs['name'];
-      _data.loan = widget.docs['loan'];
-      if(change_Flg == 0) {
-        date = widget.docs['date'];
-      }
-      _mainReference = Firestore.instance.collection('kasikari-memo').document(widget.docs.documentID);
-      } else {
-        _data.lendorrent = "";
-        _data.user = "";
-        _data.loan = "";
-        _mainReference = Firestore.instance.collection('kasikari-memo').document();
-      }
-    }
-    ...
-}
+ここまで実装すると、編集機能を有効になります。
+次の画像のように、実際に登録してあるデータを選択し、編集画面を開いてみましょう。
+//image[list][一覧画面][scale=0.6]{
 //}
-
-"InputForm"が引数を受けれるように"InputForm"クラス内でコンストラクタを定義します。
-
-次に”_MyInputFormState”内では、"InputForm"内の引数によって、"_data"に代入する値を変更しています。
-”Null”である場合には、全てのデータに”空欄”を代入、データがある場合にはドキュメントIDを参照して
-データを代入しています。
-
-=== lendorrent_Flgについて
-貸し借りの表記を今回”RadioListTile”を使用して実現しているのですが、"lendorrent"に対して変数を直接代入すると
-ラジオボタンが正常に動作しなくなります。そのため、後から編集するために、もともと"lend"が代入されているのか
-"rent"が代入されているのかを判断し、"lendorrent"に対して実値を代入しています。
-
-=== change_Flgについて
-こちらは、日時を入力する為のフラグになります。”showDatePicker”を使用し、データを入力すると、入力後に
-"build()"内の処理が実行されてしまいます。その為、新規登録した時の値をそのまま"build()"内で代入すると
-更新しようとした時に、新規登録した時の値で上書きされてしまいます。
-そこで、"change_Flg"を利用し、更新時に初期登録時の値で上書きしないようにしています。
-また、"_selectTime()"内で、時刻データ登録時に”change_Flg = 1;”と追記しています。
-
-ここまでの記述が完了したら、一度アプリを実行してみましょう。
-一覧画面が表示され、”へんしゅうボタン”を選択すると、新規登録画面に元々登録した値が代入された状態で
-表示されます。
+//image[update][編集画面][scale=0.6]{
+//}
