@@ -12,7 +12,11 @@
 
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter8}
 
-== 画面の実装
+== 入力画面の作成
+
+入力画面を作成して必要な設定をします。
+
+次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
 
 //list[main_input1][main.dart]{
 import 'package:flutter/material.dart';
@@ -32,6 +36,7 @@ class _MyList extends State<List> {
 ...
 }
 
+/*---------- Add Start ----------*/
 class InputForm extends StatefulWidget {
   @override
   _MyInputFormState createState() => _MyInputFormState();
@@ -65,7 +70,7 @@ class _MyInputFormState extends State<InputForm> {
             onPressed: () {
               print("削除ボタンを押しました");
             },
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -117,7 +122,7 @@ class _MyInputFormState extends State<InputForm> {
                   child: const Text("締め切り日変更"),
                   onPressed: (){
                      print("締め切り日変更をタッチしました");
-                    },
+                  },
                 ),
               ],
             ),
@@ -126,36 +131,64 @@ class _MyInputFormState extends State<InputForm> {
       );
     }
 }
+/*----------- Add End -----------*/
 //}
 
-@<code>{InputForm}クラスを@<code>{StatefulWidget}を継承して作成しているのがポイントになります。この中で、
-実際の実装を行う、@<code>{_MyInputFormState}の作成を行います。
+入力画面を作成しました。
+本来であれば次の画像のような画面が表示されるはずですが、これを実行しているタイミングでは確認することができません。
 
-@<code>{_formData}クラスは入力する変数を格納するために作成しています。
-それぞれ
+次の項目の画面遷移を作ってこの画面を確認してみましょう。
+
+//image[input][入力画面の作成][scale=0.7]{
+//}
+
+=== 入力画面の解説
+
+画面遷移を作成する前に簡単にこの入力画面について解説をします。
+
+ユーザの入力によって表示が変化するので、@<code>{StatefulWidget}クラスを継承していきます。
+
+==== @<code>{_FormData}クラス
+入力する変数をまとめて管理するクラスです。
 
  * borrowOrLend → 貸したか借りたか
  * user       → 誰に貸したのか、借りたのか
  * stuff       → 何を貸したのか、借りたのか
  * date       → 締め切り日
 
- に対応しています。
+==== @<code>{IconButton}
+保存ボタンと削除ボタンを表示します。
+機能の実装は後ほど行う為、ボタンが押された後にコンソール画面にボタンを押した旨の表示をしています。
 
-@<code>{_MyInputFormState}内では、まず、@<code>{appBar:}にて@<code>{IconButton}を使用し、保存ボタンと削除ボタンを
-設定します。機能の実装は後ほど行う為、ボタンが押された後にコンソール画面にボタンを押した旨の表示をしています。
+他のIconは次のURLをご覧ください。
 
-@<code>{body:}においては、@<code>{Form}を利用し、データの入力画面を作成します。
-@<code>{key: _formKey}では、フォーム全体に対する制御を行うものであり、後ほど、実装する入力チェックに利用します。
+@<href>{https://docs.flutter.io/flutter/material/Icons-class.html}
+
+==== @<code>{Form}
+Webと同じようにFormを使ってデータの入力画面を作成します。
+
+@<code>{key: _formKey}は、フォーム全体に対する制御を行うものであり、後ほど実装する入力チェックに利用します。
+
+このKeyを使うことで簡単に複数のWidgetをコントロールすることができます。
+
+==== フォームの構成
+
 @<code>{RadioListTile}で「貸したのか、借りたのか」の情報を入力しています。
 まだ、この段階では、ボタンは有効化されていません。
 
-@<code>{TextFormField}を使用し、
+@<code>{TextFormField}を使用し、次の入力を実現しています。
+
  * 貸した、借りた相手の名前
  * 貸し借りした物の名前
-の入力を実現しています。この段階では、入力画面のみを作成しており、まだ、データの取り出し等は行えません。
 
+この段階では、入力画面のみを作成しており、まだ、データの取り出し等は行えません。
 
-== 登録後の画面遷移
+== 入力画面への画面遷移
+
+入力画面への画面遷移をします。
+
+次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
+
 //list[main_input2][main.dart]{
   class _MyList extends State<List> {
 
@@ -171,6 +204,7 @@ class _MyInputFormState extends State<InputForm> {
             child: const Icon(Icons.check),
             onPressed: () {
               print("新規作成ボタンを押しました");
+              /*---------- Add Start ----------*/
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -178,6 +212,7 @@ class _MyInputFormState extends State<InputForm> {
                     builder: (BuildContext context) => InputForm()
                 ),
               );
+              /*----------- Add End -----------*/
             }
         ),
       );
@@ -189,7 +224,7 @@ class _MyInputFormState extends State<InputForm> {
 新規登録ボタン選択後、@<code>{Navigator.push()}を使用し、画面の遷移機能を実装しています。
 @<code>{settings:}では、ルーティングの設定、@<code>{builder:}では、どこのクラスに遷移するのかを設定します。
 
-== RadioListTile有効化
+== ラジオボタンの有効化
 //list[main_input3][main.dart]{
   class _MyInputFormState extends State<InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -221,7 +256,9 @@ class _MyInputFormState extends State<InputForm> {
                   title: Text("借りた"),
                   onChanged: (String value){
                     print("借りたをタッチしました");
+                    /*---------- Add Start ----------*/
                     _setLendOrRent(value);
+                    /*----------- Add End -----------*/
                   },
                 ),
 
@@ -231,7 +268,9 @@ class _MyInputFormState extends State<InputForm> {
                   title: Text("貸した"),
                   onChanged: (String value) {
                     print("貸したをタッチしました");
+                    /*---------- Add Start ----------*/
                     _setLendOrRent(value);
+                    /*----------- Add End -----------*/
                   }
                 ),
                 ...
@@ -249,18 +288,20 @@ class _MyInputFormState extends State<InputForm> {
 
 
 
-== 入力チェック機能追加
+== 入力チェック機能
 //list[main_input4][main.dart]{
 
 class _MyInputFormState extends State<InputForm> {
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-final _FormData _data = _FormData();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _FormData _data = _FormData();
 
-void _setLendOrRent(String value){
-  setState(() {
-    _data.borrowOrLend = value;
-  });
-}
+  /*---------- Add Start ----------*/
+  void _setLendOrRent(String value){
+    setState(() {
+      _data.borrowOrLend = value;
+    });
+  }
+  /*----------- Add End -----------*/
 
   @override
   Widget build(BuildContext context) {
@@ -279,10 +320,11 @@ void _setLendOrRent(String value){
 
                 TextFormField(
                     decoration: const InputDecoration(
-                    icon: const Icon(Icons.person),
-                    hintText: '相手の名前',
-                    labelText: 'Name',
+                      icon: const Icon(Icons.person),
+                      hintText: '相手の名前',
+                      labelText: 'Name',
                     ),
+                    /*---------- Add Start ----------*/
                     onSaved: (String value) {
                       _data.user = value;
                     },
@@ -292,14 +334,16 @@ void _setLendOrRent(String value){
                       }
                     },
                     initialValue: _data.user,
+                    /*----------- Add End -----------*/
                 ),
 
                 TextFormField(
                   decoration: const InputDecoration(
-                    icon: const Icon(Icons.business_center),
-                    hintText: '借りたもの、貸したもの',
-                    labelText: 'loan',
+                      icon: const Icon(Icons.business_center),
+                      hintText: '借りたもの、貸したもの',
+                      labelText: 'loan',
                     ),
+                    /*---------- Add Start ----------*/
                     onSaved: (String value) {
                       _data.stuff = value;
                     },
@@ -308,7 +352,8 @@ void _setLendOrRent(String value){
                         return '借りたもの、貸したものは必須入力項目です';
                       }
                     },
-                      initialValue: _data.stuff,
+                    initialValue: _data.stuff,
+                    /*----------- Add End -----------*/
                   ),
                   ...
               ],
@@ -328,21 +373,25 @@ void _setLendOrRent(String value){
 //list[main_input5][main.dart]{
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+/*---------- Add Start ----------*/
 import 'dart:async';
+/*----------- Add End -----------*/
 
 class _MyInputFormState extends State<InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _FormData _data = _FormData();
 
+  /*---------- Add Start ----------*/
   Future <DateTime> _selectTime(BuildContext context) async {
-  final DateTime picked = await showDatePicker(
+    final DateTime picked = await showDatePicker(
       context: context,
       initialDate: _data.date,
       firstDate: DateTime(_data.date.year - 2),
       lastDate: DateTime(_data.date.year + 2)
-  );
-  return picked;
+    );
+    return picked;
   }
+  /*----------- Add End -----------*/
 
   @override
   Widget build(BuildContext context) {
@@ -362,6 +411,7 @@ class _MyInputFormState extends State<InputForm> {
                   child: const Text("締め切り日変更"),
                   onPressed: (){
                     print("締め切り日変更をタッチしました");
+                    /*---------- Add Start ----------*/
                     _selectTime(context).then((time){
                       if(time != null && time != _data.date){
                         setState(() {
@@ -369,6 +419,7 @@ class _MyInputFormState extends State<InputForm> {
                         });
                       }
                     });
+                    /*----------- Add End -----------*/
                   },
                 ),
               ],
@@ -390,55 +441,3 @@ class _MyInputFormState extends State<InputForm> {
 忘れずに追加しましょう。
 
 @<code>{initialDate:}は初期値の値、@<code>{firstDate:}が入力できる日付の最小値、@<code>{lastDate:}が入力できる値の最大値となっております。
-
-== データ保存
-//list[main_input6][main.dart]{
-class _MyInputFormState extends State<InputForm> {
-
-  @override
-  Widget build(BuildContext context) {
-  DocumentReference _mainReference;
-  _mainReference = Firestore.instance.collection('kasikari-memo').document();
-
-  return Scaffold(
-  appBar: AppBar(
-    title: const Text('かしかり入力'),
-    actions: <Widget>[
-      IconButton(
-          icon: Icon(Icons.save),
-          onPressed: () {
-            print("保存ボタンを押しました");
-            if (_formKey.currentState.validate()) {
-              _formKey.currentState.save();
-              _mainReference.setData(
-                  {
-                    'borrowOrLend': _data.borrowOrLend,
-                    'user': _data.user,
-                    'stuff': _data.stuff,
-                    'date': _data.date
-                  });
-              Navigator.pop(context);
-            }
-          }
-      ),
-      IconButton(
-        ...
-      )
-    ],
-  ),
-  ...
-  )
-  }
-}
-//}
-
-Firestoreにデータを登録するために、@<code>{Firestore.instance.collection('コレクション名').document();}
-を使用し、インスタンスを生成します。
-
-保存ボタンを選択後、@<code>{_formKey}を使用し、入力チェックを行います。
-入力チェクを行い、問題なければ、@<code>{_mainReference.setData()}を使用し、Firestoreへデータの登録を行います。
-
-「"キー":"値"」の形式で、Firestoreへデータの登録を行い、４つのデータを保存したら、@<code>{Navigator.pop}を利用し
-元の一覧画面に戻ります。
-
-この状態で、アプリを実行すると、一覧画面が表示され、右下の新規作成ボタンを押すことで、新規作成画面に遷移し、新規登録が可能になります。
