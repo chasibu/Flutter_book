@@ -1,8 +1,7 @@
 = 登録機能の実装
 この章ではアプリの画面を通して、Firebaseへデータの登録を行う機能の実装をします。
-その為、触るのは「_MyInputFormState」クラスの中になります。
 
-この章を完了すると下記のタグの内容になります。
+この章を完了すると次のタグの内容になります。
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter10}
 
 == 登録に使用するメソッドについて
@@ -10,119 +9,54 @@ Firestore.instance.collection('コレクション名').document()というイン
 データの登録を行います。
 
 
-==　コードの説明
-今回も改変箇所が少ないので、一部だけを抜粋して記載します。
-
+== データ保存
 //list[main_registration1][main.dart]{
 class _MyInputFormState extends State<InputForm> {
-  ・・・
+
   @override
   Widget build(BuildContext context) {
-    var _mainReference;
+  DocumentReference _mainReference;
+  _mainReference = Firestore.instance.collection('kasikari-memo').document();
 
-    _data.lendorrent = "";
-    _data.user = "";
-    _data.loan = "";
-    _mainReference = Firestore.instance.collection('kasikari-memo').document();
-
-    Widget titleSection;
-    titleSection = Scaffold(
-      appBar: AppBar(
-        title: const Text('かしかりめも'),
-        actions: <Widget>[
-          // action button
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {
-              _data.lendorrent = lendorrent;
-              _data.date = date;
-              if (this._formKey.currentState.validate()) {
-                _formKey.currentState.save();
-                _mainReference.setData(
-                    { 'lendorrent': _data.lendorrent, 'name': _data.user,
-                      'loan': _data.loan, 'date': _data.date});
-                Navigator.pop(context);
-              }
+  return Scaffold(
+  appBar: AppBar(
+    title: const Text('かしかり入力'),
+    actions: <Widget>[
+      IconButton(
+          icon: Icon(Icons.save),
+          onPressed: () {
+            print("保存ボタンを押しました");
+            if (_formKey.currentState.validate()) {
+              _formKey.currentState.save();
+              _mainReference.setData(
+                  {
+                    'borrowOrLend': _data.borrowOrLend,
+                    'user': _data.user,
+                    'stuff': _data.stuff,
+                    'date': _data.date
+                  });
+              Navigator.pop(context);
             }
-          ),
-        ・・・
-        ],
+          }
       ),
-}
-//}
-
-データ登録用の変数は事前に、””で初期化しておきます。
-
-「_mainReference」にFirebaseへの登録用のインスタンスを代入しておきます。
-また、コレクション名には前章にて作成したコレクション名を記入します。
-今回は、「kasikari-memo」としております。
-実際の登録処理は_mainReference.setData()内で行われております。
-
-
-//list[main_registration2][main.dart]{
-class _MyInputFormState extends State<InputForm> {
-...
-
-  @override
-  Widget build(BuildContext context) {
-    body: new SafeArea(
-      child:
-      new Form(
-        key: this._formKey,
-        child: new ListView(
-          padding: const EdgeInsets.all(20.0),
-          children: <Widget>[
-          ・・・
-
-          new TextFormField(
-            //controller: _myController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.person),
-              hintText: '相手の名前',
-              labelText: 'Name',
-            ),
-            onSaved: (String value) {
-              this._data.user = value;
-            },
-            validator: (value) {
-              if (value.isEmpty) {
-                return '名前は必須入力項目です';
-              }
-            },
-            initialValue: _data.user,
-          ),
-
-          new TextFormField(
-            //controller: _myController2,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.business_center),
-              hintText: '借りたもの、貸したもの',
-              labelText: 'loan',
-            ),
-            onSaved: (String value) {
-              this._data.loan = value;
-            },
-            validator: (value) {
-              if (value.isEmpty) {
-                return '借りたもの、貸したものは必須入力項目です';
-              }
-            },
-            initialValue: _data.loan,
-          ),
-          ...
-
-        ]
+      IconButton(
+        ...
       )
-    )
+    ],
+  ),
+  ...
   )
-  return titleSection;
   }
 }
 //}
 
-貸し借りした人物や貸し借りした物の記載箇所に変更になります。
-「TextFormField」内の「onSaved:」において、入力したデータを登録用の変数「_data」内の各変数に
-代入します。
+Firestoreにデータを登録するために、@<code>{Firestore.instance.collection('コレクション名').document();}
+を使用し、インスタンスを生成します。
 
-ここまでの記述が完了したら、一度アプリを立ち上げてみましょう。
-新規登録画面にて登録内容記載ご、右上の保存ボタンを選択すると、一覧画面に戻り、登録した内容が表示されます。
+保存ボタンを選択後、@<code>{_formKey}を使用し、入力チェックを行います。
+入力チェクを行い、問題なければ、@<code>{_mainReference.setData()}を使用し、Firestoreへデータの登録を行います。
+
+「"キー":"値"」の形式で、Firestoreへデータの登録を行い、４つのデータを保存したら、@<code>{Navigator.pop}を利用し
+元の一覧画面に戻ります。
+
+この状態で、アプリを実行すると、一覧画面が表示され、右下の新規作成ボタンを押すことで、新規作成画面に遷移し、新規登録が可能になります。

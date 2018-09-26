@@ -96,8 +96,8 @@
           _data.user = widget.document['user'];
           _data.stuff = widget.document['stuff'];
           _data.date = widget.document['date'];
-          _mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
         }
+        _mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
         } else {
            _mainReference = Firestore.instance.collection('kasikari-memo').document();
         }

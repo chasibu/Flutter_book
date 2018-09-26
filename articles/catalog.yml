@@ -11,7 +11,6 @@ CHAPS:
   - 12develop_connectfirebase.re
   - 13develop_show.re
   - 14develop_input.re
-  - 15develop_transition.re
   - 16develop_registration.re
   - 17develop_update.re
   - 18develop_delete.re
