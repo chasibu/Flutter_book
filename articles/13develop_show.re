@@ -127,6 +127,7 @@ Cloud Firestoreからデータを取得し、表示する機能を@<code>{Stream
  * @<code>{stream:}は、非同期で取得できるデータを指定します。
 今回であれば、@<code>{Firestore.instance.collection('kasikari-memo').snapshots()}
 と指定したパスのデータをCloud Firestoreから取得します。
+
  * @<code>{builder:}は、@<code>{stream:}に変化があったときに呼び出されます。
  今回は、データの受信されるまでは「Loading...」と表示し、データを取得し始めたら
  @<code>{ListView.builder}にデータを渡し、表示します。

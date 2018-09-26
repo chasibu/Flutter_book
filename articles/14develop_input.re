@@ -1,23 +1,16 @@
-=  登録画面の実装
+=  入力画面の実装
 
-この章を完了すると下記のタグの内容になります。
-@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter8}
-
-この章では貸借り情報の入力を画面を作成します。
-具体的には次のデータを入力できるようにします。
+この章では貸し借り情報の入力を画面を作成します。
+次のデータを入力できるようにします。
 
  * 貸したのか、借りたのか
- * 誰から、誰になのか
- * 何を貸借りしたのか
- * 期限はいつなのか
+ * 誰から?
+ * 何を?
+ * いつまで?
 
+この章を完了すると下記のタグの内容になります。
 
-登録画面は入力を伴い、ユーザからの入力や表示するの内容が他のデータに依存する為
-（たとえば、データベースから登録してある情報を表示するなど）
-statefullなページとして作成します。
-
-Flutterではそのようなページを作成する場合、@<code>{StatefulWidget}クラスを継承しクラスの作成を行います。
-
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter8}
 
 == 画面の実装
 
@@ -25,7 +18,7 @@ Flutterではそのようなページを作成する場合、@<code>{StatefulWid
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
 ...
