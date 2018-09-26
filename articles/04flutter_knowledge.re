@@ -106,3 +106,10 @@ Flutterでアプリを作成していると「Stateless」と「Stateful」と�
 == プライベート変数について
 
 Flutterでは変数や関数を宣言する時に、頭に"_"をつけるとその変数や関数はプライベートな値として扱われます。
+
+== パッケージ
+
+パッケージを使用すると、簡単にアプリを拡張することができます。
+Flutterでは、次のURLでパッケージを検索することができます。
+
+@<href>{https://pub.dartlang.org/flutter/packages}
