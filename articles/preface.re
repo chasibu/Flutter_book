@@ -24,4 +24,4 @@ FlutterやFirebaseを使用し、AndroidとiOS上で動作するアプリを作�
 
 タグで章ごとに項目を分けてありますので、ぜひ参考にしてください。
 
-ダウンロードリンク :@<href>{https://github.com/chasibu/kasikari_memo}
+ダウンロードリンク : @<href>{https://github.com/chasibu/kasikari_memo}
