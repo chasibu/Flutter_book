@@ -35,3 +35,17 @@
 先ほどの@<chap>{03sampleProgram}を参考にプロジェクトを作成します。
 
 本書では「kasikari_memo」という名前をプロジェクト名にして開発を進めます。
+
+====[column] 困ったときは？
+
+これから作成するアプリはすべてGitHubにコードを上げてあります。
+
+章ごとにタグを切っているのではまった場合はそのタグのコードと見比べたりして問題点を探してみてください。
+
+@<href>{https://github.com/chasibu/kasikari_memo/tags}
+
+この章のタグは次のものになります。
+
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter5}
+
+====[/column]
