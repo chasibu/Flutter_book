@@ -1,8 +1,11 @@
 = 一覧画面の実装
-この章ではFirestoreに保存されている貸し借りデータを一括で表示する機能の実装を行います。
 
+この章では先ほどFirebaseに登録した貸し借りデータを表示する機能の実装を行いながら、FlutterのUIについて学んでいきます。
+
+//lead{
 この章を完了すると下記のタグの内容になります。
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter7}
+//}
 
 == pubspec.yamlの変更
 1. 「pubspec.yaml」を開き、次のように変更を加えます。
@@ -15,27 +18,32 @@
 //}
 
 2. コンソール画面から次のコマンドを入力します。
-
 //cmd{
 flutter packages get
 //}
 
-以上で、Firestoreとの連携の準備は完了です。
+もしくは、Android Studioの画面上から操作することができるのでそちらから行ってください。
 
+//image[uiget][packages get実行][scale=0.6]{
+//}
 
-== Firestoreデータリスト表示
+== リスト作成
+
+「main.dart」に書かれているものを削除し、次のコードに変更してください。
+
 //list[main_show1][main.dart]{
+/*---------- Add Start ----------*/
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'かしかりメモ',
-      home: new List(),
+      home: List(),
     );
   }
 }
@@ -87,20 +95,19 @@ class _MyList extends State<List> {
     );
   }
 }
+/*----------- Add End -----------*/
 //}
+
+=== アプリの動作
+
+Firebaseから読み込んだデータをリスト表示するためのコードを作成しました。
+
+実行すると次のような画面が表示されます。
 
 Flutterでは@<code>{main()}からアプリが開始します。
 今回のコードでは次の順番でクラスが実行されます。
 
-1. @<code>{main()}が@<code>{MyApp()}を実行。
 
-2. @<code>{MyApp()}内の@<code>{build()}が実行。
-
-3. @<code>{build()}内の@<code>{home: new List()}が実行。
-
-4. @<code>{List()}内で@<code>{_MyList()}が実行。
-
-5. @<code>{_MyList()}内で@<code>{build()}が実行。
 
 6. @<code>{build()}内で@<code>{StreamBuilder<QuerySnapshot>}を実行。
 
@@ -135,7 +142,7 @@ Firestoreからデータを取得し、表示する機能は@<code>{StreamBuilde
 --------------------------------------------------------------
 scrollDirection:	Axis.vertical	スクロールの方向を決める。
 itemCount:	snapshot.data.documents.length	表示するアイテムの数を決める。
-padding:	const EdgeInsets.only(top: 10.0)	一番初めに表示されるアイテムのパディングを決定。
+padding:	const EdgeInsets.only(top: 10.0)	アイテムのパディングを決定。
 itemBuilder:	(context, index) => _buildListItem()	次の項目にて説明
 //}
 
@@ -157,12 +164,14 @@ class _MyList extends State<List> {
         body: Padding(
           ...
         ),
+        /*---------- Add Start ----------*/
         floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.check),
             onPressed: () {
               print("新規作成ボタンを押しました");
             }
         ),
+        /*----------- Add End -----------*/
       );
     }
 }
