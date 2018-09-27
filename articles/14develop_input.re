@@ -500,11 +500,14 @@ Fluuterがデフォルトで用意している、日時を入力するための@
 
 ==== showDatePicker()
 
-この関数の戻り値はFuture型となっており、これは非同期処理を行うときに使用します。
-そのため、async/awaitを利用し、非同期処理を実現しております。
-そのため、ファイルの初めに@<code>{import 'dart:async'}”が追加になっているので、
-忘れずに追加しましょう。
+Flutterでは、@<code>{async/await}を利用し、非同期処理をします。
 
- * @<code>{initialDate:}で初期値の日付を設定します。
- * @<code>{firstDate:}で最小の日付を設定します。今回は２年前を設定しました。
- * @<code>{lastDate:}で最大の日付を設定します。今回は２年後を設定しました。
+@<code>{async}を有効にした関数では、@<code>{await}を使用すると非同期処理の動作完了を待つことができます。
+
+日付入力されるのを待つため、@<code>{async/await}を使用します。
+
+@<code>{async/await}を使用するに、@<code>{import 'dart:async'}”を追記する必要があるので忘れずに追加しましょう。
+
+* @<code>{initialDate:}で初期値の日付を設定します。
+* @<code>{firstDate:}で最小の日付を設定します。今回は２年前を設定しました。
+* @<code>{lastDate:}で最大の日付を設定します。今回は２年後を設定しました。
