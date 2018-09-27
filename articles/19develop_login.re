@@ -508,7 +508,7 @@ class _MyInputFormState extends State<InputForm> {
 ユーザに紐付く@<code>{collection}を取得します。
 
 
-== 一覧表示機能の変更
+== 一覧表示画面の変更
 
 //list[main_login10][main.dart]{
   class _MyList extends State<List> {
