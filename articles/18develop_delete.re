@@ -3,6 +3,7 @@
 前章にてドキュメントIDを参照する機能を実装したので、それを利用し、登録してあるデータの削除を行います。
 
 この章を完了すると下記のタグの内容になります。
+
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter12}
 
 == deleteflagの用意
@@ -22,12 +23,14 @@
           _data.stuff = widget.document['stuff'];
           _data.date = widget.document['date'];
         }
-        _mainReference =_mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
+        _mainReference =_mainReference = Firestore.instance.
+         collection('kasikari-memo').document(widget.document.documentID);
         /*---------- Add Start ----------*/
         deleteFlg = true;
         /*----------- Add End -----------*/
         } else {
-          _mainReference = _mainReference = Firestore.instance.collection('kasikari-memo').document();
+          _mainReference = _mainReference = Firestore.instance.
+           collection('kasikari-memo').document();
         }
       }
   ...
@@ -68,12 +71,12 @@ class _MyInputFormState extends State<InputForm> {
           ),
           IconButton(
             icon: Icon(Icons.delete),
-            //add-start
+            /*---------- Add Start ----------*/
             onPressed: !deleteFlg? null:() {
               print("削除ボタンを押しました");
               _mainReference.delete();
             },
-            //add-end
+            /*---------- Add End ----------*/
           )
           ],
         ),
@@ -83,8 +86,7 @@ class _MyInputFormState extends State<InputForm> {
 }
 //}
 
-@<code>{deleteFlg}が@<code>{true}の場合には、削除機能が有効になり、
-@<code>{_mainReference.delete()}を利用して、データ削除を行います。
+@<code>{deleteFlg}が@<code>{true}の場合には、@<code>{_mainReference.delete()}を利用して、データ削除を行います。
 
 ここまで実装すると、削除機能が有効になります。
 次の画像のように実際に登録してあるデータを削除してみましょう。

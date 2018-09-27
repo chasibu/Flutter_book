@@ -34,6 +34,7 @@
                 MaterialPageRoute(
                     settings: const RouteSettings(name: "/new"),
                     /*---------- Edit Start ----------*/
+                    //新規作成ボタンの修正
                     builder: (BuildContext context) => InputForm(null)
                     /*----------- Edit End -----------*/
                 ),
@@ -58,6 +59,7 @@
                           {
                             print("編集ボタンを押しました");
                             /*---------- Add Start ----------*/
+                            //編集ボタンの処理追加
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -79,6 +81,7 @@
 
   class InputForm extends StatefulWidget {
     /*---------- Add Start ----------*/
+    //引数の追加
     InputForm(this.document);
     final DocumentSnapshot document;
     /*----------- Add End -----------*/
@@ -93,6 +96,7 @@
     @override
     Widget build(BuildContext context) {
       /*---------- Add Start ----------*/
+      //編集データの作成
       DocumentReference _mainReference;
       _mainReference = Firestore.instance.collection('kasikari-memo').document();
       if (widget.document != null) {
@@ -128,7 +132,7 @@
 
 ==== 引数の追加
 
-編集機能を作るために、どのデータを修正するのかという情報が必要になります。
+編集機能を作るために、一覧画面から編集画面へ遷移する時に、どのデータを修正するのかという情報が必要になります。
 
 @<code>{InputForm(this.document);}のように引数を追加することでデータによって処理を変更することが可能になります。
 
@@ -137,7 +141,7 @@
 
 引数の追加を行ったので、既存の画面遷移をしていた部分を修正します。
 
-ただ引数として渡したいものがないため、nullを渡します。
+新規作成時には、編集時の遷移と区別したいため、nullを渡します。
 
 @<code>{builder: (BuildContext context) => InputForm()}
 　→　
@@ -150,13 +154,13 @@
 編集ボタンを押したときに編集できるようにコードを追加します。
 
 タッチされたデータを引数にして、表示するクラスに情報を送信します。
-
+@<code>{builder: (BuildContext context) => InputForm(document)}
 
 ==== 編集データの作成
 
 引数として提供されたデータが実際にある場合、それぞれのWidgetにデータをセットして表示させます。
 
-それ以外の時はデータを新規作成させます。
+それ以外のときはデータを新規作成させます。
 
 Firestore.instance.collection('kasikari-memo').document();を使いどこにデータを保存するのか指定をします。
 　
