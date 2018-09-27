@@ -508,6 +508,6 @@ Flutterでは、@<code>{async/await}を利用し、非同期処理をします�
 
 @<code>{async/await}を使用するに、@<code>{import 'dart:async'}”を追記する必要があるので忘れずに追加しましょう。
 
-* @<code>{initialDate:}で初期値の日付を設定します。
-* @<code>{firstDate:}で最小の日付を設定します。今回は２年前を設定しました。
-* @<code>{lastDate:}で最大の日付を設定します。今回は２年後を設定しました。
+ * @<code>{initialDate:}で初期値の日付を設定します。
+ * @<code>{firstDate:}で最小の日付を設定します。今回は２年前を設定しました。
+ * @<code>{lastDate:}で最大の日付を設定します。今回は２年後を設定しました。

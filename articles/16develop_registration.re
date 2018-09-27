@@ -2,7 +2,7 @@
 この章ではアプリの画面を通して、Firebaseへデータの登録を行う機能の実装をします。
 
 この章を完了すると次のタグの内容になります。
-@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter10}
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter9}
 
 == 登録に使用するメソッドについて
 Firestore.instance.collection('コレクション名').document()というインスタンスを生成し
