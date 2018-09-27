@@ -173,19 +173,23 @@ Webと同じようにFormを使ってデータの入力画面を作成します�
 
 ==== フォームの構成
 
-@<code>{RadioListTile}で「貸したのか、借りたのか」の情報を入力しています。
-まだ、この段階では、ボタンは有効化されていません。
+@<code>{RadioListTile}でラジオボタンを作成します。
 
-@<code>{TextFormField}を使用し、次の入力を実現しています。
+「貸したのか、借りたのか」の情報を入力します。
+この段階では、タッチしてもボタンは切り替りは有効化されていません。
+
+@<code>{TextFormField}でテキストの入力画面を作成します。
 
  * 貸した、借りた相手の名前
  * 貸し借りした物の名前
 
 この段階では、入力画面のみを作成しており、まだ、データの取り出し等は行えません。
 
-== 入力画面への画面遷移
+== 一覧画面から入力画面への画面遷移
 
-入力画面への画面遷移をします。
+一覧画面から入力画面への画面遷移を作成します。
+
+先ほど作成した一覧画面の新規作成ボタンにコードを追加します。
 
 次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
 
@@ -220,21 +224,52 @@ Webと同じようにFormを使ってデータの入力画面を作成します�
   }
 //}
 
-一覧画面から登録画面への画面遷移機能の実装になります。
+一覧画面から登録画面への画面遷移を作成しました。
+
+次の画像で赤枠で囲われたボタンを押すと前の項目で作成した入力画面を開くことができるので試してみましょう。
+
+//image[add][一覧画面で押すボタン][scale=0.7]{
+//}
+
+=== 入力画面への画面遷移の説明
+
+Navigatorという機能を使って、画面遷移を実装します。
+
+Navigatorを使うことで画面遷移を簡単に行うことができます。
+基本的には次の２つを使って画面遷移を行います。
+
+ * push
+次のページを指定して移動します。
+
+ * pop
+表示されているページを閉じて、前に表示していた画面を描画します。
+
+
 新規登録ボタン選択後、@<code>{Navigator.push()}を使用し、画面の遷移機能を実装しています。
-@<code>{settings:}では、ルーティングの設定、@<code>{builder:}では、どこのクラスに遷移するのかを設定します。
+
+==== MaterialPageRoute
+
+ * @<code>{settings:}は、ルーティングの設定を行います。
+ * @<code>{builder:}は、どこのクラスに遷移するのかを設定します。
 
 == ラジオボタンの有効化
+
+ラジオボタンを有効化するためにコードを修正します。
+
+次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
+
 //list[main_input3][main.dart]{
   class _MyInputFormState extends State<InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _FormData _data = _FormData();
 
+  /*---------- Add Start ----------*/
   void _setLendOrRent(String value){
     setState(() {
       _data.borrowOrLend = value;
     });
   }
+  /*----------- Add End -----------*/
 
   @override
   Widget build(BuildContext context) {
@@ -282,26 +317,29 @@ Webと同じようにFormを使ってデータの入力画面を作成します�
   }
 }
 //}
-@<code>{RadioListTile}において、ボタンを押した後の実際の値の代入の処理は
-@<code>{onChanged:}の中にある@<code>{_setLendorRent()}にて実装しています。
-@<code>{_data.borrowOrLend}に対して値の代入を行います。
 
+ラジオボタンをタッチすると切り替えができるので試してみましょう。
 
+//image[button][ラジオボタン][scale=0.7]{
+//}
+
+=== ラジオボタン有効化の説明
+
+ボタンを押した時に@<code>{onChanged:}が発火します。
+
+@<code>{_data.borrowOrLend}に押された情報を入れることで表示を切り替えることができます。
 
 == 入力チェック機能
+
+テキストフォームで入力された文字のチェック機能を作成します。
+
+次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
+
 //list[main_input4][main.dart]{
 
 class _MyInputFormState extends State<InputForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _FormData _data = _FormData();
-
-  /*---------- Add Start ----------*/
-  void _setLendOrRent(String value){
-    setState(() {
-      _data.borrowOrLend = value;
-    });
-  }
-  /*----------- Add End -----------*/
 
   @override
   Widget build(BuildContext context) {
@@ -365,11 +403,28 @@ class _MyInputFormState extends State<InputForm> {
 }
 //}
 
-貸し借りした相手の名前、貸し借りしたものの名前を入力する@<code>{TextFormField}に対して、
-入力チェック機能とを実装しています。@<code>{onSaved:}にて、@<code>{_data}の各プロパティに対して、値の代入を行なっています。
-また、@<code>{validator:}を使用し、登録時に空欄である場合、エラー文を返すように設定しています。
+空データのときに保存ボタンを押してみましょう。次のような画面になります。
 
-== 日付選択
+//image[verify][入力チェック機能][scale=0.7]{
+//}
+
+=== 入力チェック機能説明
+
+@<code>{TextFormField}に対して、入力チェック機能を実装していきます。
+
+ * @<code>{validator:}で入力欄が空欄のときにエラー文を返すように設定します。
+ * @<code>{onSaved:}で@<code>{_data}の各プロパティに対して、値の代入を行ないます。
+
+ 次の章で設定した関数を使っていきます。
+
+== 日付選択画面作成
+
+日付の選択画面を作成します。
+
+日付ダイアログの応答を受け取るために非同期処理を使っていきます。
+
+次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
+
 //list[main_input5][main.dart]{
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -431,13 +486,25 @@ class _MyInputFormState extends State<InputForm> {
 }
 
 //}
-@<code>{RaisedButton}の@<code>{onPressed:}のおいて、時刻入力するための関数、@<code>{_selectTime()}を呼び出します。
-@<code>{_selectTime()}では、Fluuterがデフォルトで用意している、日時を入力するための@<code>{showDatePicker()}という
-関数を使用します。
+
+「締め切り日変更」と書かれたボタンを押してみましょう。
+
+//image[time][日付選択画面作成][scale=0.7]{
+//}
+
+=== 日付選択画面作成説明
+
+「締め切り日変更」と書かれたボタンを押すと時刻入力するために@<code>{_selectTime()}を呼び出します。
+
+Fluuterがデフォルトで用意している、日時を入力するための@<code>{showDatePicker()}という関数を使用します。
+
+==== showDatePicker()
 
 この関数の戻り値はFuture型となっており、これは非同期処理を行うときに使用します。
 そのため、async/awaitを利用し、非同期処理を実現しております。
 そのため、ファイルの初めに@<code>{import 'dart:async'}”が追加になっているので、
 忘れずに追加しましょう。
 
-@<code>{initialDate:}は初期値の値、@<code>{firstDate:}が入力できる日付の最小値、@<code>{lastDate:}が入力できる値の最大値となっております。
+ * @<code>{initialDate:}で初期値の日付を設定します。
+ * @<code>{firstDate:}で最小の日付を設定します。今回は２年前を設定しました。
+ * @<code>{lastDate:}で最大の日付を設定します。今回は２年後を設定しました。
