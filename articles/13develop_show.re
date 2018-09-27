@@ -13,7 +13,9 @@
   dependencies:
     flutter:
       sdk: flutter
-    cloud_firestore: ^0.7.3     # new
+    /*---------- Add Start ----------*/
+    cloud_firestore: ^0.7.3
+    /*----------- Add End -----------*/
 //}
 
 2. コンソール画面から次のコマンドを入力します。
@@ -66,7 +68,6 @@ class _MyList extends State<List> {
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return const Text('Loading...');
               return ListView.builder(
-                scrollDirection: Axis.vertical,
                 itemCount: snapshot.data.documents.length,
                 padding: const EdgeInsets.only(top: 10.0),
                 itemBuilder: (context, index) =>
@@ -130,21 +131,17 @@ Cloud Firestoreからデータを取得し、表示する機能を@<code>{Stream
 と指定したパスのデータをCloud Firestoreから取得します。
 
  * @<code>{builder:}は、@<code>{stream:}に変化があったときに呼び出されます。
- 今回は、データの受信されるまでは「Loading...」と表示し、データを取得し始めたら
+ データの受信されるまでは「Loading...」と表示し、データを取得し始めたら
  @<code>{ListView.builder}にデータを渡し、表示します。
 
 データを取得した時の@<code>{ListView.builder}のプロパティは次のとおりです。
 
-//table[ListView.builder][ListView.builderのプロパティ]{
-プロパティ	値	説明
---------------------------------------------------------------
-scrollDirection:	Axis.vertical	スクロールの方向を決める。
-itemCount:	snapshot.data.documents.length	表示するアイテムの数を決める。
-padding:	const EdgeInsets.only(top: 10.0)	アイテムのパディングを決定。
-itemBuilder:	(context, index) => _buildListItem()	次の項目にて説明
-//}
+==== @<code>{ListView.builder}
 
-==== itemBuilder
+ * @<code>{itemCount:}は、いくつ表示するかを指定します。
+@<code>{snapshot.data.documents.length}で取得してきたデータ長によって表示数を指定します。
+
+ * @<code>{itemBuilder:}は、表示するリストデータを受け渡しをします。
 
 一件ごとのCloud Firestoreのデータを@<code>{_buildListItem}関数に渡し、リストデータを作成しています。
 
