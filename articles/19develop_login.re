@@ -1,4 +1,4 @@
-= ログイン機能の実装
+= ログイン機能の実装をしよう
 現在の状態では、@<code>{kasikari-memo}コレクションに入力されたデータは誰でもアクセス可能です。
 
 アプリを公開するにあたり、それでは、困ってしまいます。
@@ -307,7 +307,7 @@ class _MyList extends State<List> {
 ログインボタンは一覧画面の@<code>{appBar}に追記します。
 ボタン選択後、@<code>{showBasicDialog()}が呼び出され、ログイン画面が表示されます。
 
-==
+==　ログイン処理の実装
 
 //list[main_login7][main.dart]{
 class _MyList extends State<List> {

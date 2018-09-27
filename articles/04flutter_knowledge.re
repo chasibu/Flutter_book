@@ -1,4 +1,4 @@
-= Flutterの基礎知識
+= Flutterの基礎知識を学ぼう
 
 == Flutterアプリの構造について
 
