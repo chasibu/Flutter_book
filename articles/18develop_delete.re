@@ -89,11 +89,5 @@ class _MyInputFormState extends State<InputForm> {
 ここまで実装すると、削除機能が有効になります。
 次の画像のように実際に登録してあるデータを削除してみましょう。
 
-//image[list_before][一覧画面(削除前)][scale=0.6]{
-//}
-
-//image[update][編集画面][scale=0.6]{
-//}
-
-//image[list_after][一覧画面(削除後)][scale=0.6]{
+//image[delete][登録データの削除][scale=0.9]{
 //}
