@@ -1,23 +1,25 @@
 = Firebaseの設定をしよう
 
+アプリを作成する前にFirebaseの設定をします。
+
 この章を完了すると下記のタグの内容になります。
 
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter6}
 
 == アカウント取得
-1. FirebaseのWebサイトを開き、画面の右上にある「コンソールへ移動」を選択します。
+1. FirebaseのWebサイトを開き、右上にある「コンソールへ移動」を選択します。
 
 Firebase公式サイト : @<href>{https://firebase.google.com/}
 
 //image[firebase1][コンソールへ移動][scale=0.8]{
 //}
 
-2. 「Firebaseへようこそ」と記載された画面が表示されたら、「プロジェクトを追加」を選択します。
+2. 「Firebaseへようこそ」の画面が表示されたら、「プロジェクトを追加」を選択します。
 
 //image[firebase2][プロジェクトを追加][scale=0.8]{
 //}
 
-3. プロジェクト名に「kasikari-memo」を入力します。
+3. プロジェクト名に「kasikari-memo」と入力します。
 すべてにチェックを入れて、プロジェクト作成ボタンを押します。
 
 //image[firebase3][情報を入力][scale=0.6]{
@@ -28,7 +30,7 @@ Firebase公式サイト : @<href>{https://firebase.google.com/}
 //image[firebase4][準備完了][scale=0.5]{
 //}
 
-== プロジェクトとFirebaseの紐付け
+== FlutterアプリとFirebaseの紐付け
 
 Android向けとiOS向けにそれぞれ設定を行う必要があります。
 
@@ -40,9 +42,10 @@ Android向けとiOS向けにそれぞれ設定を行う必要があります。
 //}
 
 2. アプリの登録を行うのにAndroidのパッケージ名を入力する必要があるので、それを調べます。
-「android/app/src/main/AndroidManifest.xml」を開きます。
 
-「package」の値がパッケージ名なので、これをコピーします。
+前の章で作成したAndroid Studioのプロジェクトから「android/app/src/main/AndroidManifest.xml」を開きます。
+
+2行目に表示されている「package」の値がパッケージ名なので、これをコピーします。
 
 //image[firebase6][AndroidManifest][scale=0.8]{
 //}
@@ -60,6 +63,7 @@ Android向けとiOS向けにそれぞれ設定を行う必要があります。
 //}
 
 5. ダウンロードしたファイルを「android/app」フォルダ直下にコピーします。
+「android/app/google-services.json」といった形になります。
 
 //image[firebase9][ファイルを配置][scale=0.8]{
 //}
