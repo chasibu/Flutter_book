@@ -106,7 +106,8 @@
           _data.stuff = widget.document['stuff'];
           _data.date = widget.document['date'];
         }
-        _mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
+        _mainReference = Firestore.instance.collection('kasikari-memo').
+                          document(widget.document.documentID);
       }
       /*----------- Add End -----------*/
       return Scaffold(
@@ -144,7 +145,9 @@
 新規作成時には、編集時の遷移と区別したいため、nullを渡します。
 
 @<code>{builder: (BuildContext context) => InputForm()}
+
 　→　
+
 @<code>{builder: (BuildContext context) => InputForm(null)}
 
 前のコードの一部をこのように修正しました。
@@ -154,6 +157,7 @@
 編集ボタンを押したときに編集できるようにコードを追加します。
 
 タッチされたデータを引数にして、表示するクラスに情報を送信します。
+
 @<code>{builder: (BuildContext context) => InputForm(document)}
 
 ==== 編集データの作成
@@ -165,6 +169,7 @@
 Firestore.instance.collection('kasikari-memo').document();を使いどこにデータを保存するのか指定をします。
 　
 ここまで実装すると、編集機能を有効になります。
+
 次の画像のように、実際に登録してあるデータを選択し、編集画面を開いてみましょう。
 //image[update1][編集機能][scale=0.99]{
 //}

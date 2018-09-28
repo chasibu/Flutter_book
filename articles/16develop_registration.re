@@ -1,7 +1,7 @@
 = 登録機能の実装をしよう
 この章ではCloud Firestoreへデータの登録を行う機能を作成します。
 
-この章を完了すると次のタグの内容になります。
+この章を完了すると下記のタグの内容になります。
 
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter9}
 

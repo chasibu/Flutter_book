@@ -1,17 +1,15 @@
 = ログイン機能の実装をしよう
 現在の状態では、@<code>{kasikari-memo}コレクションに入力されたデータは誰でもアクセス可能です。
-
-アプリを公開するにあたり、それでは、困ってしまいます。
-
-そこで、ログイン機能を実装し、自分が入力したデータは自分だけが見れるような機能を実装します。
+アプリを公開するにあたり、それでは、困ってしまいます。そこで、ログイン機能を実装し、自分が入力したデータは自分だけが見れるような機能を実装します。
 
 
 == ログイン機能について
-ログイン機能の実装はFirebaseが提供している、”Authentication”機能を利用します。
-本来、サーバサイド側で自前で用意する必要のある、認証機能を簡単に実現することができます。
+ログイン機能の実装はFirebaseが提供している、Authentication機能を利用します。
+これを利用すると、自前で準備する必要のある、認証機能を簡単に実現することができます。
 コードを記述する前に、FirebaseのWebコンソール上から設定を行います。
 具体的な手順は次のとおりです。
-1.FirebaseのWebコンソール画面から左ペインにある”Authentication”を選択します。
+
+1.FirebaseのWebコンソール画面から左ペインにあるAuthenticationを選択します。
 //image[open_authentication][認証画面]{
 //}
 
@@ -39,7 +37,8 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
 
 また、ドキュメントの下にはデータだけなく、コレクションを追加することが可能です。
 そのため、次の画像のように「ドキュメント→コレクション→ドキュメント...」という入れ子構造を作ることが可能です。
-※逆にいうと,ドキュメントの下にドキュメント、コレクションの下にコレクションを作ることはできません。
+
+※ドキュメントの下にドキュメント、コレクションの下にコレクションを作ることはできません。
 //image[ireko][ドキュメント、コレクションの入れ子構造]{
 //}
 
@@ -47,11 +46,13 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
 //image[structure_before][今までの機能の構成]{
 //}
 
-今回ログオン機能を追加することで、Cloud Firestoreの構成は次の画像の通りになります。
+今回ログオン機能を追加することで、Cloud Firestoreの構成は次の画像のとおりになります。
 //image[structure_after][今までの機能の構成]{
 //}
-ユーザに対して、直に貸し借りデータを紐づけたいのですが、先に記載したようにドキュメントの下にドキュメントを
-紐づける事は出来ないので、間にコレクションを挟んでいます。
+
+ユーザというドキュメントに対して、transactionというコレクションを紐づけ、さらに貸し借りデータを
+紐づけています。先に記載したように、ドキュメントの下にドキュメントを紐づける事は出来ないので、
+ユーザと貸し借りデータの間にtransactionを挟んでいます。
 
 == ライブラリの追加
 //list[main_login1][pubspec.yaml]{
@@ -106,7 +107,8 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
         disable 'InvalidPackage'
     }
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        // TODO: Specify your own unique Application ID
+        // (https://developer.android.com/studio/build/application-id.html).
         applicationId "local.chasibu.kasikarimemo"
         minSdkVersion 16
         targetSdkVersion 27
@@ -143,7 +145,7 @@ dependencies {
 }
 //}
 ライブラリーを追加した状態でビルドするとエラーを発生させる為、gradleファイルに追記します。
-追記対象のgradleファイルは次の画像のとおりです。
+追記対象のgradleファイルの保存場所は次の画像のとおりです。
 
 //image[gradle][編集対象のgradleファイルの場所][scale=0.6]{
 //}
@@ -162,10 +164,13 @@ dependencies {
 
 //}
 
-ログイン機能を有効にする為に、@<code>{package:firebase_auth/firebase_auth.dart},
-@<code>{package:fluttertoast/fluttertoast.dart}を追加します。
-また、パッケージでは
+ログイン機能を有効にする為に、
 
+@<code>{package:firebase_auth/firebase_auth.dart}
+
+@<code>{package:fluttertoast/fluttertoast.dart}
+
+を追加します。
 
 
 == ルーティングの変更
@@ -190,7 +195,7 @@ class MyApp extends StatelessWidget {
 アプリ起動時におけるデータの読み込み中に表示する画面をスプラッシュ画面と呼び、
 今回、ログイン機能の実装と並行して、この画面の実装も行います。
 
-@<code>{MaterialApp}の@<code>{routes:}に対して@<code>{/}@<code>{/list}のふたつのルートを設定します。
+@<code>{MaterialApp}の@<code>{routes:}に対して@<code>{/}と@<code>{/list}のふたつのルートを設定します。
 アプリを立ち上げると、@<code>{/}にアクセスするので、@<code>{Splash()}が実行されます。
 
 
@@ -264,6 +269,7 @@ class _MyList extends State<List> {
   }
 //}
 ログインボタンは一覧画面の@<code>{appBar}に追記します。
+
 ボタン選択後、@<code>{showBasicDialog()}が呼び出され、ログイン画面が表示されます。
 
 ==　ログイン処理の実装
@@ -389,7 +395,7 @@ void showBasicDialog(BuildContext context) {
 /*---------- Add End ----------*/
 //}
 
-@<code>{firebaseUser.isAnonymous}を使用し、ログインユーザが匿名ユーザかどうかで処理を分けています。
+@<code>{firebaseUser.isAnonymous}を使用し、ユーザが永久アカウントなのか匿名ユーザなのかどうかで処理を分けています。
 匿名ユーザとは、アプリに登録していなくても、セキュリティルールで保護されたページが利用可能なユーザです。
 アプリ起動時、ユーザはユーザ登録（ログイン）を行なっていない為、匿名ユーザでアプリを使用します。
 その後,ログインを行い、永久アカウントでアプリを使用します。
@@ -449,12 +455,16 @@ class _MyInputFormState extends State<InputForm> {
         _data.date = widget.document['date'];
       }
       /*----------- Add Start -----------*/
-        _mainReference =Firestore.instance.collection('users').document(firebaseUser.uid).collection("transaction").document(widget.document.documentID);
+        _mainReference =Firestore.instance.collection('users').
+                        document(firebaseUser.uid).collection("transaction").
+                        document(widget.document.documentID);
       /*----------- Add End -----------*/
       deleteFlg = true;
     } else {
       /*----------- Add Start -----------*/
-      _mainReference = Firestore.instance.collection('users').document(firebaseUser.uid).collection("transaction").document();
+      _mainReference = Firestore.instance.collection('users').
+                        document(firebaseUser.uid).collection("transaction").
+                        document();
       /*----------- Add End -----------*/
     }
   }
@@ -480,7 +490,8 @@ class _MyInputFormState extends State<InputForm> {
           padding: const EdgeInsets.all(8.0),
           child: StreamBuilder<QuerySnapshot>(
             /*----------- Add Start -----------*/
-            stream: Firestre.instance.collection('users').document(firebaseUser.uid).collection("transaction").snapshots(),
+            stream: Firestre.instance.collection('users').
+                    document(firebaseUser.uid).collection("transaction").snapshots(),
             /*----------- Add End -----------*/
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return const Text('Loading...');

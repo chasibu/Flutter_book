@@ -28,7 +28,8 @@ _MyInputFormStateクラスに削除機能を追加します。
           _data.stuff = widget.document['stuff'];
           _data.date = widget.document['date'];
         }
-        _mainReference = Firestore.instance.collection('kasikari-memo').document(widget.document.documentID);
+        _mainReference = Firestore.instance.collection('kasikari-memo').
+                          document(widget.document.documentID);
         /*---------- Add Start ----------*/
         deleteFlg = true;
         /*----------- Add End -----------*/
