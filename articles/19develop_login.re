@@ -269,7 +269,7 @@ class _MyList extends State<List> {
 
 これから実装する@<code>{showBasicDialog()}が呼び出され、ログイン画面を表示します。
 
-==　ログイン画面の実装
+== ログイン画面の実装
 
 //list[main_login7][main.dart]{
 class _MyList extends State<List> {
@@ -339,9 +339,11 @@ void showBasicDialog(BuildContext context) {
                       _formKey.currentState.save();
                       _createUser(email, password)
                           .then((FirebaseUser user) =>
-                           Navigator.pushNamedAndRemoveUntil(context, "/", (_) => false))
+                            Navigator.pushNamedAndRemoveUntil(
+                            　context, "/", (_) => false))
                           .catchError((e) {
-                        Fluttertoast.showToast(msg: "Firebaseの登録に失敗しました。");
+                            Fluttertoast.showToast(
+                            　msg: "Firebaseの登録に失敗しました。");
                       });
                     }
                   }
@@ -353,9 +355,11 @@ void showBasicDialog(BuildContext context) {
                       _formKey.currentState.save();
                       _signIn(email, password)
                           .then((FirebaseUser user) =>
-                           Navigator.pushNamedAndRemoveUntil(context, "/", (_) => false))
+                            Navigator.pushNamedAndRemoveUntil(
+                              context, "/", (_) => false))
                           .catchError((e) {
-                        Fluttertoast.showToast(msg: "Firebaseのログインに失敗しました。");
+                            Fluttertoast.showToast(
+                              msg: "Firebaseのログインに失敗しました。");
                       });
                     }
                   }
