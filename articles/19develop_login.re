@@ -9,7 +9,7 @@
 
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter11}
 
-== ログイン機能について
+== ログイン機能の作成
 
 ログイン機能の実装はFirebaseが提供している、「Firebase Authentication」を利用します。
 
@@ -59,44 +59,7 @@ Firebase Authenticationを使うと簡単な設定でアプリにさまざまな
 これでFirebase側の準備は整いました。
 それでは実際にコードを書いて行きましょう。
 
-====[column] Cloud Firestoreのデータ保存の仕組み
-
-Cloud FirestoreではNoSQLドキュメント指向データベースです。
-NoSQLはSQLとは異なり、キーと値の組み合わせ（key-value型）でデータの保存を行います。
-
-データの集合をドキュメントという名称で呼び、ドキュメントの集合をコレクションという名称で呼びます。
-
-//image[collection][データ、ドキュメント、コレクションの関係][scale=0.5]{
-//}
-
-また、ドキュメントの下にはデータだけなく、コレクションを追加することが可能です。
-次の画像のように「コレクション→ドキュメント→コレクション...」という入れ子構造を作ることが可能です。
-
-※ドキュメントの下にドキュメント、コレクションの下にコレクションを作ることはできません。
-
-//image[ireko][ドキュメント、コレクションの入れ子構造][scale=0.6]{
-//}
-
-====[/column]
-
-== データ保存構成
-
-今までの機能では、次のような構成になっていました。
-
-//image[structure_before][今までの構成][scale=0.6]{
-//}
-
-それを次のような構成に変更します。
-
-users → [userID] → transaction → [貸し借りデータ]
-
- * userID : ログインしたユーザID
- * 貸し借りデータ : アプリから入力したデータ
-
-//image[structure_after][今後の構成][scale=0.8]{
-//}
-
-== ライブラリの追加
+=== ライブラリの追加
 //list[main_login1][pubspec.yaml][scale=0.8]{
   name: kasikari_memo
   description: kasikari memo Flutter application.
@@ -123,7 +86,7 @@ users → [userID] → transaction → [貸し借りデータ]
  * @<code>{firebase_auth: ^0.5.20} : Firebase Authenticationを有効にします。
  * @<code>{fluttertoast: ^2.0.7} : ログインできなかったときにトースト表示をします。
 
-== ビルドエラー修正
+=== ビルドエラー修正
 
 //list[maim_login2][android/app/build.gradle]{
   ...
@@ -151,7 +114,7 @@ dependencies {
 
 その対応で「android/app/build.gradle」に上の2行を追記します。
 
-== ルーティングの変更
+=== ルーティングの変更
 //list[main_login4][main.dart]{
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -190,7 +153,7 @@ class MyApp extends StatelessWidget {
  * @<code>{/} : スプラッシュ画面を表示
  * @<code>{/list} : リスト画面を表示
 
-== スプラッシュ画面の表示
+=== スプラッシュ画面の表示
 
 //list[main_login5][main.dart]{
 
@@ -233,7 +196,7 @@ void _getUser(BuildContext context) async {
 また、@<code>{Scaffold}内でスプラッシュ画面に実際に表示する内容を記載しており、
 今回は画面の中央に「スプラッシュ画面」と表示しています。
 
-== ログインボタンの実装
+=== ログインボタンの実装
 
 //list[main_login6][main.dart]{
 class _MyList extends State<List> {
@@ -264,7 +227,7 @@ class _MyList extends State<List> {
 
 これから実装する@<code>{showBasicDialog()}が呼び出され、ログイン画面を表示します。
 
-== ログイン画面の実装
+=== ログイン画面の実装
 
 //list[main_login7][main.dart]{
 class _MyList extends State<List> {
@@ -395,23 +358,60 @@ void _createUser(BuildContext context,String email, String password) async {
 /*---------- Add End ----------*/
 //}
 
-@<code>{firebaseUser.isAnonymous}を使用し、ユーザが匿名アカウントか永久アカウントかで処理を分けています。
+@<code>{firebaseUser.isAnonymous}を使用し、ユーザが匿名アカウントか永久アカウントかで処理を分けます。
 
 アプリ起動時にユーザがログインを行なっていない場合、匿名アカウントでアプリを使用します。
-その後,ログインを行い、永久アカウントでアプリを使用します。
 
-その為、匿名アカウントでの場合、ログインボタンを押すと、ログイン/登録画面が表示され、
-匿名アカウント以外（ログインした状態）では、ログアウトボタンが表示されます。
+ログインボタンを押したときに、ログイン状態によって表示を切り替えます。
 
-認証を行う@<code>{_auth},ユーザ登録を行う@<code>{_createUser}の機能については、次に説明を行います。
+ * 匿名アカウントの場合 : ログインボタンを押すと、ログイン/登録画面が表示します。
+ * 匿名アカウント以外の場合 : ログアウトボタンを表示します。
 
-@<code>{_auth}では、@<code>{_auth.signInWithEmailAndPassword}を使用し、メールアドレス、パスワードを
-元にして、ログイン機能を実現しています。
+@<code>{_signIn}では、@<code>{_auth.signInWithEmailAndPassword}を使用し、メールアドレス・パスワードでログインします。
 
-@<code>{_createUser}では、@<code>{_auth.createUserWithEmailAndPassword}を使用し、メールアドレス、パスワードを
-元にして、新規ユーザを作成します。
+@<code>{_createUser}では、@<code>{_auth.createUserWithEmailAndPassword}を使用し、メールアドレス・パスワードで新規ユーザを作成します。
 
-== 入力機能の変更
+== Cloud Firestore と ログイン機能を組み合わせよう
+
+=== データ保存構成
+
+今までの機能では、次のような構成になっていました。
+
+//image[structure_before][今までの構成][scale=0.6]{
+//}
+
+それを次のような構成に変更します。
+
+users → [userID] → transaction → [貸し借りデータ]
+
+ * userID : ログインしたユーザID
+ * 貸し借りデータ : アプリから入力したデータ
+
+//image[structure_after][今後の構成][scale=0.8]{
+//}
+
+====[column] Cloud Firestoreのデータ保存の仕組み
+
+Cloud FirestoreではNoSQLドキュメント指向データベースです。
+NoSQLはSQLとは異なり、キーと値の組み合わせ（key-value型）でデータの保存を行います。
+
+データの集合をドキュメントという名称で呼び、ドキュメントの集合をコレクションという名称で呼びます。
+
+//image[collection][データ、ドキュメント、コレクションの関係][scale=0.5]{
+//}
+
+また、ドキュメントの下にはデータだけなく、コレクションを追加することが可能です。
+次の画像のように「コレクション→ドキュメント→コレクション...」という入れ子構造を作ることが可能です。
+
+※ドキュメントの下にドキュメント、コレクションの下にコレクションを作ることはできません。
+
+//image[ireko][ドキュメント、コレクションの入れ子構造][scale=0.6]{
+//}
+
+====[/column]
+
+
+=== 入力機能の変更
 
 //list[main_login9][main.dart]{
 class _MyInputFormState extends State<InputForm> {
@@ -419,6 +419,11 @@ class _MyInputFormState extends State<InputForm> {
     @override
   Widget build(BuildContext context) {
     DocumentReference _mainReference;
+    /*----------- Add Start -----------*/
+    _mainReference = Firestore.instance.collection('users')
+                        .document(firebaseUser.uid).collection("transaction")
+                        .document();
+    /*----------- Add End -----------*/
     bool deleteFlg = false;
     if (widget.document != null) {
       if(_data.user == null && _data.stuff == null) {
@@ -428,29 +433,25 @@ class _MyInputFormState extends State<InputForm> {
         _data.date = widget.document['date'];
       }
       /*----------- Add Start -----------*/
-        _mainReference =Firestore.instance.collection('users')
-                         .document(firebaseUser.uid).collection("transaction")
-                         .document(widget.document.documentID);
+      _mainReference = Firestore.instance.collection('users')
+                          .document(firebaseUser.uid).collection("transaction")
+                          .document(widget.document.documentID);
       /*----------- Add End -----------*/
       deleteFlg = true;
-    } else {
-      /*----------- Add Start -----------*/
-      _mainReference = Firestore.instance.collection('users')
-                        .document(firebaseUser.uid).collection("transaction")
-                        .document();
-      /*----------- Add End -----------*/
     }
   }
 }
 //}
 
-かしかりデータを入力するための、@<code>{Firestore.instance}の生成方法を変更します。
-ユーザごとのコレクションを取得するため、取得対象のコレクションを@<code>{collection('users')}に変更します。
-ドキュメントもユーザIDごとに取得するので、@<code>{document(firebaseUser.uid)}を使用し、
-ユーザに紐付く@<code>{collection}を取得します。
+かしかりデータを保持するための、@<code>{Firestore.instance}の生成方法を変更します。
 
+先ほど決めた「データ保存構成」に沿うように修正します。
 
-== 一覧表示画面の変更
+@<code>{collection('users')} →　@<code>{document(firebaseUser.uid)} → @<code>{collection("transaction")}
+
+上の順に設定することで準備は完了です。
+
+=== 一覧表示画面の変更
 
 //list[main_login10][main.dart]{
   class _MyList extends State<List> {
@@ -478,9 +479,8 @@ class _MyInputFormState extends State<InputForm> {
     }
   }
 //}
-一覧に表示するデータもログインユーザに紐づいたものにする必要があるので、@<code>{document(firebaseUser.uid)}を使用して
-データを取り出しを行います。
 
+先ほど決めた「データ保存構成」に沿うように修正します。
 
 ここまで実装すると、ログイン機能が有効になります。
 次の画像のように実際にログインフォームを入力し、ログインしてみましょう。
