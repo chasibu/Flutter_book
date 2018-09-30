@@ -57,7 +57,6 @@ Firebase Authenticationを使うと簡単な設定でアプリにさまざまな
 //}
 
 これでFirebase側の準備は整いました。
-
 それでは実際にコードを書いて行きましょう。
 
 ====[column] Cloud Firestoreのデータ保存の仕組み
