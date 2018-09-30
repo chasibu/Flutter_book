@@ -1,9 +1,10 @@
 = 削除機能の実装をしよう
+
 この章では、登録したデータの削除する機能の実装を行います。
-前章にてドキュメントIDを参照する機能を実装したので、それを利用し、登録してあるデータの削除を行います。
 
 この章を完了すると下記のタグの内容になります。
-@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter12}
+
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter11}
 
 == 削除機能の作成
 
@@ -50,6 +51,7 @@ _MyInputFormStateクラスに削除機能を追加します。
               onPressed: !deleteFlg? null:() {
                 print("削除ボタンを押しました");
                 _mainReference.delete();
+                Navigator.pop(context);
               },
               /*----------- Add End -----------*/
             )
@@ -61,15 +63,17 @@ _MyInputFormStateクラスに削除機能を追加します。
 }
 //}
 
-=== 削除機能の解説
 
-@<code>{!deleteFlg? null:() }このコードで入力画面を表示するときに削除ボタンの有効化・無効化を判定しています。
-編集時には、画面上部にある削除ボタンを有効化、新規作成の時には無効化します。
-
-編集時には@<code>{_mainReference.delete()}を利用して、データ削除を行います。
-
-ここまで実装すると、削除機能が有効になります。
 次の画像のように実際に登録してあるデータを削除してみましょう。
 
 //image[delete][登録データの削除][scale=0.9]{
 //}
+
+=== 削除機能の解説
+
+@<code>{!deleteFlg? null:() }このコードで入力画面を表示するときに削除ボタンの有効化・無効化を判定しています。
+画面上部にある削除ボタンを編集のときは有効化、新規作成のときには無効化します。
+
+編集時には@<code>{_mainReference.delete()}を利用して、データ削除を行います。
+
+これで削除機能の実装は完了です。
