@@ -126,7 +126,6 @@ users → [userID] → transaction → [貸し借りデータ]
 == ビルドエラー修正
 
 //list[maim_login2][android/app/build.gradle]{
-  def localProperties = new Properties()
   ...
   android {
     compileSdkVersion 27
@@ -149,6 +148,7 @@ dependencies {
 //}
 
 ライブラリーを追加した状態でビルドするとエラーが発生します。
+
 その対応で「android/app/build.gradle」に上の2行を追記します。
 
 == ルーティングの変更
@@ -189,9 +189,6 @@ class MyApp extends StatelessWidget {
 
  * @<code>{/} : スプラッシュ画面を表示
  * @<code>{/list} : リスト画面を表示
-
-アプリを立ち上げると、@<code>{/}にアクセスするので、@<code>{Splash()}が実行されます。
-
 
 == スプラッシュ画面の表示
 
