@@ -204,13 +204,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
 class Splash extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    _getUser().then((user){
-      firebaseUser = user;
-      Navigator.pushReplacementNamed(context, "/list");
-    }).catchError((onError){
-      Fluttertoast.showToast(msg: "Firebaseとの接続に失敗しました。");
-    }
-    );
+    _getUser(context);
     return Scaffold(
       body: Center(
         child: const Text("スプラッシュ画面"),
@@ -219,13 +213,17 @@ class Splash extends StatelessWidget{
   }
 }
 
-Future<FirebaseUser> _getUser() async {
-  FirebaseUser user = await _auth.currentUser();
-  if(user == null) {
-    await _auth.signInAnonymously();
-    user = await _auth.currentUser();
+void _getUser(BuildContext context) async {
+  try {
+    firebaseUser = await _auth.currentUser();
+    if (firebaseUser == null) {
+      await _auth.signInAnonymously();
+      firebaseUser = await _auth.currentUser();
+    }
+    Navigator.pushReplacementNamed(context, "/list");
+  }catch(e){
+    Fluttertoast.showToast(msg: "Firebaseとの接続に失敗しました。");
   }
-  return user;
 }
 /*---------- Add End ----------*/
 
@@ -337,14 +335,7 @@ void showBasicDialog(BuildContext context) {
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      _createUser(email, password)
-                          .then((FirebaseUser user) =>
-                            Navigator.pushNamedAndRemoveUntil(
-                            　context, "/", (_) => false))
-                          .catchError((e) {
-                            Fluttertoast.showToast(
-                            　msg: "Firebaseの登録に失敗しました。");
-                      });
+                      _createUser(context,email, password);
                     }
                   }
               ),
@@ -353,14 +344,7 @@ void showBasicDialog(BuildContext context) {
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      _signIn(email, password)
-                          .then((FirebaseUser user) =>
-                            Navigator.pushNamedAndRemoveUntil(
-                              context, "/", (_) => false))
-                          .catchError((e) {
-                            Fluttertoast.showToast(
-                              msg: "Firebaseのログインに失敗しました。");
-                      });
+                      _signIn(context,email, password);
                     }
                   }
               ),
@@ -393,39 +377,37 @@ void showBasicDialog(BuildContext context) {
     );
   }
 }
+
+void _signIn(BuildContext context,String email, String password) async {
+  try {
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    Navigator.pushNamedAndRemoveUntil(context, "/", (_) => false);
+  }catch(e){
+    Fluttertoast.showToast(msg: "Firebaseのログインに失敗しました。");
+  }
+}
+
+void _createUser(BuildContext context,String email, String password) async {
+  try {
+    await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    Navigator.pushNamedAndRemoveUntil(context, "/", (_) => false);
+  }catch(e){
+    Fluttertoast.showToast(msg: "Firebaseの登録に失敗しました。");
+  }
+}
 /*---------- Add End ----------*/
 //}
 
-@<code>{firebaseUser.isAnonymous}を使用し、ユーザが永久アカウントなのか匿名ユーザなのかどうかで処理を分けています。
-匿名ユーザとは、アプリに登録していなくても、セキュリティルールで保護されたページが利用可能なユーザです。
-アプリ起動時、ユーザはユーザ登録（ログイン）を行なっていない為、匿名ユーザでアプリを使用します。
+@<code>{firebaseUser.isAnonymous}を使用し、ユーザが匿名アカウントか永久アカウントかで処理を分けています。
+
+アプリ起動時にユーザがログインを行なっていない場合、匿名アカウントでアプリを使用します。
 その後,ログインを行い、永久アカウントでアプリを使用します。
 
-その為、匿名ユーザでの場合、ログインボタンを押すと、ログイン/登録画面が表示され、
-匿名ユーザ以外（ログインした状態）では、ログアウトボタンが表示されます。
+その為、匿名アカウントでの場合、ログインボタンを押すと、ログイン/登録画面が表示され、
+匿名アカウント以外（ログインした状態）では、ログアウトボタンが表示されます。
 
 認証を行う@<code>{_auth},ユーザ登録を行う@<code>{_createUser}の機能については、次に説明を行います。
 
-//list[main_login8][main.dart]{
-  class _MyList extends State<List> {
-    ...
-  }
-
-  void showBasicDialog(BuildContext context) {
-    ...
-  }
-
-  /*---------- Add Start ----------*/
-  Future<FirebaseUser> _signIn(String email, String password){
-    return _auth.signInWithEmailAndPassword(email: email, password: password);
-  }
-
-  Future<FirebaseUser> _createUser(String email, String password){
-    return _auth.createUserWithEmailAndPassword(email: email, password: password);
-  }
-  /*----------- Add End -----------*/
-
-//}
 @<code>{_auth}では、@<code>{_auth.signInWithEmailAndPassword}を使用し、メールアドレス、パスワードを
 元にして、ログイン機能を実現しています。
 
