@@ -42,7 +42,7 @@
 
 章ごとにタグを切っているのではまった場合はそのタグのコードと見比べたりして問題点を探してみてください。
 
-@<href>{https://github.com/chasibu/kasikari_memo/tags}
+@<href>{https://github.com/chasibu/kasikari_memo}
 
 この章のタグは次のものになります。
 

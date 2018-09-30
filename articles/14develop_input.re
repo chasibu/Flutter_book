@@ -8,13 +8,13 @@
  * 何を?
  * いつまで?
 
-この章を完了すると下記のタグの内容になります。
+ この章を完了すると下記のタグの内容になります。
 
-@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter8}
+ @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter8}
 
 == 入力画面の作成
 
-入力画面を作成して必要な設定をします。
+入力画面を作成します。少々長いですが頑張ってください。
 
 次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
 
@@ -89,7 +89,6 @@ class _MyInputFormState extends State<InputForm> {
                     print("借りたをタッチしました");
                   },
                 ),
-
                 RadioListTile(
                     value: "lend",
                     groupValue: _data.borrowOrLend,
@@ -98,6 +97,7 @@ class _MyInputFormState extends State<InputForm> {
                       print("貸したをタッチしました");
                     }
                 ),
+
                 TextFormField(
                   decoration: const InputDecoration(
                     icon: const Icon(Icons.person),
@@ -118,6 +118,7 @@ class _MyInputFormState extends State<InputForm> {
                   padding: const EdgeInsets.only(top:8.0),
                   child: Text("締め切り日：${_data.date.toString().substring(0,10)}"),
                 ),
+
                 RaisedButton(
                   child: const Text("締め切り日変更"),
                   onPressed: (){
@@ -135,16 +136,18 @@ class _MyInputFormState extends State<InputForm> {
 //}
 
 入力画面を作成しました。
-本来であれば次の画像のような画面が表示されるはずですが、これを実行しているタイミングでは確認することができません。
 
-次の項目の画面遷移を作ってこの画面を確認してみましょう。
+これを実行しているタイミングでは一覧画面から移動することができず、入力画面を確認することができません。
+なので次の項目の画面遷移を作ってからこの画面を確認してみましょう。
+
+画面遷移が完成して入力画面を表示した場合次のような画面が表示されます。
 
 //image[input][入力画面の作成][scale=0.7]{
 //}
 
 === 入力画面の解説
 
-画面遷移を作成する前に簡単にこの入力画面について解説をします。
+画面遷移を作成する前にこの入力画面について解説をします。
 
 ユーザの入力によって表示が変化するので、@<code>{StatefulWidget}クラスを継承していきます。
 
@@ -183,13 +186,12 @@ Webと同じようにFormを使ってデータの入力画面を作成します�
  * 貸した、借りた相手の名前
  * 貸し借りした物の名前
 
-この段階では、入力画面のみを作成しており、まだ、データの取り出し等は行えません。
+この段階では、入力画面のみを作成しており、まだデータの取り出し等は行えません。
 
 == 一覧画面から入力画面への画面遷移
 
 一覧画面から入力画面への画面遷移を作成します。
-
-先ほど作成した一覧画面の新規作成ボタンにコードを追加します。
+@<chap>{13develop_show}で作成した一覧画面の新規作成ボタンにコードを追加します。
 
 次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
 
@@ -226,7 +228,7 @@ Webと同じようにFormを使ってデータの入力画面を作成します�
 
 一覧画面から登録画面への画面遷移を作成しました。
 
-次の画像で赤枠で囲われたボタンを押すと前の項目で作成した入力画面を開くことができるので試してみましょう。
+次の画像の赤枠で囲われたボタンを押すと前の項目で作成した入力画面を開くことができるので試してみましょう。
 
 //image[add][一覧画面で押すボタン][scale=0.7]{
 //}
@@ -245,7 +247,7 @@ Navigatorを使うことで画面遷移を簡単に行うことができます�
 表示されているページを閉じて、前に表示していた画面を描画します。
 
 
-新規登録ボタン選択後、@<code>{Navigator.push()}を使用し、画面の遷移機能を実装しています。
+新規登録ボタン選択後、@<code>{Navigator.push()}を使用し、入力画面の表示をしています。
 
 ==== MaterialPageRoute
 
@@ -329,99 +331,11 @@ Navigatorを使うことで画面遷移を簡単に行うことができます�
 
 @<code>{_data.borrowOrLend}に押された情報を入れることで表示を切り替えることができます。
 
-== 入力チェック機能
-
-テキストフォームで入力された文字のチェック機能を作成します。
-
-次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
-
-//list[main_input4][main.dart]{
-
-class _MyInputFormState extends State<InputForm> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final _FormData _data = _FormData();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        ...
-      ),
-      body: SafeArea(
-        child:
-          Form(
-              key: _formKey,
-              child: ListView(
-                padding: const EdgeInsets.all(20.0),
-                children: <Widget>[
-                ...
-
-                TextFormField(
-                    decoration: const InputDecoration(
-                      icon: const Icon(Icons.person),
-                      hintText: '相手の名前',
-                      labelText: 'Name',
-                    ),
-                    /*---------- Add Start ----------*/
-                    onSaved: (String value) {
-                      _data.user = value;
-                    },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return '名前は必須入力項目です';
-                      }
-                    },
-                    initialValue: _data.user,
-                    /*----------- Add End -----------*/
-                ),
-
-                TextFormField(
-                  decoration: const InputDecoration(
-                      icon: const Icon(Icons.business_center),
-                      hintText: '借りたもの、貸したもの',
-                      labelText: 'loan',
-                    ),
-                    /*---------- Add Start ----------*/
-                    onSaved: (String value) {
-                      _data.stuff = value;
-                    },
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return '借りたもの、貸したものは必須入力項目です';
-                      }
-                    },
-                    initialValue: _data.stuff,
-                    /*----------- Add End -----------*/
-                  ),
-                  ...
-              ],
-            ),
-          ),
-      ),
-    );
-  }
-}
-//}
-
-空データのときに保存ボタンを押してみましょう。次のような画面になります。
-
-//image[verify][入力チェック機能][scale=0.7]{
-//}
-
-=== 入力チェック機能説明
-
-@<code>{TextFormField}に対して、入力チェック機能を実装していきます。
-
- * @<code>{validator:}で入力欄が空欄のときにエラー文を返すように設定します。
- * @<code>{onSaved:}で@<code>{_data}の各プロパティに対して、値の代入を行ないます。
-
- 次の章で設定した関数を使っていきます。
-
 == 日付選択画面作成
 
 日付の選択画面を作成します。
 
-日付ダイアログの応答を受け取るために非同期処理を使っていきます。
+日付ダイアログでのユーザから入力を受け取るために非同期処理を使っていきます。
 
 次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
 
@@ -437,14 +351,13 @@ class _MyInputFormState extends State<InputForm> {
   final _FormData _data = _FormData();
 
   /*---------- Add Start ----------*/
-  Future <DateTime> _selectTime(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: _data.date,
-      firstDate: DateTime(_data.date.year - 2),
-      lastDate: DateTime(_data.date.year + 2)
+  Future <DateTime> _selectTime(BuildContext context) {
+     return showDatePicker(
+        context: context,
+        initialDate: _data.date,
+        firstDate: DateTime(_data.date.year - 2),
+        lastDate: DateTime(_data.date.year + 2)
     );
-    return picked;
   }
   /*----------- Add End -----------*/
 
@@ -500,14 +413,21 @@ Fluuterがデフォルトで用意している、日時を入力するための@
 
 ==== showDatePicker()
 
-Flutterでは、@<code>{async/await}を利用し、非同期処理をします。
-
-@<code>{async}を有効にした関数では、@<code>{await}を使用すると非同期処理の動作完了を待つことができます。
-
-日付入力されるのを待つため、@<code>{async/await}を使用します。
-
-@<code>{async/await}を使用するに、@<code>{import 'dart:async'}”を追記する必要があるので忘れずに追加しましょう。
+日時を入力するのに必要なデータを設定します。
 
  * @<code>{initialDate:}で初期値の日付を設定します。
  * @<code>{firstDate:}で最小の日付を設定します。今回は２年前を設定しました。
  * @<code>{lastDate:}で最大の日付を設定します。今回は２年後を設定しました。
+
+ ユーザの入力を非同期処理で待ちます。コラムで非同期処理について書きましたのでご覧ください。
+
+====[column] 非同期処理
+
+Flutterでは、@<code>{async/await}や@<code>{then}を利用し、非同期処理をします。
+
+ * @<code>{async}を有効にした関数では、@<code>{await}を使用すると非同期処理の動作完了を待ちます。
+ * @<code>{then}は、コールバック関数のような形で使用できます。
+
+@<code>{async/await}や@<code>{then}を使用するに、@<code>{import 'dart:async'}”を追記する必要があるので忘れずに追加しましょう。
+
+====[/column]

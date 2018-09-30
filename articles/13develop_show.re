@@ -1,6 +1,7 @@
 = 一覧画面の実装をしよう
 
-この章では先ほどFirebaseのCloud Firestoreに登録した貸し借りデータを表示する機能の実装を行いながら、FlutterのUIについて学んでいきます。
+この章では先ほどCloud Firestoreに登録した貸し借りデータを表示する機能の実装を行いながら、
+FlutterのUIについて学んでいきます。
 
 この章を完了すると下記のタグの内容になります。
 
@@ -30,7 +31,7 @@ flutter packages get
 
 == リスト作成
 
-「main.dart」に書かれているものを削除し、次のコードに変更してください。
+もともと「main.dart」に書かれているものを削除し、次のコードに変更してください。
 
 //list[main_show1][main.dart]{
 /*---------- Add Start ----------*/
@@ -65,7 +66,7 @@ class _MyList extends State<List> {
         padding: const EdgeInsets.all(8.0),
         child: StreamBuilder<QuerySnapshot>(
             stream: Firestore.instance.collection('kasikari-memo').snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
               if (!snapshot.hasData) return const Text('Loading...');
               return ListView.builder(
                 itemCount: snapshot.data.documents.length,
@@ -99,7 +100,7 @@ class _MyList extends State<List> {
 /*----------- Add End -----------*/
 //}
 
-Firestoreから読み込んだデータをリスト表示するためのコードを作成しました。
+Cloud Firestoreから読み込んだデータをリスト表示するためのコードを作成しました。
 
 実行すると次のような画面が表示されます。
 
@@ -107,7 +108,6 @@ Firestoreから読み込んだデータをリスト表示するためのコー�
 //}
 
 === リスト表示解説
-
 
 Flutterでは@<code>{void main()}からアプリが開始されます。
 @<code>{runApp}に表示データを渡すことでアプリの画面を作成しています。
@@ -117,7 +117,7 @@ Flutterでは@<code>{void main()}からアプリが開始されます。
 //}
 
 
-Flutterでは多くは「StatefulWidget」か「StatelessWidget」のどちらかを継承してクラスを作成します。。
+Flutterでは多くは「StatefulWidget」か「StatelessWidget」のどちらかを継承してクラスを作成します。
 今回は表示されるCloud Firestoreの内容が変化するので、@<code>{StatefulWidget}クラスを継承していきます。
 
 必要によってPaddingを使い、表示するWidgetに余白を指定します。
@@ -150,7 +150,7 @@ Cloud Firestoreからデータを取得し、表示する機能を@<code>{Stream
 
 == 新規ボタン追加
 
-新規ボタンを追加して次の章でデータを追加できるように準備します。
+新規ボタンを追加します。データを新規で追加するためのコードは@<chap>{14develop_input}で作成します。
 
 次のコードで「/*-- Add Start --*/」と「/*-- Add End --*/」コメントの間にあるコードを追加しましょう。
 
@@ -167,7 +167,7 @@ class _MyList extends State<List> {
         ),
         /*---------- Add Start ----------*/
         floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.check),
+            child: const Icon(Icons.add),
             onPressed: () {
               print("新規作成ボタンを押しました");
             }
@@ -178,7 +178,7 @@ class _MyList extends State<List> {
 }
 //}
 
-新規ボタンを表示するためのコードを作成しました。
+青色の新規ボタンを表示するためのコードを作成しました。
 
 実行すると次のような画面が表示されます。
 
@@ -238,7 +238,7 @@ class _MyList extends State<List> {
 }
 //}
 
-準備ボタンを表示するためのコードを作成しました。
+編集ボタンを表示するためのコードを作成しました。
 
 実行すると次のような画面が表示されます。
 
@@ -257,4 +257,4 @@ class _MyList extends State<List> {
 
 この状態で、アプリを実行すると、編集ボタンが表示されます。
 
-これでリスト表示の作成は完了です！
+これで一覧画面の作成は完了です！
