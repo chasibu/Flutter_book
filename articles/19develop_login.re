@@ -43,11 +43,11 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
 //}
 
 今までの機能では、次の画像のような構成になっていました。
-//image[structure_before][今までの機能の構成]{
+//image[structure_before][今までの構成]{
 //}
 
 今回ログオン機能を追加することで、Cloud Firestoreの構成は次の画像のとおりになります。
-//image[structure_after][今までの機能の構成]{
+//image[structure_after][今後の構成]{
 //}
 
 ユーザというドキュメントに対して、transactionというコレクションを紐づけ、さらに貸し借りデータを
