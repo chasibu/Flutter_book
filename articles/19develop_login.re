@@ -111,8 +111,6 @@ users → [userID] → transaction → [貸し借りデータ]
     fluttertoast: ^2.0.7
     /*---------- Add End ----------*/
 
-    # The following adds the Cupertino Icons font to your application.
-    # Use with the CupertinoIcons class for iOS style icons.
     cupertino_icons: ^0.1.2
 
   dev_dependencies:
@@ -121,9 +119,10 @@ users → [userID] → transaction → [貸し借りデータ]
   ...
 //}
 
-ログイン機能を有効化するために、@<code>{dependencies:}に@<code>{firebase_auth: ^0.5.20},
-@<code>{fluttertoast: ^2.0.7}を追加します。
+ログイン機能を有効化するため@<code>{dependencies:}にライブラリを追加します。
 
+ * @<code>{firebase_auth: ^0.5.20} : Firebase Authenticationを有効にします。
+ * @<code>{fluttertoast: ^2.0.7} : ログインできなかったときにトースト表示をします。
 
 == ビルドエラー修正
 
@@ -141,47 +140,28 @@ users → [userID] → transaction → [貸し借りデータ]
         /*---------- Add End ----------*/
     }
 }
-
 dependencies {
     ...
     implementation 'com.google.firebase:firebase-core:16.0.1'
     /*---------- Add Start ----------*/
     implementation 'com.android.support:multidex:1.0.3'
     /*---------- Add End ----------*/
-
 }
 //}
-ライブラリーを追加した状態でビルドするとエラーを発生させる為、gradleファイルに追記します。
-追記対象のgradleファイルの保存場所は次の画像のとおりです。
 
-//image[gradle][編集対象のgradleファイルの場所][scale=0.6]{
-//}
-
-
-
-== パッケージのインポート
-//list[main_login3][main.dart]{
-  import 'package:flutter/material.dart';
-  import 'package:cloud_firestore/cloud_firestore.dart';
-  import 'dart:async';
-  /*---------- Add Start ----------*/
-  import 'package:firebase_auth/firebase_auth.dart';
-  import 'package:fluttertoast/fluttertoast.dart';
-  /*----------- Add End -----------*/
-
-//}
-
-ログイン機能を有効にする為に、
-
-@<code>{package:firebase_auth/firebase_auth.dart}
-
-@<code>{package:fluttertoast/fluttertoast.dart}
-
-を追加します。
-
+ライブラリーを追加した状態でビルドするとエラーが発生します。
+その対応で「android/app/build.gradle」に上の2行を追記します。
 
 == ルーティングの変更
 //list[main_login4][main.dart]{
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
+/*---------- Add Start ----------*/
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+/*----------- Add End -----------*/
+...
 class MyApp extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
@@ -198,11 +178,19 @@ class MyApp extends StatelessWidget {
   }
 //}
 
-ログイン機能を実装する前に、ルーティングの設定を変更します。
-アプリ起動時におけるデータの読み込み中に表示する画面をスプラッシュ画面と呼び、
-今回、ログイン機能の実装と並行して、この画面の実装も行います。
+今回のログインを作成するために次の2つのパッケージを追加します。
 
-@<code>{MaterialApp}の@<code>{routes:}に対して@<code>{/}と@<code>{/list}のふたつのルートを設定します。
+ * @<code>{package:firebase_auth/firebase_auth.dart}
+ * @<code>{package:fluttertoast/fluttertoast.dart}
+
+ログイン機能を実装する前に、ルーティングの設定を変更します。
+アプリ起動時のデータを読み込む時間を待つために簡易スプラッシュ画面の実装を行います。
+
+@<code>{MaterialApp}の@<code>{routes:}に対して、2つのルートを設定します。
+
+ * @<code>{/} : スプラッシュ画面を表示
+ * @<code>{/list} : リスト画面を表示
+
 アプリを立ち上げると、@<code>{/}にアクセスするので、@<code>{Splash()}が実行されます。
 
 
@@ -211,7 +199,7 @@ class MyApp extends StatelessWidget {
 //list[main_login5][main.dart]{
 
 /*---------- Add Start ----------*/
-  FirebaseUser firebaseUser;
+FirebaseUser firebaseUser;
 
 class Splash extends StatelessWidget{
   @override
@@ -462,16 +450,16 @@ class _MyInputFormState extends State<InputForm> {
         _data.date = widget.document['date'];
       }
       /*----------- Add Start -----------*/
-        _mainReference =Firestore.instance.collection('users').
-                        document(firebaseUser.uid).collection("transaction").
-                        document(widget.document.documentID);
+        _mainReference =Firestore.instance.collection('users')
+                         .document(firebaseUser.uid).collection("transaction")
+                         .document(widget.document.documentID);
       /*----------- Add End -----------*/
       deleteFlg = true;
     } else {
       /*----------- Add Start -----------*/
-      _mainReference = Firestore.instance.collection('users').
-                        document(firebaseUser.uid).collection("transaction").
-                        document();
+      _mainReference = Firestore.instance.collection('users')
+                        .document(firebaseUser.uid).collection("transaction")
+                        .document();
       /*----------- Add End -----------*/
     }
   }
@@ -496,10 +484,10 @@ class _MyInputFormState extends State<InputForm> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: StreamBuilder<QuerySnapshot>(
-            /*----------- Add Start -----------*/
-            stream: Firestre.instance.collection('users').
-                    document(firebaseUser.uid).collection("transaction").snapshots(),
-            /*----------- Add End -----------*/
+            /*----------- Edit Start -----------*/
+            stream: Firestre.instance.collection('users').document(firebaseUser.uid)
+                      .collection("transaction").snapshots(),
+            /*----------- Edit End -----------*/
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return const Text('Loading...');
               return ListView.builder(
