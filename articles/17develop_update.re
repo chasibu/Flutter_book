@@ -64,7 +64,8 @@
                               context,
                               MaterialPageRoute(
                                   settings: const RouteSettings(name: "/edit"),
-                                  builder: (BuildContext context) => InputForm(document)
+                                  builder: (BuildContext context) =>
+                                    InputForm(document)
                               ),
                             );
                             /*----------- Add End -----------*/
