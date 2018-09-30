@@ -199,6 +199,7 @@ class MyApp extends StatelessWidget {
 
 /*---------- Add Start ----------*/
 FirebaseUser firebaseUser;
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class Splash extends StatelessWidget{
   @override
@@ -229,12 +230,13 @@ Future<FirebaseUser> _getUser() async {
 /*---------- Add End ----------*/
 
 //}
-@<code>{_getUser()}を作成し,ログイン済みのユーザなのかの認証を行います。
+@<code>{_getUser()}を作成し、ログイン済みのユーザなのかの認証を行います。
+ログイン済みじゃない場合、匿名ユーザを生成してログインします。
+
 ユーザ情報の確認が終わると一覧画面に遷移します。
 
 また、@<code>{Scaffold}内でスプラッシュ画面に実際に表示する内容を記載しており、
 今回は画面の中央に「スプラッシュ画面」と表示しています。
-
 
 == ログインボタンの実装
 
@@ -262,11 +264,12 @@ class _MyList extends State<List> {
     }
   }
 //}
+
 ログインボタンは一覧画面の@<code>{appBar}に追記します。
 
-ボタン選択後、@<code>{showBasicDialog()}が呼び出され、ログイン画面が表示されます。
+これから実装する@<code>{showBasicDialog()}が呼び出され、ログイン画面を表示します。
 
-==　ログイン処理の実装
+==　ログイン画面の実装
 
 //list[main_login7][main.dart]{
 class _MyList extends State<List> {
@@ -409,19 +412,12 @@ void showBasicDialog(BuildContext context) {
   }
 
   /*---------- Add Start ----------*/
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<FirebaseUser> _signIn(String email, String password) async {
-    final FirebaseUser user = await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
-    print("User id is ${user.uid}");
-    return user;
+  Future<FirebaseUser> _signIn(String email, String password){
+    return _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
-  Future<FirebaseUser> _createUser(String email, String password) async {
-    final FirebaseUser user = await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    print("User id is ${user.uid}");
-    return user;
+  Future<FirebaseUser> _createUser(String email, String password){
+    return _auth.createUserWithEmailAndPassword(email: email, password: password);
   }
   /*----------- Add End -----------*/
 
