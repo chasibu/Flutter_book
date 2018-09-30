@@ -165,4 +165,4 @@ class _MyInputFormState extends State<InputForm> {
 
  @<code>{initialValue:}で初期値を設定します。
 
-これで登録処理機能の実装は完了です。
+これで登録機能の実装は完了です。

@@ -99,7 +99,7 @@
       //編集データの作成
       DocumentReference _mainReference;
       _mainReference = Firestore.instance.collection('kasikari-memo').document();
-      if (widget.document != null) {
+      if (widget.document != null) {//引数で渡したデータがあるかどうか
         if(_data.user == null && _data.stuff == null) {
           _data.borrowOrLend = widget.document['borrowOrLend'];
           _data.user = widget.document['user'];
@@ -122,6 +122,10 @@
 
 これで編集ボタンを押したときにデータの更新ができるようになりました。実際に動かしてみましょう！
 
+次の画像のように、実際に登録してあるデータを選択し、編集画面を開いてみましょう。
+//image[update1][編集機能][scale=0.99]{
+//}
+
 === 編集機能の解説
 
 次の4つの部分のコードを修正しました。順に説明していきます。
@@ -133,20 +137,19 @@
 
 ==== 引数の追加
 
-編集機能を作るために、一覧画面から編集画面へ遷移する時に、どのデータを修正するのかという情報が必要になります。
+編集機能を作るためには、どのデータを修正するのかという情報が必要になります。
 
-@<code>{InputForm(this.document);}のように引数を追加することでデータによって処理を変更することが可能になります。
-
+@<code>{InputForm(this.document);}のように引数を追加することでデータによって処理を変更します。
 
 ==== 新規作成ボタンの修正
 
 引数の追加を行ったので、既存の画面遷移をしていた部分を修正します。
 
-新規作成時には、編集時の遷移と区別したいため、nullを渡します。
+新規作成時には、編集時の遷移と区別したいのでnullを渡します。
 
 @<code>{builder: (BuildContext context) => InputForm()}
 
-　→　
+　↓　
 
 @<code>{builder: (BuildContext context) => InputForm(null)}
 
@@ -156,7 +159,7 @@
 
 編集ボタンを押したときに編集できるようにコードを追加します。
 
-タッチされたデータを引数にして、表示するクラスに情報を送信します。
+編集ボタンで選択されたデータを引数として渡します。
 
 @<code>{builder: (BuildContext context) => InputForm(document)}
 
@@ -165,11 +168,5 @@
 引数として提供されたデータが実際にある場合、それぞれのWidgetにデータをセットして表示させます。
 
 それ以外のときはデータを新規作成させます。
-
-Firestore.instance.collection('kasikari-memo').document();を使いどこにデータを保存するのか指定をします。
 　
-ここまで実装すると、編集機能を有効になります。
-
-次の画像のように、実際に登録してあるデータを選択し、編集画面を開いてみましょう。
-//image[update1][編集機能][scale=0.99]{
-//}
+これで更新機能の実装は完了です。
