@@ -10,35 +10,62 @@
 @<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter11}
 
 == ログイン機能について
-ログイン機能の実装はFirebaseが提供している、Authentication機能を利用します。
-これを利用すると、自前で準備する必要のある、認証機能を簡単に実現することができます。
-コードを記述する前に、FirebaseのWebコンソール上から設定を行います。
-具体的な手順は次のとおりです。
 
-1.FirebaseのWebコンソール画面から左ペインにあるAuthenticationを選択します。
-//image[open_authentication][認証画面][scale=0.8]{
+ログイン機能の実装はFirebaseが提供している、「Firebase Authentication」を利用します。
+
+=== Firebase Authenticationとは
+
+自前で作ると大変な認証機能を少しのコードを追加するだけで動かすことができるサービスです。
+
+ * メールアドレス・パスワード
+ * 電話番号（SMS）
+ * Google
+ * Playゲーム
+ * Facebook
+ * Twitter
+ * GitHub
+ * 匿名ログイン
+
+Firebase Authenticationを使うと簡単な設定でアプリにさまざまなログインをできるようになります。
+
+今回のアプリではメールアドレス・パスワードと匿名ログインを使用します。
+
+これからどのような設定でメールアドレス・パスワードと匿名ログインを使用できるのか説明していきます。
+
+=== Firebase Authenticationの設定
+
+コードを書く前に、FirebaseのWebコンソール上から設定を行います。
+
+1.FirebaseのサイドメニューにあるAuthenticationをクリックします。
+
+//image[open_authentication][Authenticationの開き方][scale=0.8]{
 //}
 
-2.ログインプロバイダからメール/パスワードを選択し、有効化に変更した後、保存を選択します。
-//image[mail][メール/パスワード][scale=0.8]{
+2.ログインプロバイダからメールアドレス・パスワードを選択し、有効に変更して保存をクリックします。
+
+//image[mail][メールアドレス・パスワードの有効化][scale=0.8]{
 //}
 
-3.ログインプロバイダから匿名を選択し、有効化に変更した後、保存を選択します。
+3.ログインプロバイダから匿名を選択し、有効に変更して保存をクリックします。
+
 //image[anonymous][匿名の有効化][scale=0.8]{
 //}
 
-4.メール/パスワード、匿名が有効になっていれば問題ありません。
-//image[complete][メール/パスワード、匿名有効化の確認][scale=0.8]{
+4.メールアドレス・パスワード、匿名が有効になっていることを確認出来たら大丈夫です。
+
+//image[complete][メールアドレス・パスワード、匿名有効化の確認][scale=0.8]{
 //}
 
-以上で管理コンソール側の準備は整いました。それでは実際にコードを書いて行きましょう。
+これでFirebase側の準備は整いました。
+
+それでは実際にコードを書いて行きましょう。
 
 == Cloud Firestoreのデータ保存の仕組みについて
 Cloud FirestoreではNoSQLドキュメント指向データベースです。NoSQLはSQLとは異なり、
 データや行はなく、キーと値の組み合わせ（key-value型）でデータの保存を行います。
 Cloud Firestoreでは、データの集合をドキュメントという名称で呼び、ドキュメントの集合を
 コレクションという名称で呼びます。
-//image[collection][データ、ドキュメント、コレクションの関係][scale=0.8]{
+//image[collection][データ、ドキュメント、コレクションの関係][scale=0.6]{
 //}
 
 また、ドキュメントの下にはデータだけなく、コレクションを追加することが可能です。
@@ -49,7 +76,7 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
 //}
 
 今までの機能では、次の画像のような構成になっていました。
-//image[structure_before][今までの機能の構成][scale=0.4]{
+//image[structure_before][今までの機能の構成][scale=0.6]{
 //}
 
 今回ログオン機能を追加することで、Cloud Firestoreの構成は次の画像のとおりになります。
