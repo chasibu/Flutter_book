@@ -80,18 +80,22 @@ NoSQLはSQLとは異なり、キーと値の組み合わせ（key-value型）で
 
 ====[/column]
 
+== データ保存構成
 
-今までの機能では、次の画像のような構成になっていました。
-//image[structure_before][今までの機能の構成][scale=0.6]{
+今までの機能では、次のような構成になっていました。
+
+//image[structure_before][今までの構成][scale=0.6]{
 //}
 
-今回ログオン機能を追加することで、Cloud Firestoreの構成は次の画像のとおりになります。
-//image[structure_after][今までの機能の構成][scale=0.8]{
-//}
+それを次のような構成に変更します。
 
-ユーザというドキュメントに対して、transactionというコレクションを紐づけ、さらに貸し借りデータを
-紐づけています。先に記載したように、ドキュメントの下にドキュメントを紐づける事は出来ないので、
-ユーザと貸し借りデータの間にtransactionを挟んでいます。
+users → [userID] → transaction → [貸し借りデータ]
+
+ * userID : ログインしたユーザID
+ * 貸し借りデータ : アプリから入力したデータ
+
+//image[structure_after][今後の構成][scale=0.8]{
+//}
 
 == ライブラリの追加
 //list[main_login1][pubspec.yaml][scale=0.8]{
