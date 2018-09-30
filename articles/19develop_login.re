@@ -489,15 +489,29 @@ Cloud Firestoreにはアクセス制御のルールを設定できます。
 
 自分が作成したデータのみを見れるような設定をします。
 
+1. Firebaseにログインし、「Database > ルール」を開きます。
+
+//image[cloud][ルール設定画面][scale=0.8]{
+//}
+
+2. 次のコードに置き換えて、「公開」とかかれたボタンをクリックします。
+
 //list[sec][Cloud Firestore ルール]{
 service cloud.firestore {
   match /databases/{database}/documents {
-     match /users/{userId}/promise/{file} {
-    		allow read,create,delete,update: if request.auth.uid == userId;
+    match /users/{userId}/promise/{file} {
+      allow read,create,delete,update: if request.auth.uid == userId;
     }
   }
 }
 //}
+
+//image[setting][ルール設定画面][scale=0.8]{
+//}
+
+これで設定は完了です。
+
+==== ルール説明
 
 上記のコードの見方は、
 「/users/{userId}/promise/{file}」の条件に一致するデータで、
@@ -513,6 +527,18 @@ service cloud.firestore {
 
 これでCloud Firestoreルール設定は完了です！
 
+====[column] ルールのテスト
+Cloud Firestoreルール設定をするときには問題がないか確認しながら開発することができます。
+
+シミュレータがあり、認証した状態やパスの設定、読み書きの状態などさまざまなことを確認できるので開発時には使用しましょう！
+
+//image[check][ルール設定画面][scale=0.3]{
+//}
+
+====[/column]
+
+
+=== アプリを実行してみよう
 
 アプリを実行して次の画像のように実際にログインフォームを入力し、アカウントを作成してログインしてみましょう。
 
