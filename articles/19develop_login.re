@@ -77,7 +77,7 @@ NoSQLはSQLとは異なり、キーと値の組み合わせ（key-value型）で
 //image[ireko][ドキュメント、コレクションの入れ子構造][scale=0.6]{
 //}
 
-====[column]
+====[/column]
 
 == データ保存構成
 
