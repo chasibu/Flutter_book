@@ -1,7 +1,13 @@
 = ログイン機能の実装をしよう
-現在の状態では、@<code>{kasikari-memo}コレクションに入力されたデータは誰でもアクセス可能です。
-アプリを公開するにあたり、それでは、困ってしまいます。そこで、ログイン機能を実装し、自分が入力したデータは自分だけが見れるような機能を実装します。
 
+現在の設定では、Cloud Firestoreに入力された貸し借りデータは誰でも確認して、編集することができます。
+このままでは、秘密にしたいことも公開されてしまい困ってしまいます。
+
+そこでログイン機能を実装し、自分が入力したデータは自分だけが見れるようにします。
+
+この章を完了すると下記のタグの内容になります。
+
+@<href>{https://github.com/chasibu/kasikari_memo/releases/tag/chapter11}
 
 == ログイン機能について
 ログイン機能の実装はFirebaseが提供している、Authentication機能を利用します。
@@ -10,19 +16,19 @@
 具体的な手順は次のとおりです。
 
 1.FirebaseのWebコンソール画面から左ペインにあるAuthenticationを選択します。
-//image[open_authentication][認証画面]{
+//image[open_authentication][認証画面][scale=0.8]{
 //}
 
 2.ログインプロバイダからメール/パスワードを選択し、有効化に変更した後、保存を選択します。
-//image[mail][メール/パスワード]{
+//image[mail][メール/パスワード][scale=0.8]{
 //}
 
 3.ログインプロバイダから匿名を選択し、有効化に変更した後、保存を選択します。
-//image[anonymous][匿名の有効化]{
+//image[anonymous][匿名の有効化][scale=0.8]{
 //}
 
 4.メール/パスワード、匿名が有効になっていれば問題ありません。
-//image[complete][メール/パスワード、匿名有効化の確認]{
+//image[complete][メール/パスワード、匿名有効化の確認][scale=0.8]{
 //}
 
 以上で管理コンソール側の準備は整いました。それでは実際にコードを書いて行きましょう。
@@ -32,22 +38,22 @@ Cloud FirestoreではNoSQLドキュメント指向データベースです。NoS
 データや行はなく、キーと値の組み合わせ（key-value型）でデータの保存を行います。
 Cloud Firestoreでは、データの集合をドキュメントという名称で呼び、ドキュメントの集合を
 コレクションという名称で呼びます。
-//image[collection][データ、ドキュメント、コレクションの関係]{
+//image[collection][データ、ドキュメント、コレクションの関係][scale=0.8]{
 //}
 
 また、ドキュメントの下にはデータだけなく、コレクションを追加することが可能です。
 そのため、次の画像のように「ドキュメント→コレクション→ドキュメント...」という入れ子構造を作ることが可能です。
 
 ※ドキュメントの下にドキュメント、コレクションの下にコレクションを作ることはできません。
-//image[ireko][ドキュメント、コレクションの入れ子構造]{
+//image[ireko][ドキュメント、コレクションの入れ子構造][scale=0.8]{
 //}
 
 今までの機能では、次の画像のような構成になっていました。
-//image[structure_before][今までの機能の構成]{
+//image[structure_before][今までの機能の構成][scale=0.4]{
 //}
 
 今回ログオン機能を追加することで、Cloud Firestoreの構成は次の画像のとおりになります。
-//image[structure_after][今までの機能の構成]{
+//image[structure_after][今までの機能の構成][scale=0.8]{
 //}
 
 ユーザというドキュメントに対して、transactionというコレクションを紐づけ、さらに貸し借りデータを
@@ -55,22 +61,10 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
 ユーザと貸し借りデータの間にtransactionを挟んでいます。
 
 == ライブラリの追加
-//list[main_login1][pubspec.yaml]{
-
+//list[main_login1][pubspec.yaml][scale=0.8]{
   name: kasikari_memo
   description: kasikari memo Flutter application.
-
-  # The following defines the version and build number for your application.
-  # A version number is three numbers separated by dots, like 1.2.43
-  # followed by an optional build number separated by a +.
-  # Both the version and the builder number may be overridden in flutter
-  # build by specifying --build-name and --build-number, respectively.
-  # Read more about versioning at semver.org.
-  version: 1.0.0+1
-
-  environment:
-    sdk: ">=2.0.0-dev.68.0 <3.0.0"
-
+  ...
   dependencies:
     flutter:
       sdk: flutter
@@ -87,8 +81,7 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
   dev_dependencies:
     flutter_test:
       sdk: flutter
-...
-
+  ...
 //}
 
 ログイン機能を有効化するために、@<code>{dependencies:}に@<code>{firebase_auth: ^0.5.20},
@@ -97,46 +90,23 @@ Cloud Firestoreでは、データの集合をドキュメントという名称�
 
 == ビルドエラー修正
 
-//list[maim_login2][build.gradle]{
+//list[maim_login2][android/app/build.gradle]{
   def localProperties = new Properties()
   ...
   android {
     compileSdkVersion 27
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
     defaultConfig {
-        // TODO: Specify your own unique Application ID
-        // (https://developer.android.com/studio/build/application-id.html).
         applicationId "local.chasibu.kasikarimemo"
-        minSdkVersion 16
-        targetSdkVersion 27
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ...
         /*---------- Add Start ----------*/
         multiDexEnabled true
         /*---------- Add End ----------*/
-
     }
-    buildTypes {
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-        }
-    }
-}
-
-flutter {
-    source '../..'
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    ...
     implementation 'com.google.firebase:firebase-core:16.0.1'
     /*---------- Add Start ----------*/
     implementation 'com.android.support:multidex:1.0.3'
