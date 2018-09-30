@@ -49,7 +49,7 @@ aut: [{name: "わみ"},{name: "しもぱた。"}]
 # a-csl, csl: 監修者
 # a-dsr, dsr: デザイナ
 # a-edt, edt: 編集者
-edt: [""]
+edt: ["わみ"]
 # a-ill, ill: イラストレータ
 # a-lyr, lyr: 歌詞作成者
 # a-mdc, mdc: メタデータセットの一次的責任者
