@@ -1,148 +1,161 @@
-= 開発環境構築
-それでは、PCを操作して実際に環境の構築を行なっていこうと思います。
-インストールするものは下記の通りです。
+= 開発環境を構築しよう
 
- 1. Flutter SDK
- 2. Xcode（iOSの場合）
- 3. Android Studio（Androidの場合）
+それでは、開発するために環境構築を行います。
 
-基本的に開発環境および開発はMacをベースに行います。
-Windows、Linuxでは環境構築の手順が異なりますので、公式のページをご確認下さい。
-※公式ページ：https://flutter.io/get-started/install/
-また、AndroidStudioについては別のテキストエディター等でも代替可能ですが、公式推奨とのことなので、こちらを利用して行きます。
+インストールするものは次のとおりです。
 
+ * Flutter SDK
+ * Android Studio
+ * Xcode（（Macのみ）iOSの開発を行う場合）
 
-== Flutter SDKのインストール（Mac版）
-まずは、Flutter SDKのインストールから行います。基本的には公式のページに英語のドキュメントがありますので、それに沿って行えば問題なくインストール行えます。
+基本的に開発環境および開発は@<b>{Windows 10}をベースに行います。
+Flutterはベータ版なのでインストール方法が変わる可能性があります。
 
- 1. 公式のFlutterのサイト(https://flutter.io/setup-macos/)にアクセスします。
+執筆現在（2018/9/23）のインストール方法について紹介します。
+本書の手順でうまくいかない場合など最新のインストール方法については公式サイトをご覧ください。
 
- 画面トップの方にFlutter SDKのダウンロードリンクがありますので、ダウンロードします。
-※執筆時点ではフォルダー名が「flutter_macos_v0.6.0-beta.zip 」となっております。
+公式サイト： @<href>{https://flutter.io/get-started/install/}
 
+== Flutter SDKのインストール
 
-<!--
-画像を入れ込む
--->
+Flutter SDKのインストールを行います。
+WindowsとMacのインストールがそれぞれ異なるので順に説明します。
 
- 2. 好きな所にファイルを展開します。特にこだわり無い人は公式ドキュメント通り、ホーム直下に「development」フォルダーを作成し、そこにフォルダーを展開しましょう。
+=== Windows版
 
-//cmd{
-  $ mkdir development
-  $ cd ~/development
-  $ unzip ~/Downloads/flutter_macos_v0.6.0-beta.zip
+1. 公式のFlutterのサイト（@<href>{https://flutter.io/setup-windows/}）にアクセスします。
+Flutter SDKのダウンロードリンクをクリックし、ダウンロードします。
+
+※執筆時点ではフォルダー名が「flutter_macos_v0.8.2-beta.zip」となっております。
+
+//image[windows1][ダウンロードリンク][scale=0.8]{
 //}
 
- 3. パスを追加します。以下のコマンドを入力して、「~.bash_profile」ファイルにパスを書き込みます。
+2. ダウンロードしたZipファイルを展開し中身のFlutterフォルダを「C:\Users\ユーザフォルダ」の下などに配置します。
+
+//image[windows2][フォルダ配置][scale=0.8]{
+//}
+
+3.「コントロールパネル > ユーザーアカウント > ユーザーアカウント > 環境変数の変更」をすると次のような画面が表示されます。
+
+「Path」と書かれた行を選択した上で編集というボタンを押します。
+
+//image[windows3][パス設定][scale=0.8]{
+//}
+
+4. 先ほど 2.の手順で配置したフォルダのパスを「編集」をクリックし、設定します。
+
+本書と同じ手順であれば「C:\Users\ユーザフォルダ\flutter\bin」となります。
+設定が完了したらOKをクリックし、閉じます。
+
+//image[windows4][パス設定][scale=0.6]{
+//}
+
+Windows版のFlutter SDKの準備は完了です。
+
+=== Mac版
+
+1. 公式のFlutterのサイト（@<href>{https://flutter.io/setup-macos/}）にアクセスします。
+Flutter SDKのダウンロードリンクをクリックし、ダウンロードします。
+
+※執筆時点ではフォルダー名が「flutter_macos_v0.8.2-beta.zip」となっております。
+
+//image[mac1][ダウンロードリンク][scale=0.8]{
+//}
+
+2. 公式ドキュメントどおり、ホーム直下に「development」フォルダーを作成し、そこにダウンロードしたzipファイルを展開しましょう。
 
 //cmd{
   $ cd
-  $ echo "export PATH=/Users/user/development/flutter/bin:$PATH" >> .bash_profile
+  $ mkdir development
+  $ cd ~/development
+  $ unzip ~/Downloads/flutter_macos_v0.8.2-beta.zip
 //}
 
-上記の記法じゃいけない？？
+3. パスを追加します。次のコマンドを入力して、「~.bash_profile」ファイルにパスを書き込みます。
 
- 4. pathを定義したファイルの再読み込みを行ないます。
+//cmd{
+  $ cd
+  $ vim .bash_profile
+//}
+
+//cmd{
+  #ファイルの一番下に書き込む userと書かれた部分には実行ユーザ名が入ります。
+  export PATH=/Users/${user}/development/flutter/bin:$PATH
+//}
+
+※次の画像の57行目のように入力して下さい。画像では、「user」の箇所が実行ユーザ名の「sho」となっています。
+ここの名前は実行環境により異なります。
+
+//image[write_path][パス入力画面][scale=0.8]{
+//}
+
+
+4. pathを定義したファイルの再読み込みを行ないます。
 
 //cmd{
 source $HOME/.bash_profile
 //}
 
- 5. pathが更新されたかを確認します。
+5. pathが更新されたかを確認します。
 
 //cmd{
 echo $PATH
 //}
-正しく更新されていれば、3.で記載した内容が表示されます。
 
+※場合によっては、次の画像のように先頭に表示されない場合がありますので、注意して確認してください。
 
-== Xcode
-
-=== Xcodeインストール
-
- 1. 「App Store」から「Xcode」のインストールを行なって下さい。
- 2. インストール後、一度ソフトを起動し、ライセンス認証をして下さい。
-
-=== エミュレータの起動
-
- 1. 動作確認のために、一度iOSのエミュレータを起動させます。
-
-//cmd{
-open -a Simulator
+//image[path_list][パス表示画面][scale=0.5]{
 //}
 
-起動に成功するとiphoneが画面上に表示されます。
-画面上部にあるメニューバーから「Simulator」→「Quit Simulator」より終了することができます。
-
-//comment{
-物理iphoneで起動させるための手順があるけど、飛ばしていいよね
-付録として書くぐらいの分量でいいかも
-//}
+Mac 版の Flutter SDK の準備は完了です。
 
 == Android Studioのインストール
 
-=== Android Studio インストール
+1. 公式サイト（@<href>{https://developer.android.com/studio/}）よりインストーラをダウンロードします。
 
- 1. 公式サイト(https://developer.android.com/studio/)
-よりインストーラをダウンロードし,インストールします。
- 2. インストール手順等についてはこちら(https://developer.android.com/studio/install?hl=ja)
-を参考にインストールして下さい。
+//image[android1][Android Studioのインストール][scale=0.8]{
+//}
 
-紙媒体だとURLめんどいのであんまりURL誘導はよくない？
+2. インストーラに沿ってインストールを完了してください。
 
-=== エミュレータの設定
+== Flutterプラグインの追加
 
- 1. インストールが完了したら、AndroidStudioを開き、Androidシミュレータの設定を行います。画面上部にある、「AVD Manager」のアイコンを選択します。
+Android StudioでFlutterを開発するためにFlutterのプラグインをインストールします。
 
- 2. 表示された画面の左下にある「Create Virtual Device...」のボタンを選択します。
+1. 起動画面で「Configure>Plugins」を選択します。
 
- 3. デバイス選択画面が表示されるので「Nexus 5X」を選択し、右下の「Next」ボタンを選択します。
-※基本的にどれ選んでも問題ないと思うのですが、今回動作確認を行なったデバイスがNexus 5Xだったため、これを選択しています。
+//image[plugin1][Flutterプラグインのインストール][scale=0.8]{
+//}
 
- 4. OSのバージョン選択画面が表示されますが、「Android 8.1」を選択し、右下の「Next」ボタンを押下します。
+もしくは「File＞settings」からでも同様の画面に進むことができます。
 
- 5. 設定の確認画面が出てきますが、特に変更することなく、右下の「Finish」を選択します。
+//image[plugin2][Flutterプラグインのインストール][scale=0.7]{
+//}
 
- 6. 再生ボタンを選択し、デバイスを起動させます。
+2. プラグイン一覧が表示されます。下部にある「Browser repositories」を選択してます。
 
- 7. Nexus 5Xが画面に表示されれば、成功です。画面横にある×ボタンを選択して、エミュレータを終了させます。
+//image[plugin3][Flutterプラグインの一覧][scale=0.8]{
+//}
 
-== プラグインの追加
-基本的にはAndroidアプリ、iOSアプリを作るにしろ全て、Android Studioを操作して行きます。そのため、Flutterを使う準備など全てAndroidStudio上で行います。
+3. 検索欄がありますので「flutter」と入力します。選択するとインストールボタンが表示されるのでそれをクリックします。
 
- 1. 画面上部より、「AndroidStudio>Preferences>Plugins」を選択します。
- 2. プラグイン一覧が表示されるので、「Flutter plug-in」を選択して、インストールを行います。
- 3. 途中、「Dart plugin」をインストールしてもいいかと聞かれるので、インストールして下さい。
- 4. インストール後、AndroidStudioを再起動します。
+//image[plugin4][Flutterプラグインの検索][scale=0.8]{
+//}
 
-== Flutterの動作確認
-長くなりましたが、環境構築は以上となり、残りは動作確認になります。
-開発に入るまでもう一息ですが、頑張りましょう！
+4. 途中、「Dart plugin」をインストールしてもいいかと聞かれるので「Yes」を選択し、インストールして下さい。
 
- 1. 画面上部より「File>New>New Flutter Project」を選択します。
- 2. 「Flutter Application」を選択し,「Next」を選択します。
- 3. 「Projectname」を「Flutter_test」とし、「Next」を選択します。
- 4. 「Set the package name」画面では特に変更を加えずに、「Finish」を選択します。
- 5. 「今開いている画面で開くかどうか」聞かれるので、「This Window」を選んでおきましょう。
- 6. 画面上部にあるデバイス選択画面から使用デバイスを選択します。
-　先ほど起動した、「Nexus 5X」があると思いますので、選択します。
- 7. 先ほど同様に、Nexus 5Xが起動すると思いますので、起動を確認したら、AndroidStudioの画面上部にある再生ボタンを選択します。
- 8. 画像のようなデモアプリが実行されれば動作確認完了です。
+//image[plugin5][Dartプラグインのインストール][scale=0.8]{
+//}
 
+5. インストール完了後、Browse Repositoriesを「Close」で閉じ、「Flutter」をリストから探しクリックします。
 
-=====[column] ホットリロード
-Flutterにはhotreloadという、アプリ実行中に変更を反映させる機能が標準で搭載されています。
-先程は実行したアプリに対して以下の変更を加え、画面上部にある稲妻マークのhotreloadボタンを押してみましょう。
+「Restart Android Studio」をクリックします。
+そうするとAndroid Studioが再起動するのでしばらく待ちましょう。
 
-もっとわかりやすい表記に変更すること
+//image[plugin6][Dartプラグインのインストール][scale=0.8]{
+//}
 
-@<code>{You have pushed the button this many times:}
+これで環境構築は完了です！
 
-↓
-
-@<code>{hotreloadの動作確認！:}
-
-すると、実行中のアプリの画面が変更されます。
-この様に、hotreload機能を使用すると、変更を反映させるためにアプリを停止させる必要がなく、効率よくアプリ開発を進める事が可能です。
-
-====[/column]
+次の章ではいったんアプリの開発を始める前にサンプルプログラムを動かして、デバイスへのデプロイなどを体験しましょう。

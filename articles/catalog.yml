@@ -5,9 +5,17 @@ PREDEF:
 CHAPS:
   - 01intro.re
   - 02make_enviroment.re
-  
+  - 03sampleProgram.re
+  - 04flutter_knowledge.re
   - 10develop_intro.re
-  - 11develop_input.re
+  - 12develop_connectfirebase.re
+  - 13develop_show.re
+  - 14develop_input.re
+  - 16develop_registration.re
+  - 17develop_update.re
+  - 18develop_delete.re
+  - 19develop_login.re
+  - 20endroll.re
 APPENDIX:
 
 POSTDEF:

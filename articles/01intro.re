@@ -1,41 +1,48 @@
-= DartとFlutterとFirebaseについて
+= FlutterとFirebaseを知ろう
 
-== Dartについて
-Google社によって開発されたwebプログラミング言語になります。
-位置付けとしてはJavaScriptの代替となる言語として作られました。
-その為、JavaScriptもしくはJavaとかをやっていると比較的始めやすい言語なのかなと思います。
-また、2018年２月にはDart2発表され、本書でもDart2を使用して行きます。
-//comment{
-余裕があったら何が変更になったのかを記載する。
-//}
+== Flutter
 
+オープンソースのモバイルアプリケーションフレームワークです。
 
-== Flutterについて
-こちらもGoogle社が開発した、オープンソースのモバイルアプリケーションフレームワークになります。特徴は以下の通りとなります。
+特徴は次のとおりです。
 
  * 対応言語はDart
- * hotreload対応
- * Android,iOSが開発可能なマルチプラットフォーム対応
+ * Hot Reload対応
+ * AndroidやiOSが開発可能なマルチプラットフォーム対応
+ * 開発元はGoogle
 
-
-=== 他のマルチクロスプラットフォーム(ReactNative,Xamarin)との比較を表にまとめました。
-
-|対応プラットフォーム|Flutter/dart|ReactNative/javascript|Xamarin/.NET|
-|---|---|---|---|
-|Android||||
-|iOS||||
-|デスクトップ(Win)||||
-|デスクトップ(Mac)||||
-|Web(フロントエンド)||||
-|Web(バックエンド)||||
-
-デスクトップアプリが作れるXamarinに比べると対応プラットフォーム数は劣りますが、ReactNativeとは対応数は同じです。
-
-//comment{
-引用元：https://qiita.com/amay077/items/dff88e7ce6868615a9bb
+//image[flutter][Flutterロゴ][scale=0.4]{
 //}
 
-== Firebaseについて
-こちらも、Google社が提供しているサービスになります。
-Baas(backend as a service)と呼ばれるサービスの一つで、今までサーバサイドで行なっていた処理をインターネットを経由してクラウドサービスとして提供してくれうサービスです。
-Firebaseは様々なサービスを提供しており、ストレージや認証機能を一つのサービスとして提供してくれます。今回は、「Cloud Firestore」(※2018年8月現在、β版のみ提供)というクエリと自動スケーリング機能を兼ね備えたリアルタイムデータベースを使用いたします。
+====[column] Dart
+
+Googleによって開発されたWebプログラミング言語です。
+
+JavaScriptの代替となる言語として作られました。
+JavaScriptやJavaに記法が似ており、どちらかの言語を使ったことがある方には始めやすい言語だと思います。
+
+====[/column]
+
+=== ReactNativeやXamarinとの比較
+
+//table[comparison][他のマルチクロスプラットフォームとの比較]{
+対応プラットフォーム	Flutter/Dart	ReactNative/JavaScript	Xamarin/.NET
+--------------------------------------------------------------
+Android	○	○	○
+iOS	○	○	○
+デスクトップ（Win）	-	-	○
+デスクトップ（Mac）	-	-	○
+Web（フロントエンド）	-	-	○
+Web（バックエンド）	-	-	-
+//}
+
+デスクトップアプリが作れるXamarinに比べると対応プラットフォーム数は劣りますが、
+ReactNativeと対応プラットフォーム数は同じです。
+
+== Firebase
+
+FirebaseはGoogleが運営するBaaSです。
+
+BaaS（backend as a service）とは、サーバーサイドのプログラミングが不要でデータベースや認証機能、プッシュ通知などを行ってくれるサービスです。
+
+今回は、「Cloud Firestore」（※2018年9月現在、β版のみ提供）というクエリと自動スケーリング機能を兼ね備えたリアルタイムデータベースを使用します。
