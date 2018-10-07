@@ -464,7 +464,7 @@ class _MyInputFormState extends State<InputForm> {
           padding: const EdgeInsets.all(8.0),
           child: StreamBuilder<QuerySnapshot>(
             /*----------- Edit Start -----------*/
-            stream: Firestre.instance.collection('users').document(firebaseUser.uid)
+            stream: Firestore.instance.collection('users').document(firebaseUser.uid)
                       .collection("transaction").snapshots(),
             /*----------- Edit End -----------*/
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
